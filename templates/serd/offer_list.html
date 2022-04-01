@@ -1,0 +1,61 @@
+<div class="main">
+ 
+    <table border = "1">
+    <tr>
+        <td>
+            ID
+        </td>
+        <td>
+            Name
+        </td>
+        <td>PLZ</td>
+        <td>Ort</td>
+        <td>Straße</td>
+        <td>Tel</td>
+        <td>mail</td>
+        <td>Sprachen</td>
+        <td>Kosten</td>
+        <td>spontan</td>
+        <td>verfügbar ab</td>
+        <td>begrenzt verfügbar</td>
+        <td>verfügbar bis</td>
+        <td>Barrierefrei</td>
+        <td>ÖPNV</td>
+        <td>Zimmer</td>
+        <td>Eigene Wohnung</td>
+        <td>Wohnsituation</td>
+        <td>Haustiere</td>
+        <td>Status</td>
+        <td>Vermittelt</td>
+    </tr>
+    {% for data in dataset %}.
+        <tr>
+           <td> {{data.id}}</td>
+           <td> {{ data.given_name}}, {{data.last_name}}</td>
+           <td> {{data.plz}}</td>
+           <td> {{data.city}}</td>
+           <td> {{data.street}}</td>
+           <td> {{data.phone}}</td>
+           <td> {{data.mail}}</td>
+           <td> {{data.language}}</td>
+           <td> {{data.cost}}</td>
+           <td> {{data.spontan|yesno:'Ja,Nein'}}</td>
+           <td> {{data.available_from}}</td>
+           <td> {{data.limited_availability}}</td>
+           <td> {{data.available_until}}</td>
+           <td> {{data.accessability|yesno:'Ja,Nein'}}</td>
+           <td> {{data.public_transport|yesno:'Ja,Nein'}}</td>
+           <td> {{data.rooms}}</td>
+           <td> {{data.seperate_appartment|yesno:'Ja,Nein'}}</td>
+           <td> {{data.living_situation}}</td>
+           <td> {{data.pets}}</td>
+           <td> {{data.state}}</td>
+           <td> {{data.placed_request}}</td>
+
+           <td> <a href="offers/edit/{{data.id}}">edit </a></td>
+           </tr>
+        {% endfor %}
+    </table>
+
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+</div>

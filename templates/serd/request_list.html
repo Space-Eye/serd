@@ -1,0 +1,41 @@
+<div class="main">
+ 
+    <table border = "1">
+    <tr>
+        <td>
+            ID
+        </td>
+        <td>
+            Name
+        </td>
+        <td>Tel</td>
+        <td>email</td>
+        <td>Erwachsene</td>
+        <td>Kinder</td>
+        <td>Wer</td>
+        <td>Teilbar</td>
+        <td>Aktuelle Unterbringung</td>
+        <td>Ankunft Zeit</td>
+        <td>Ankunft Ort</td>
+        <td>Haustiere</td>
+        <td>Haustiere</td>
+        <td>Sprachen</td>
+        <td>Barrierfrei</td>
+    </tr>
+    {% for data in dataset %}.
+        <tr>
+           <td> {{data.id}}</td>
+           <td> {{ data.given_name}}, {{data.last_name}}</td>
+           <td> {{data.phone}}</td>
+           <td> {{data.mail}}</td>
+           <td> {{data.adults}}</td>
+           <td> {{data.children}}</td>
+           <td> {{data.who}}</td>
+           <td> {{data.split}}</td>
+           <td> <a href="offers/edit/{{data.id}}">edit </a></td>
+           </tr>
+        {% endfor %}
+    </table>
+
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+</div>
