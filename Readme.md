@@ -10,7 +10,6 @@ Recht einfacher Aufbau:
 - Tests
 - Layout
 - Übersetzungen
-- fields Überprüfen
 - ssl config
 - Doku
 - filter / sortierfunktionen in die 'requests' und 'offers' Seiten
