@@ -31,7 +31,7 @@
            <td> {{data.adults}}</td>
            <td> {{data.children}}</td>
            <td> {{data.who}}</td>
-           <td> {{data.split}}</td>
+           <td> {{data.split |yesno:'Ja,Nein'}}</td>
            <td> <a href="offers/edit/{{data.id}}">edit </a></td>
            </tr>
         {% endfor %}
