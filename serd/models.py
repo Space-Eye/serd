@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from multiselectfield import MultiSelectField
-from .choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS
+from .choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
 
 
 class  HousingRequest(models.Model):
@@ -29,6 +29,7 @@ class  HousingRequest(models.Model):
     case_handler = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     priority = models.CharField(choices=PRIORITY_CHOICE, max_length=64)
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True)
+    state = models.TextField(choices=REQUEST_STATE)
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.id)])
 
