@@ -28,7 +28,7 @@ urlpatterns = [
     path('offers/edit/<offer_id>', OfferUpdate.as_view()),
     path('requests/edit/<request_id>', RequestUpdate.as_view()),
     path('success', success),
-    path('',index)
+    path('',index, name='index')
 
 ]
 
