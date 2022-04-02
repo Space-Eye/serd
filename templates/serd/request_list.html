@@ -20,6 +20,11 @@
         <th>Haustiere</th>
         <th>Sprachen</th>
         <th>Barrierfrei</th>
+        <th>Vermittelt</th>
+        <th>Priorität</th>
+        <th>Sachbearbeiter:in</th>
+        <th>Status</th>
+        <th>Interner Kommentar</th>
     </tr>
     {% for data in dataset %}.
         {%if data.state == "new"%}    
@@ -50,6 +55,11 @@
            <td> {{data.pet_number}} {{data.pets}}</td>
            <td> {{data.languages}}</td>
            <td> {{data.accessability_needs |yesno:'Ja,Nein'}}</td>
+           <td>  {{data.placed_at}}</td>
+           <td> {{data.priority}}</td>
+           <td> {{data.case_handler}}</td>
+           <td> {{data.state}}</td>
+           <td> {{data.private_comment}}</td>
            <td> <a href="/requests/edit/{{data.id}}">edit </a></td>
            </tr>
         {% endfor %}
