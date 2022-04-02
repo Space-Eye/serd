@@ -18,7 +18,7 @@ class  HousingRequest(models.Model):
     who = models.CharField(max_length=256)
     split = models.BooleanField()
     current_housing = models.CharField(choices=CURRENT_ACCOMODATION, max_length=128)
-    arrival_date = models.DateTimeField()
+    arrival_date = models.DateField()
     arrival_location = models.CharField(max_length=256)
     pets = MultiSelectField(choices=PETS)
     pet_number = models.PositiveSmallIntegerField()
