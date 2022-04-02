@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import OfferEditForm, OfferForm
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestForm
 import datetime
 
 def success(request):
@@ -16,9 +16,8 @@ def success(request):
 
 class AddRequest(CreateView):
     model = HousingRequest
-    fields = ['last_name', 'given_name', 'phone', 'mail', 'representative', 'repr_phone',
-    'repr_mail', 'adults', 'children', 'who', 'split', 'current_housing', 'arrival_date',
-    'arrival_location', 'pets', 'car', 'languages', 'accessability_needs']
+    success_url = "/success"
+    form_class = RequestForm
 
 class AddOffer(CreateView):
     model = Offer
@@ -46,11 +45,9 @@ class OfferUpdate(UpdateView):
     form_class = OfferEditForm
 
 class RequestUpdate(UpdateView):
-    success_url = "/offers"
+    success_url = "/requests"
     def get_object(self, queryset=None):
         return HousingRequest.objects.get(id=self.kwargs["request_id"])
-        
-    fields = ['last_name', 'given_name','phone', 'mail', 'language', 'adults', 'children', 'who', 'split', 'current_housing', 'arrival_date', 
-    'pets', 'pet_number', 'vaccination', 'accessability_needs', 'case_handler', 'priority']
+    form_class = RequestEditForm
 
         
