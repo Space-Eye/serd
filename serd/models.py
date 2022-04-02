@@ -1,15 +1,16 @@
 from django.conf import settings
 from django.db import models
 from multiselectfield import MultiSelectField
+from django.core.validators import validate_email
 from .choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
-
+from .validators import validate_plz, validate_phone
 
 class  HousingRequest(models.Model):
     id = models.AutoField(primary_key=True)
     last_name = models.CharField(max_length=128)
     given_name = models.CharField(max_length=128)
-    phone = models.CharField(max_length=50)
-    mail = models.CharField(max_length=256)
+    phone = models.CharField(max_length=50, validators=[validate_phone])
+    mail = models.CharField(max_length=256, validators=[validate_email])
     representative = models.CharField(max_length=256)
     repr_phone = models.CharField(max_length=256)
     repr_mail = models.CharField(max_length=256)
@@ -39,10 +40,11 @@ class Offer(models.Model):
     id = models.AutoField(primary_key=True)
     last_name = models.CharField(max_length=128)
     given_name = models.CharField(max_length=128)
+    plz = models.CharField(max_length=5, validators=[validate_plz])
     street = models.CharField(max_length=256, blank=True)
     city = models.CharField(max_length=256)
-    phone = models.CharField(max_length=50)
-    mail = models.CharField(max_length=256)
+    phone = models.CharField(max_length=50, validators=[validate_phone])
+    mail = models.CharField(max_length=256, validators=[validate_email])
     language = MultiSelectField(choices=LANGUAGE_CHOICE)
     cost = models.PositiveSmallIntegerField()
     spontan = models.BooleanField()

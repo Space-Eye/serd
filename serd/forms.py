@@ -1,16 +1,24 @@
 from django import forms
 from .models import HousingRequest, Offer
-
+from django.utils.translation import gettext_lazy as _
 
 class OfferForm(forms.ModelForm):
     available_from =  forms.DateField(
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     available_until =  forms.DateField(
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
-    def clean_available_from (self):
-        available_from = self.cleaned_data['available_from']
-        print(available_from)
-        return available_from
+    def clean(self):
+        if self.cleaned_data['limited_availability']:
+            available_from = self.cleaned_data['available_from']
+            available_until = self.cleaned_data['available_until']
+            if (available_until <= available_from):
+                self.add_error(field='available_until', error=
+                ValueError(
+                    _("Ende der Verfügbarkeit muss später als der Beginn sein")
+                ))
+
+        return self.cleaned_data
+        
     class Meta :
         model = Offer
         fields =('given_name', 'last_name',  'plz','city','street', 'phone', 'mail',
