@@ -30,6 +30,7 @@ class  HousingRequest(models.Model):
     priority = models.CharField(choices=PRIORITY_CHOICE, max_length=64)
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True)
     state = models.TextField(choices=REQUEST_STATE)
+    private_comment = models.TextField(blank=True, null=True)
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.id)])
 

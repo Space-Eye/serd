@@ -35,4 +35,4 @@ class RequestForm(forms.ModelForm):
 class RequestEditForm(RequestForm):
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('state',)
+        fields = RequestForm.Meta.fields + ('state','case_handler','placed_at', 'priority','private_comment')
