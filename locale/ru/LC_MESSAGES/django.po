@@ -1,0 +1,193 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-02 21:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: serd/forms.py:17
+msgid "Ende der Verfügbarkeit muss später als der Beginn sein"
+msgstr ""
+
+#: serd/models.py:13 serd/models.py:44
+msgid "Nachname"
+msgstr ""
+
+#: serd/models.py:14 serd/models.py:45
+msgid "Vorname"
+msgstr ""
+
+#: serd/models.py:15 serd/models.py:49
+msgid "Telephonnummer"
+msgstr ""
+
+#: serd/models.py:16
+msgid "E-Mail Adresse"
+msgstr ""
+
+#: serd/models.py:20
+msgid "Anzahl Erwachsener"
+msgstr ""
+
+#: serd/models.py:21
+msgid "Anzahl Kinder"
+msgstr ""
+
+#: serd/models.py:22
+msgid "Kurze Beschreibung"
+msgstr ""
+
+#: serd/models.py:23
+msgid "Gruppe darf geteilt werden"
+msgstr ""
+
+#: serd/models.py:24
+msgid "Aktuelle Unterbringung"
+msgstr ""
+
+#: serd/models.py:25
+msgid "Ankunftstag"
+msgstr ""
+
+#: serd/models.py:27
+msgid "Haustiere"
+msgstr ""
+
+#: serd/models.py:28
+msgid "Anzahl der Haustiere"
+msgstr ""
+
+#: serd/models.py:29
+msgid "Auto verfügbar"
+msgstr ""
+
+#: serd/models.py:30 serd/models.py:51
+msgid "Gesprochene Sprachen"
+msgstr ""
+
+#: serd/models.py:31
+msgid "Alle Personen vollständig geimpft"
+msgstr ""
+
+#: serd/models.py:32
+msgid "Barrierefreie Wohnung benötigt"
+msgstr ""
+
+#: serd/models.py:33
+msgid "Sachbearbeiter:in"
+msgstr ""
+
+#: serd/models.py:34
+msgid "Priorität"
+msgstr ""
+
+#: serd/models.py:35
+msgid "Vermitttelt an"
+msgstr ""
+
+#: serd/models.py:36 serd/models.py:63
+msgid "Status"
+msgstr ""
+
+#: serd/models.py:37
+msgid "Interner Kommentar"
+msgstr ""
+
+#: serd/models.py:46
+msgid "Postleitzahl"
+msgstr ""
+
+#: serd/models.py:47
+msgid "Straße (optional"
+msgstr ""
+
+#: serd/models.py:48
+msgid "Ort"
+msgstr ""
+
+#: serd/models.py:50
+msgid "E-mail Adresse"
+msgstr ""
+
+#: serd/models.py:52
+msgid "Monatsmiete"
+msgstr ""
+
+#: serd/models.py:53
+msgid "Spontan Verfügbar"
+msgstr ""
+
+#: serd/models.py:54
+msgid "Verfügbar Ab"
+msgstr ""
+
+#: serd/models.py:55
+msgid "Nur vorrübergehend Verfügbar"
+msgstr ""
+
+#: serd/models.py:56
+msgid "Verfügbar bis"
+msgstr ""
+
+#: serd/models.py:57
+msgid "Barrierefrei"
+msgstr ""
+
+#: serd/models.py:58
+msgid "Mit ÖPNV Erreichbar"
+msgstr ""
+
+#: serd/models.py:59
+msgid "Anzahl Zimmer"
+msgstr ""
+
+#: serd/models.py:60
+msgid "Unterkunft ist eine eigenständige Wohnung"
+msgstr ""
+
+#: serd/models.py:61
+msgid "Meine Wohnsituation"
+msgstr ""
+
+#: serd/models.py:62
+msgid "Haustiere Erlaubt"
+msgstr ""
+
+#: serd/models.py:64
+msgid "Kommentar"
+msgstr ""
+
+#: serd/validators.py:8
+msgid "PLZ muss fünfstellig sein"
+msgstr ""
+
+#: serd/validators.py:12
+msgid "PLZ darf nur Ziffern enthalten"
+msgstr ""
+
+#: serd/validators.py:18
+msgid "Telephonnumer muss mindestens sechstellig sein"
+msgstr ""
+
+#: serd/validators.py:22
+msgid "Telephonnummer muss mit + oder 0 beginnen"
+msgstr ""
+
+#: serd/validators.py:27
+msgid "Ungültiges Zeichen in der Telephonnummer"
+msgstr ""
