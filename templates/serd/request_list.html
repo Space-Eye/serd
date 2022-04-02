@@ -2,28 +2,40 @@
  
     <table border = "1">
     <tr>
-        <td>
+        <th>
             ID
-        </td>
-        <td>
+        </th>
+        <th>
             Name
-        </td>
-        <td>Tel</td>
-        <td>email</td>
-        <td>Erwachsene</td>
-        <td>Kinder</td>
-        <td>Wer</td>
-        <td>Teilbar</td>
-        <td>Aktuelle Unterbringung</td>
-        <td>Ankunft Zeit</td>
-        <td>Ankunft Ort</td>
-        <td>Haustiere</td>
-        <td>Haustiere</td>
-        <td>Sprachen</td>
-        <td>Barrierfrei</td>
+        </th>
+        <th>Tel</th>
+        <th>email</th>
+        <th>Erwachsene</th>
+        <th>Kinder</th>
+        <th>Wer</th>
+        <th>Teilbar</th>
+        <th>Aktuelle Unterbringung</th>
+        <th> Ankunft Datum</th>
+        <th>Ankunft Ort</th>
+        <th>Haustiere</th>
+        <th>Sprachen</th>
+        <th>Barrierfrei</th>
     </tr>
     {% for data in dataset %}.
-        <tr>
+        {%if data.state == "new"%}    
+            <tr style="background-color:white">
+        {%elif data.state == "contacted" %}
+            <tr style="background-color:yellow">
+        {%elif data.state == "housing_contact" %}
+            <tr style="background-color:blue">
+        {%elif data.state == "stale" %}
+            <tr style="background-color:grey">
+        {%elif data.state == "arrived" %}
+            <tr style="background-color:green">
+        {%endif%}
+
+
+
            <td> {{data.id}}</td>
            <td> {{ data.given_name}}, {{data.last_name}}</td>
            <td> {{data.phone}}</td>
@@ -32,7 +44,13 @@
            <td> {{data.children}}</td>
            <td> {{data.who}}</td>
            <td> {{data.split |yesno:'Ja,Nein'}}</td>
-           <td> <a href="offers/edit/{{data.id}}">edit </a></td>
+           <td>  {{data.current_housing}}</td>
+           <td> {{data.arrival_date}}</td>
+           <td> {{data.arrival_location}}</td>
+           <td> {{data.pet_number}} {{data.pets}}</td>
+           <td> {{data.languages}}</td>
+           <td> {{data.accessability_needs |yesno:'Ja,Nein'}}</td>
+           <td> <a href="requests/edit/{{data.id}}">edit </a></td>
            </tr>
         {% endfor %}
     </table>

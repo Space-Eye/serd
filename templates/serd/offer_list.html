@@ -2,34 +2,48 @@
  
     <table border = "1">
     <tr>
-        <td>
+        <th>
             ID
-        </td>
-        <td>
+        </th>
+        <th>
             Name
-        </td>
-        <td>PLZ</td>
-        <td>Ort</td>
-        <td>Straße</td>
-        <td>Tel</td>
-        <td>mail</td>
-        <td>Sprachen</td>
-        <td>Kosten</td>
-        <td>spontan</td>
-        <td>verfügbar ab</td>
-        <td>begrenzt verfügbar</td>
-        <td>verfügbar bis</td>
-        <td>Barrierefrei</td>
-        <td>ÖPNV</td>
-        <td>Zimmer</td>
-        <td>Eigene Wohnung</td>
-        <td>Wohnsituation</td>
-        <td>Haustiere</td>
-        <td>Status</td>
-        <td>Vermittelt</td>
+        </th>
+        <th>PLZ</th>
+        <th>Ort</th>
+        <th>Straße</th>
+        <th>Tel</th>
+        <th>mail</th>
+        <th>Sprachen</th>
+        <th>Kosten</th>
+        <th>spontan</th>
+        <th>verfügbar ab</th>
+        <th>begrenzt verfügbar</th>
+        <th>verfügbar bis</th>
+        <th>Barrierefrei</th>
+        <th>ÖPNV</th>
+        <th>Zimmer</th>
+        <th>Eigene Wohnung</th>
+        <th>Wohnsituation</th>
+        <th>Haustiere</th>
+        <th>Status</th>
+        <th>Vermittelt</th>
     </tr>
     {% for data in dataset %}.
-        <tr>
+        {%if data.state == "new"%}    
+            <tr style="background-color:white">
+        {%elif data.state == "contacted" %}
+            <tr style="background-color:yellow">
+        {%elif data.state == "request_contact" %}
+            <tr style="background-color:blue">
+        {%elif data.state == "stale" %}
+            <tr style="background-color:grey">
+        {%elif data.state == "arrived" %}
+            <tr style="background-color:green">
+        {%elif data.state == "free" %}
+            <tr style="background-color:lightblue">
+        {%elif data.state == "reserved" %}
+            <tr style="background-color:red">
+        {%endif%}
            <td> {{data.id}}</td>
            <td> {{ data.given_name}}, {{data.last_name}}</td>
            <td> {{data.plz}}</td>
