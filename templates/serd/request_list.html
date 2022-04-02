@@ -50,7 +50,7 @@
            <td> {{data.pet_number}} {{data.pets}}</td>
            <td> {{data.languages}}</td>
            <td> {{data.accessability_needs |yesno:'Ja,Nein'}}</td>
-           <td> <a href="requests/edit/{{data.id}}">edit </a></td>
+           <td> <a href="/requests/edit/{{data.id}}">edit </a></td>
            </tr>
         {% endfor %}
     </table>
