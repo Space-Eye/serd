@@ -39,5 +39,6 @@ CURRENT_ACCOMODATION = (
 PETS = (
     ('dog', 'Hund'),
     ('cat', 'Katze'),
-    ('small', 'Kleintier')
+    ('small', 'Kleintier'),
+    ('none', 'Keine')
 )
