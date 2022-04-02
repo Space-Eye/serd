@@ -14,6 +14,8 @@ import datetime
 def success(request):
     return HttpResponse("success")
 
+def index(request):
+    return render(request, "serd/index.html")
 class AddRequest(CreateView):
     model = HousingRequest
     success_url = "/success"

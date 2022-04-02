@@ -16,18 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate, success
+from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate, success, index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('add_request/',AddRequest.as_view()),
-    path('add_offer/', AddOffer.as_view()),
+    path('add_request/',AddRequest.as_view(),name='add_request'),
+    path('add_offer/', AddOffer.as_view(), name='add_offer'),
     path("accounts/", include("django.contrib.auth.urls")),
-    path('requests',request_list),
-    path('offers', offer_list),
+    path('requests/',request_list, name='requests'),
+    path('offers/', offer_list, name='offers'),
     path('offers/edit/<offer_id>', OfferUpdate.as_view()),
     path('requests/edit/<request_id>', RequestUpdate.as_view()),
-    path('success', success)
+    path('success', success),
+    path('',index)
 
 ]
 

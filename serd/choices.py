@@ -20,7 +20,6 @@ LIVING_WITH = (
 OFFER_STATE = (
     ('new','Neu'),
     ('contacted', 'Kontaktiert'),
-    ('closed', 'Vermittelt' ),
     ('request_contact', 'Kontakt zu Gast'),
     ('arrived', 'Gast ist Angekommen'),
     ('stale', 'Nicht mehr verfügbar'),

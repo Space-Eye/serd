@@ -6,8 +6,6 @@ Recht einfacher Aufbau:
 - offers/edit/, requests/edit: Bearbeitung von Einträgen.
 
 # TODOS:
-- HousingRequest Formulare 
-- index.html
 - Input Validation
 - Tests
 - Layout
