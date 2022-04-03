@@ -32,7 +32,7 @@ class  HousingRequest(models.Model):
     accessability_needs = models.BooleanField(_("Barrierefreie Wohnung benötigt"))
     case_handler = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Sachbearbeiter:in"))
     priority = models.CharField(choices=PRIORITY_CHOICE, max_length=64, verbose_name=_("Priorität"))
-    placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, verbose_name=_("Vermitttelt an"))
+    placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
     state = models.TextField(choices=REQUEST_STATE, verbose_name=_("Status"))
     private_comment = models.TextField(blank=True, null=True, verbose_name=_("Interner Kommentar"))
     def __str__(self):
