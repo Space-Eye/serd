@@ -65,7 +65,7 @@
            <td> {{data.seperate_appartment|yesno:'Ja,Nein'}}</td>
            <td> {{data.living_with}}</td>
            <td> {{data.pets}}</td>
-           <td> {{data.state}}</td>
+           <td> {{data.get_state_display}}</td>
            <td> {% for req in data.housingrequest_set.all %}
                {{ req }}
                {% endfor %}
