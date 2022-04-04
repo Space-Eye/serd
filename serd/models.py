@@ -33,7 +33,7 @@ class  HousingRequest(models.Model):
     case_handler = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Sachbearbeiter:in"))
     priority = models.CharField(choices=PRIORITY_CHOICE, max_length=64, verbose_name=_("Priorität"))
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
-    state = models.TextField(choices=REQUEST_STATE, verbose_name=_("Status"))
+    state = models.TextField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new")
     private_comment = models.TextField(blank=True, null=True, verbose_name=_("Interner Kommentar"))
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.id)])
@@ -60,7 +60,7 @@ class Offer(models.Model):
     seperate_appartment = models.BooleanField(verbose_name=_("Unterkunft ist eine eigenständige Wohnung"))
     living_with = models.CharField(choices=LIVING_WITH, max_length=64, verbose_name=_("Meine Wohnsituation"))
     pets = MultiSelectField(choices=PETS,verbose_name=_("Haustiere Erlaubt"))
-    state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"))
+    state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"),default="new")
     comment = models.TextField(blank=True, verbose_name=_("Kommentar"))
     private_comment = models.TextField(blank=True, verbose_name=("Interner Kommentar"))
     def __str__(self):
