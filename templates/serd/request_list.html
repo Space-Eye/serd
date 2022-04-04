@@ -72,24 +72,26 @@
 
            <td> {{data.id}}</td>
            <td> {{ data.given_name}}, {{data.last_name}}</td>
-           <td> {{data.phone}}</td>
-           <td> {{data.mail}}</td>
-           <td> {{data.adults}}</td>
-           <td> {{data.children}}</td>
-           <td> {{data.who}}</td>
-           <td> {{data.split |yesno:'Ja,Nein'}}</td>
-           <td>  {{data.get_current_housing_display}}</td>
-           <td> {{data.arrival_date}}</td>
-           <td> {{data.arrival_location}}</td>
-           <td> {{data.pet_number}} {{data.pets}}</td>
-           <td> {{data.languages}}</td>
-           <td> {{data.accessability_needs |yesno:'Ja,Nein'}}</td>
-           <td>  {{data.placed_at}}</td>
-           <td> {{data.priority}}</td>
-           <td> {{data.case_handler}}</td>
-           <td> {{data.get_state_display}}</td>
-           <td> {{data.private_comment}}</td>
-           <td> <a href="/requests/edit/{{data.id}}">edit </a></td>
+         
+            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.phone}}</span></td>
+            
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.mail}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.adults}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.split |yesno:'Ja,Nein'}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_date}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_location}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.pet_number}} {{data.pets}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.languages}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.accessability_needs |yesno:'Ja,Nein'}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.placed_at}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.priority}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.case_handler}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.get_state_display}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.private_comment}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.id}}">edit </a></span></td>
            </tr>
         {% endfor %}
     </table>

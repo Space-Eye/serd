@@ -76,35 +76,36 @@
         {%endif%}
            <td> {{data.id}}</td>
            <td> {{ data.given_name}}, {{data.last_name}}</td>
-           <td> {{data.plz}}</td>
-           <td> {{data.city}}</td>
-           <td> {{data.street}}</td>
-           <td> {{data.phone}}</td>
-           <td> {{data.mail}}</td>
-           <td> {{data.language}}</td>
-           <td> {{data.cost}}</td>
-           <td> {{data.spontan|yesno:'Ja,Nein'}}</td>
-           <td> {{data.available_from}}</td>
-           <td> {{data.limited_availability}}</td>
-           <td> {{data.available_until}}</td>
-           <td> {{data.accessability|yesno:'Ja,Nein'}}</td>
-           <td> {{data.public_transport|yesno:'Ja,Nein'}}</td>
-           <td> {{data.rooms}}</td>
-           <td> {{data.seperate_appartment|yesno:'Ja,Nein'}}</td>
-           <td> {{data.living_with}}</td>
-           <td> {{data.pets}}</td>
-           <td> {{data.get_state_display}}</td>
-           <td> {% for req in data.housingrequest_set.all %}
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.plz}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.city}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.street}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.phone}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.mail}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.language}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.cost}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.spontan|yesno:'Ja,Nein'}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.available_from}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.limited_availability}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.available_until}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.accessability|yesno:'Ja,Nein'}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.public_transport|yesno:'Ja,Nein'}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.rooms}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.seperate_appartment|yesno:'Ja,Nein'}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.living_with}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.pets}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.get_state_display}}</span></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{% for req in data.housingrequest_set.all %}
                {{ req }}
-               {% endfor %}
+               {% endfor %}</span>
            </td>
-           <td> {{data.comment}}</td>
-           <td> {{data.private_comment}}</td>
+           <td><span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}"> {{data.comment}}</span></td>
+           <td><span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}"> {{data.private_comment}}</span></td>
 
-           <td> <a href="/offers/edit/{{data.id}}">edit </a></td>
+           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}"><a href="/offers/edit/{{data.id}}">edit </a></span></td>
            </tr>
         {% endfor %}
     </table>
+</div>
 
 <p><a href="{% url 'logout' %}">Log Out</a></p><br/>
 <p><a href="{% url 'index'%}"> Startseite</a></p>
