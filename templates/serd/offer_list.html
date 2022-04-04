@@ -1,3 +1,31 @@
+<head>
+    <style>
+    div {
+        color: white;
+        display: flex;
+        padding: 2%;
+        height: 80%;
+        overflow-y: scroll;
+        overflow-x: scroll;
+     }
+     td,th,p {
+        text-align:  center;
+        font-size: 1.25em;
+     }
+     table {
+        padding: 3%;
+        border-collapse: collapse;
+        border: 2px ridge green;
+     }
+     th {
+        top: 0;
+        position: sticky;
+        color: black;
+        background-color: white;
+     }
+    </style>
+</head>
+<body>
 <div class="main">
  
     <table border = "1" >
@@ -80,4 +108,4 @@
 
 <p><a href="{% url 'logout' %}">Log Out</a></p><br/>
 <p><a href="{% url 'index'%}"> Startseite</a></p>
-</div>
+</body>
