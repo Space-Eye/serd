@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
 from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate, success, index, SuccessOffer
 
@@ -24,8 +25,8 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path('requests/',request_list, name='requests'),
     path('offers/', offer_list, name='offers'),
-    path('offers/edit/<offer_id>', OfferUpdate.as_view()),
-    path('requests/edit/<request_id>', RequestUpdate.as_view()),
+    path('offers/edit/<offer_id>', login_required(OfferUpdate.as_view())),
+    path('requests/edit/<request_id>', login_required(RequestUpdate.as_view())),
     path('success', success),
     path('',index, name='index')
 
