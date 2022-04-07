@@ -1,11 +1,11 @@
 # import Http Response from django
-from dataclasses import fields
 from urllib.request import Request
-
+from django.urls import reverse
 from .models import HousingRequest, Offer
 from django.http import HttpResponse
 
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestForm
@@ -16,15 +16,24 @@ def success(request):
 
 def index(request):
     return render(request, "serd/index.html")
+
+
 class AddRequest(CreateView):
     model = HousingRequest
-    success_url = "/success"
     form_class = RequestForm
+    def get_success_url(self) -> str:
+        return reverse('success_request', args=(self.object.id,))
+
+    
 
 class AddOffer(CreateView):
     model = Offer
     form_class = OfferForm
-    success_url ="/success"
+    
+    def get_success_url(self) -> str:
+
+        return reverse('success_offer', args=(self.object.id,))
+
    
 @login_required
 def request_list(request):
@@ -53,3 +62,10 @@ class RequestUpdate(UpdateView):
     form_class = RequestEditForm
 
         
+class SuccessOffer(TemplateView):
+    template_name = "serd/success_offer.html"
+  
+
+class SuccessRequest(TemplateView):
+    template_name = "serd/success_request.html"
+  

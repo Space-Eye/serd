@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
-from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate, success, index, SuccessOffer
+from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate,  index, SuccessOffer, SuccessRequest
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +34,6 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('add_request/',AddRequest.as_view(),name='add_request'),
     path('add_offer/', AddOffer.as_view(), name='add_offer'),
+    path('success_request/<request_id>', SuccessRequest.as_view(), name='success_request'),
+    path('success_offer/<offer_id>', SuccessOffer.as_view(), name='success_offer')
 )
