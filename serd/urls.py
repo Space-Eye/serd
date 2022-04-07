@@ -15,13 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate, success, index
+from django.conf.urls.i18n import i18n_patterns
+from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate, success, index, SuccessOffer
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('add_request/',AddRequest.as_view(),name='add_request'),
-    path('add_offer/', AddOffer.as_view(), name='add_offer'),
+
     path("accounts/", include("django.contrib.auth.urls")),
     path('requests/',request_list, name='requests'),
     path('offers/', offer_list, name='offers'),
@@ -31,4 +30,7 @@ urlpatterns = [
     path('',index, name='index')
 
 ]
-
+urlpatterns += i18n_patterns(
+    path('add_request/',AddRequest.as_view(),name='add_request'),
+    path('add_offer/', AddOffer.as_view(), name='add_offer'),
+)
