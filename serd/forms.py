@@ -4,8 +4,10 @@ from django.utils.translation import gettext_lazy as _
 
 class OfferForm(forms.ModelForm):
     available_from =  forms.DateField(
+        label=_('Verfügbar ab'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     available_until =  forms.DateField(
+        label=_('Verfügbar bis'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     def clean(self):
         if self.cleaned_data['limited_availability']:
@@ -31,7 +33,7 @@ class OfferEditForm(OfferForm):
         fields = OfferForm.Meta.fields + ('private_comment', 'state')
 
 class RequestForm(forms.ModelForm):
-    arrival_date = forms.DateTimeField(
+    arrival_date = forms.DateTimeField(label=_('Ankunftstag'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))
     )
     pet_number = forms.IntegerField(required=False)
