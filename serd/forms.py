@@ -34,11 +34,33 @@ class RequestForm(forms.ModelForm):
     arrival_date = forms.DateTimeField(
         widget=forms.SelectDateWidget(years=range(2022, 2024))
     )
+    pet_number = forms.IntegerField(required=False)
     class Meta:
         model = HousingRequest
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',
         'split', 'current_housing', 'arrival_date', 'arrival_location', 'pets', 'pet_number',
         'car', 'languages', 'vaccination', 'accessability_needs')
+    def clean(self):
+        pets = self.cleaned_data['pets']
+        if len(pets) > 1 and 'none' in pets:
+            self.add_error(field='pets', error=ValueError(
+                _("Ungültige Auswahl: 'Keine' schließt die anderen Wahlmöglichkeiten aus.")
+            ))
+        if pets == ['none']:
+            if self.cleaned_data['pet_number']:
+                self.add_error(field='pet_number', error=ValueError(
+                    _("Auswahl 'Keine' bei Haustier widerspricht Anzahl ≠ 0")
+                ))
+            else: self.cleaned_data['pet_number'] = 0
+        elif not self.cleaned_data['pet_number']:
+            self.add_error(field='pets', error=ValueError(
+                    _("Wenn keine Haustiere vorhanden sind, muss 'Keine' ausgewählt werden.")
+                ))
+        if 'none' not in pets and len(pets) > self.cleaned_data['pet_number']:
+            self.add_error(field='pet_number', error=ValueError(
+                    _("Mehr Tierarten ausgewählt als Tiere vorhanden")
+                ))
+        return self.cleaned_data
 
 class RequestEditForm(RequestForm):
     class Meta:
