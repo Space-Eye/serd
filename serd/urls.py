@@ -27,8 +27,7 @@ urlpatterns = [
     path('offers/', offer_list, name='offers'),
     path('offers/edit/<offer_id>', login_required(OfferUpdate.as_view())),
     path('requests/edit/<request_id>', login_required(RequestUpdate.as_view())),
-    path('success', success),
-    path('',index, name='index')
+    path('',index, name='index'),
 
 ]
 urlpatterns += i18n_patterns(
