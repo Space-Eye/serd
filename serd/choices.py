@@ -34,7 +34,15 @@ PRIORITY_CHOICE = (
 CURRENT_ACCOMODATION = (
     ('none', 'Ich habe keinen Schlafplatz'),
     ('friends', 'Bei Freunden oder Verwandten'),
-    ('hotel', 'Hotel')
+    ('shelter', 'Staatliche Notunterkunft'),
+    ('hotel1', 'Hotel Bischofshof'),
+    ('hotel2', 'Hotel Bohemian'),
+    ('hotel3', 'Hotel Greenspirit'),
+    ('hotel4', 'Hotel Includio'),
+    ('hotel5', 'Hotel Jugendherberge'),
+    ('hotel6', 'Hotel Katholische Akademie'),
+    ('hotel7', 'Hotel Weidenhof'),
+    ('hotel8', 'anderes Hotel')
 )
 PETS = (
     ('dog', 'Hund'),
