@@ -41,6 +41,7 @@
         <th>email</th>
         <th>Erwachsene</th>
         <th>Kinder</th>
+        <th>Gesamt</th>
         <th>Wer</th>
         <th>Teilbar</th>
         <th>Aktuelle Unterbringung</th>
@@ -82,6 +83,7 @@
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.mail}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.adults}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.children|add:data.adults }}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.split |yesno:'Ja,Nein'}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
