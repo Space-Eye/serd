@@ -43,6 +43,9 @@
         <th>Kinder</th>
         <th>Gesamt</th>
         <th>Wer</th>
+        <th>Stellvertreter</th>
+        <th>Stv. Tel</th>
+        <th>Stv. Mail</th>
         <th>Teilbar</th>
         <th>Aktuelle Unterbringung</th>
         <th> Ankunft Datum</th>
@@ -85,6 +88,9 @@
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.children|add:data.adults }}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.representative}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.repr_phone}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.repr_mail}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.split |yesno:'Ja,Nein'}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_date}}</span></td>

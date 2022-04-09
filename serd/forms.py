@@ -43,10 +43,14 @@ class RequestForm(forms.ModelForm):
         widget=forms.SelectDateWidget(years=range(2022, 2024))
     )
     pet_number = forms.IntegerField(required=False)
+
+    representative = forms.CharField(required=False, label=('Stellvertreter'))
+    repr_phone = forms.CharField(required=False, label=('Stellvertreter Telephonnummer'))
+    repr_mail = forms.CharField(required=False, label=('Stellvertreter E-mail'))
     class Meta:
         model = HousingRequest
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',
-        'split', 'current_housing', 'arrival_date', 'arrival_location', 'pets', 'pet_number',
+        'split', 'current_housing', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 'arrival_location', 'pets', 'pet_number',
         'car', 'languages', 'vaccination', 'accessability_needs')
     def clean(self):
         pets = self.cleaned_data['pets']
