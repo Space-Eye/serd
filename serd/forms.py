@@ -1,6 +1,12 @@
 from django import forms
+from slugify import slugify
 from .models import HousingRequest, Offer
 from django.utils.translation import gettext_lazy as _
+
+def isascii(s):
+    """Check if the characters in string s are in ASCII, U+0-U+7F."""
+    return len(s) == len(s.encode())
+
 
 class OfferForm(forms.ModelForm):
     available_from =  forms.DateField(
@@ -63,6 +69,23 @@ class RequestForm(forms.ModelForm):
                     _("Mehr Tierarten ausgewählt als Tiere vorhanden")
                 ))
         return self.cleaned_data
+
+    def save(self, commit=True, **kwargs):
+        """Slugify the name if it is not in ASCII to make live easier for case handlers who
+        can't read cyrillic 
+        """
+        housingrequest = super(RequestForm, self).save(commit=False, **kwargs)
+        slug = ""
+        if not isascii(housingrequest.given_name):
+            slug = slugify(housingrequest.given_name)+" "
+        if not isascii(housingrequest.last_name):
+            slug += slugify(housingrequest.last_name)
+        housingrequest.name_slug = slug
+
+        if commit:
+            housingrequest.save()
+        return housingrequest
+
 
 class RequestEditForm(RequestForm):
     class Meta:

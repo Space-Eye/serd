@@ -71,7 +71,11 @@
 
 
            <td> {{data.id}}</td>
-           <td> {{ data.given_name}}, {{data.last_name}}</td>
+           <td> {{ data.given_name}}, {{data.last_name}}
+               {%if data.name_slug %}
+               <br> {{data.name_slug}}
+               {%endif%}
+           </td>
          
             <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.phone}}</span></td>
             
