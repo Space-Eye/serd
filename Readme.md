@@ -1,3 +1,7 @@
+# Requirements:
+- Django
+- python-slugify
+- django-multiselectfield
 # Architektur:
 Recht einfacher Aufbau:
 - HousingRequest und Offer: Modelle, Modelle für Gesuche und Angebote
