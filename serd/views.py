@@ -2,7 +2,7 @@
 from urllib.request import Request
 from django.urls import reverse
 from .models import HousingRequest, Offer
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView
@@ -24,7 +24,16 @@ class AddRequest(CreateView):
     def get_success_url(self) -> str:
         return reverse('success_request', args=(self.object.id,))
 
-    
+def add_request(request):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/success_request/')
+
+    else:
+        form = RequestForm()
+
+    return render(request, 'name.html', {'form': form})  
 
 class AddOffer(CreateView):
     model = Offer

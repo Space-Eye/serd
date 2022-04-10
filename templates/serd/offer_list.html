@@ -1,41 +1,38 @@
 <head>
-    <style>
+  <style>
     div {
-        color: white;
-        display: flex;
-        padding: 2%;
-        height: 80%;
-        overflow-y: scroll;
-        overflow-x: scroll;
-     }
-     td,th,p {
-        text-align:  center;
-        font-size: 1.25em;
-     }
-     table {
-        padding: 3%;
-        border-collapse: collapse;
-        border: 2px ridge green;
-     }
-     th {
-        top: 0;
-        position: sticky;
-        color: black;
-        background-color: white;
-     }
-    </style>
+      color: white;
+      display: flex;
+      padding: 2%;
+      height: 80%;
+      overflow-y: scroll;
+      overflow-x: scroll;
+    }
+    td,
+    th,
+    p {
+      text-align: center;
+      font-size: 1.25em;
+    }
+    table {
+      padding: 3%;
+      border-collapse: collapse;
+      border: 2px ridge green;
+    }
+    th {
+      top: 0;
+      position: sticky;
+      color: black;
+      background-color: white;
+    }
+  </style>
 </head>
 <body>
-<div class="main">
- 
-    <table border = "1" >
-    <tr>
-        <th>
-            ID
-        </th>
-        <th>
-            Name
-        </th>
+  <div class="main">
+    <table border="1">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
         <th>PLZ</th>
         <th>Ort</th>
         <th>Straße</th>
@@ -57,56 +54,154 @@
         <th>Vermittelt</th>
         <th>Kommentar</th>
         <th>Interner Kommentar</th>
-    </tr>
-    {% for data in dataset %}.
-        {%if data.state == "new"%}    
-            <tr style="background-color:white">
+      </tr>
+      {% for data in dataset %}. {%if data.state == "new"%}
+      <tr style="background-color: white">
         {%elif data.state == "contacted" %}
-            <tr style="background-color:yellow">
+      </tr>
+
+      <tr style="background-color: yellow">
         {%elif data.state == "request_contact" %}
-            <tr style="background-color:lightblue">
+      </tr>
+
+      <tr style="background-color: lightblue">
         {%elif data.state == "stale" %}
-            <tr style="background-color:grey">
+      </tr>
+
+      <tr style="background-color: grey">
         {%elif data.state == "arrived" %}
-            <tr style="background-color:green">
+      </tr>
+
+      <tr style="background-color: green">
         {%elif data.state == "free" %}
-            <tr style="background-color:orange">
+      </tr>
+
+      <tr style="background-color: orange">
         {%elif data.state == "reserved" %}
-            <tr style="background-color:red">
+      </tr>
+
+      <tr style="background-color: red">
         {%endif%}
-           <td> {{data.id}}</td>
-           <td> {{ data.given_name}}, {{data.last_name}}</td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.plz}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.city}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.street}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.phone}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.mail}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.language}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.cost}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.spontan|yesno:'Ja,Nein'}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.available_from}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.limited_availability}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.available_until}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.accessability|yesno:'Ja,Nein'}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.public_transport|yesno:'Ja,Nein'}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.rooms}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.seperate_appartment|yesno:'Ja,Nein'}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.living_with}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.pets}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{{data.get_state_display}}</span></td>
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}">{% for req in data.housingrequest_set.all %}
-               {{ req }}
-               {% endfor %}</span>
-           </td>
-           <td><span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}"> {{data.comment}}</span></td>
-           <td><span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}"> {{data.private_comment}}</span></td>
+        <td>{{data.id}}</td>
+        <td>{{ data.given_name}}, {{data.last_name}}</td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.plz}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.city}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.street}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.phone}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.mail}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.language}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.cost}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.spontan|yesno:'Ja,Nein'}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.available_from}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.limited_availability}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.available_until}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.accessability|yesno:'Ja,Nein'}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.public_transport|yesno:'Ja,Nein'}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.rooms}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.seperate_appartment|yesno:'Ja,Nein'}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.living_with}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.pets}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.get_state_display}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            >{% for req in data.housingrequest_set.all %} {{ req }} {% endfor
+            %}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}">
+            {{data.comment}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}">
+            {{data.private_comment}}</span
+          >
+        </td>
 
-           <td> <span title= "{{data.id }} {{ data.given_name}}, {{data.last_name}}"><a href="/offers/edit/{{data.id}}">edit </a></span></td>
-           </tr>
-        {% endfor %}
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
+            ><a href="/offers/edit/{{data.id}}">edit </a></span
+          >
+        </td>
+      </tr>
+      {% endfor %}
     </table>
-</div>
+  </div>
 
-<p><a href="{% url 'logout' %}">Log Out</a></p><br/>
-<p><a href="{% url 'index'%}"> Startseite</a></p>
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+  <br />
+  <p><a href="{% url 'index'%}"> Startseite</a></p>
 </body>

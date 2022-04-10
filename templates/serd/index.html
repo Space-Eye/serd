@@ -1,20 +1,34 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+
 <header>
     <title>SERD</title>
 </header>
 <body>
-    <table>
-        <tr>
-            <td><a href="{% url 'add_request' %}">Wohnungsgesuch eintragen</a></td>
-        </tr>
-        <tr>
-            <td><a href="{% url 'add_offer' %}">Wohnungsangebot eintragen</a></td>
-        </tr>
-        <tr>
-            <td><a href="{% url 'requests' %}">Wohnungsgesuche ansehen</a></td>
-        </tr>
-        <tr>
-            <td><a href="{% url 'offers' %}">Wohnungsangebote ansehen</a></td>
-        </tr>
-    </table>
-
+    <div class="container">
+        <div class="m-3">
+            {% url 'add_request' as add_request_url %}
+            {% bootstrap_button "Wohnungsgesuch eintragen" button_type="link" href=add_request_url button_class="btn-secondary" %}
+        </div>
+        <div class="m-3">
+            {% url 'add_offer' as add_offer_url%}
+            {% bootstrap_button "Wohnungsangebot eintragen" button_type="link" href=add_request_url button_class="btn-secondary" %}
+        </div>
+        <div class="m-3">
+            {% url 'requests' as show_request_url%}
+            {% bootstrap_button "Wohnungsgesuche ansehen" button_type="link" href=add_request_url button_class="btn-secondary" %}
+        </div>
+        <div class="m-3">
+            {% url 'offers' as show_offers_url%}
+            {% bootstrap_button "Wohnungsangebote ansehen" button_type="link" href=add_request_url button_class="btn-secondary" %}
+        </div>
+    </div
 </body>
