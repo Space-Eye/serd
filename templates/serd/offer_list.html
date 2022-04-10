@@ -187,8 +187,7 @@
         </td>
         <td>
           <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
-            >{% for req in data.housingrequest_set.all %} {{ req }} {% endfor
-            %}</span
+            >{% for req in data.housingrequest_set.all %} {{ req }} {% endfor%}</span
           >
         </td>
         <td>
@@ -211,6 +210,7 @@
       {% endfor %}
     </table>
   </div>
+  <p><a href="{% url 'offer_filter' %}">Filter</a></p>
 
   <p><a href="{% url 'logout' %}">Log Out</a></p>
   <br />
