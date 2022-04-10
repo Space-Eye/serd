@@ -20,15 +20,15 @@
         </div>
         <div class="m-3">
             {% url 'add_offer' as add_offer_url%}
-            {% bootstrap_button "Wohnungsangebot eintragen" button_type="link" href=add_request_url button_class="btn-secondary" %}
+            {% bootstrap_button "Wohnungsangebot eintragen" button_type="link" href=add_offer_url button_class="btn-secondary" %}
         </div>
         <div class="m-3">
             {% url 'requests' as show_request_url%}
-            {% bootstrap_button "Wohnungsgesuche ansehen" button_type="link" href=add_request_url button_class="btn-secondary" %}
+            {% bootstrap_button "Wohnungsgesuche ansehen" button_type="link" href=show_request_url button_class="btn-secondary" %}
         </div>
         <div class="m-3">
             {% url 'offers' as show_offers_url%}
-            {% bootstrap_button "Wohnungsangebote ansehen" button_type="link" href=add_request_url button_class="btn-secondary" %}
+            {% bootstrap_button "Wohnungsangebote ansehen" button_type="link" href=show_offers_url button_class="btn-secondary" %}
         </div>
     </div
 </body>
