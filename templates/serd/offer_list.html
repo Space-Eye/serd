@@ -35,6 +35,8 @@
         <th>Name</th>
         <th>PLZ</th>
         <th>Ort</th>
+        <th>Gesamtanzahl der Personen</th>
+        <th>davon Kinder unter zwölf</th>
         <th>Straße</th>
         <th>Tel</th>
         <th>mail</th>
@@ -93,6 +95,15 @@
           <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"
             >{{data.city}}</span
           >
+        </td>
+        <td>
+          <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}"
+            >{{data.total_number}}</span
+          >
+          <td>
+            <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}"
+              >{{data.children_number}}</span
+            >
         </td>
         <td>
           <span title="{{data.id }} {{ data.given_name}}, {{data.last_name}}"

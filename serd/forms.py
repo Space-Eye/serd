@@ -29,8 +29,8 @@ class OfferForm(forms.ModelForm):
         
     class Meta :
         model = Offer
-        fields =('given_name', 'last_name',  'plz','city','street', 'phone', 'mail',
-        'language', 'cost', 'spontan', 'available_from', 'limited_availability', 'available_until',
+        fields =('given_name', 'last_name',  'plz','city', 'street', 'phone', 'mail',
+        'language', 'total_number' , 'children_number' , 'cost', 'spontan', 'available_from', 'limited_availability', 'available_until',
         'accessability', 'public_transport', 'rooms', 'seperate_appartment', 'living_with', 'pets', 'comment')
     
 class OfferEditForm(OfferForm):
