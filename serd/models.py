@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.conf import settings
 from django.db import models
 from multiselectfield import MultiSelectField
@@ -7,6 +6,14 @@ from django.utils.translation import gettext_lazy as _
 from .choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
 from .validators import validate_plz, validate_phone
 
+class AnnotationManager(models.Manager):
+
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.annotations = kwargs
+
+    def get_queryset(self):
+        return super().get_queryset().annotate(**self.annotations)
 
 class  HousingRequest(models.Model):
     id = models.AutoField(primary_key=True)
@@ -36,6 +43,9 @@ class  HousingRequest(models.Model):
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
     state = models.TextField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new")
     private_comment = models.TextField(blank=True, null=True, verbose_name=_("Interner Kommentar"), default="")
+    _persons = None
+
+    objects = AnnotationManager(persons=models.F('adults')+models.F('children'))
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.id)])
 
