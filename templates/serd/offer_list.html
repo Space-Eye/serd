@@ -1,36 +1,17 @@
-<head>
-  <style>
-    div {
-      color: white;
-      display: flex;
-      padding: 2%;
-      height: 80%;
-      overflow-y: scroll;
-      overflow-x: scroll;
-    }
-    td,
-    th,
-    p {
-      text-align: center;
-      font-size: 1.25em;
-    }
-    table {
-      padding: 3%;
-      border-collapse: collapse;
-      border: 2px ridge green;
-    }
-    th {
-      top: 0;
-      position: sticky;
-      color: black;
-      background-color: white;
-    }
-  </style>
-</head>
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
 <body>
-  <div class="main">
-    <table border="1">
-      <tr>
+  <div class="main table">
+    <table class="table">
+      <thead>
         <th>ID</th>
         <th>Name</th>
         <th>PLZ</th>
@@ -56,7 +37,8 @@
         <th>Vermittelt</th>
         <th>Kommentar</th>
         <th>Interner Kommentar</th>
-      </tr>
+      </thead>
+      <tbody>
       {% for data in dataset %}. {%if data.state == "new"%}
       <tr style="background-color: white">
         {%elif data.state == "contacted" %}
@@ -208,11 +190,22 @@
         </td>
       </tr>
       {% endfor %}
+    </tbody>
     </table>
   </div>
-  <p><a href="{% url 'offer_filter' %}">Filter</a></p>
 
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-  <br />
-  <p><a href="{% url 'index'%}"> Startseite</a></p>
+  <div class="d-flex flex-row">
+    <div class="m-3">
+        {% url 'offer_filter' as offer_filter_url %}
+        {% bootstrap_button "Filter" button_type="link" href=offer_filter_url button_class="btn-primary" %}
+    </div>
+    <div class="m-3">
+        {% url 'logout' as logout_url%}
+        {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}
+    </div>
+    <div class="m-3">
+        {% url 'index' as index_url%}
+        {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
+    </div>
+</div
 </body>

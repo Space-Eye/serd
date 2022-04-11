@@ -1,42 +1,21 @@
-<head>
-    <style>
-    div {
-        color: white;
-        display: flex;
-        padding: 2%;
-        height: 80%;
-        overflow-y: scroll;
-        overflow-x: scroll;
-     }
-     td,th,p {
-        text-align:  center;
-        font-size: 1.25em;
-     }
-     table {
-        padding: 3%;
-        border-collapse: collapse;
-        border: 2px ridge green;
-     }
-     th {
-        top: 0;
-        position: sticky;
-        color: black;
-        background-color: white;
-     }
-    </style>
-</head>
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
 <body>
 
 <div class="main">
  
-    <table border = "1">
-    <tr>
-        <th>
-            ID
-        </th>
-        <th>
-            Name
-        </th>
+    <table class="table">
+    <thead >
+        <th>ID</th>
+        <th>Name</th>
         <th>Tel</th>
         <th>email</th>
         <th>Erwachsene</th>
@@ -58,7 +37,8 @@
         <th>Sachbearbeiter:in</th>
         <th>Status</th>
         <th>Interner Kommentar</th>
-    </tr>
+    </thead>
+    <tbody>
     {% for data in dataset %}.
         {%if data.state == "new"%}    
             <tr style="background-color:white">
@@ -106,9 +86,21 @@
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.id}}">edit </a></span></td>
            </tr>
         {% endfor %}
+        </tbody>
     </table>
 </div>
-<p><a href="{% url 'request_filter' %}">Filter</a></p>
-<p><a href="{% url 'logout' %}">Log Out</a></p>
-<p><a href=" {% url 'index'%}"> Startseite</a></p>
+
+<div class="d-flex flex-row">
+    <div class="m-3">
+        {% url 'request_filter' as request_filter_url %}
+        {% bootstrap_button "Filter" button_type="link" href=request_filter_url button_class="btn-primary" %}
+    </div>
+    <div class="m-3">
+        {% url 'logout' as logout_url%}
+        {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}
+    </div>
+    <div class="m-3">
+        {% url 'index' as index_url%}
+        {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
+    </div>
 </body>
