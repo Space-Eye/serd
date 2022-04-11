@@ -30,10 +30,8 @@ def add_request(request):
         form = RequestForm(request.POST)
         if form.is_valid():
             return HttpResponseRedirect('/success_request/')
-
     else:
         form = RequestForm()
-
     return render(request, 'name.html', {'form': form})  
 
 class AddOffer(CreateView):

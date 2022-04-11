@@ -14,9 +14,6 @@
     {% csrf_token %}
   
     <!-- Using the formset -->
-    {% comment %} {{ form.render }} {% endcomment %}
-
-
     {% for field in form %}
     <div class="fieldWrapper form-group row m-1">
         {{ field.errors }}

@@ -11,6 +11,7 @@ def isascii(s):
 
 
 class OfferForm(forms.ModelForm):
+    template_name = 'serd/form_snippet.html'
     available_from =  forms.DateField(
         label=_('Verfügbar ab'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
@@ -41,6 +42,7 @@ class OfferEditForm(OfferForm):
         fields = OfferForm.Meta.fields + ('private_comment', 'state')
 
 class RequestForm(forms.ModelForm):
+    template_name = 'form_snippet.html'
     arrival_date = forms.DateTimeField(label=_('Ankunftstag'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))
     )
