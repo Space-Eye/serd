@@ -8,12 +8,29 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-<body>
+<html>
+<head>
+<style>
+    .header{
+        position:sticky;
+        top:0;
+        z-index:1;
+    }
 
-<div class="main">
- 
+    .tableFixHead { overflow: auto; height: 90vh; }
+
+    #table-head {
+        background-color:#FFFFFF; 
+    }
+
+    table  { border-collapse: collapse; width: 100%; }
+</style>
+</head>
+
+<body>
+<div class="tableFixHead">
     <table class="table">
-    <thead >
+    <thead class="header" id="table-head">
         <th>ID</th>
         <th>Name</th>
         <th>Tel</th>
@@ -39,7 +56,7 @@
         <th>Interner Kommentar</th>
     </thead>
     <tbody>
-    {% for data in dataset %}.
+    {% for data in dataset %}
         {%if data.state == "new"%}    
             <tr style="background-color:white">
         {%elif data.state == "contacted" %}
@@ -87,6 +104,9 @@
            </tr>
         {% endfor %}
         </tbody>
+    
+    
+    </tbody>
     </table>
 </div>
 
@@ -103,4 +123,6 @@
         {% url 'index' as index_url%}
         {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
     </div>
+</div>
 </body>
+</html>
