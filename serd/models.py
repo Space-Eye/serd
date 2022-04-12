@@ -58,10 +58,11 @@ class Offer(models.Model):
     total_number = models.PositiveSmallIntegerField(default=1, verbose_name=_("Gesamtanzahl der Personen"))
     children_number = models.PositiveSmallIntegerField(null=True, verbose_name=_("davon Kinder unter zwölf"))
     street = models.CharField(max_length=256, blank=True, verbose_name=_("Straße (optional"))
-    city = models.CharField(max_length=256, verbose_name=_("Ort"))#toDo Personenanzahl
+    city = models.CharField(max_length=256, verbose_name=_("Ort"))
     phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name=_("Telephonnummer"))
     mail = models.CharField(max_length=256, validators=[validate_email], verbose_name=_("E-mail Adresse"))
-    language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Gesprochene Sprachen"))#toDo kostenfrei
+    language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Gesprochene Sprachen"))
+    for_free = models.BooleanField(_("kostenfreie Unterkunft"))
     cost = models.PositiveSmallIntegerField( verbose_name=_("Monatsmiete"))
     spontan = models.BooleanField(verbose_name=_("Spontan Verfügbar"))
     available_from = models.DateField(verbose_name=_("Verfügbar Ab"))
