@@ -4,7 +4,7 @@ from multiselectfield import MultiSelectField
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 from .choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
-from .validators import validate_plz, validate_phone
+from .validators import validate_plz, validate_phone, validate_not_negative
 
 class AnnotationManager(models.Manager):
 
@@ -25,15 +25,15 @@ class  HousingRequest(models.Model):
     representative = models.CharField(max_length=256, blank='true')
     repr_phone = models.CharField(max_length=256, blank='true', validators=[validate_phone])
     repr_mail = models.CharField(max_length=256, validators=[validate_email])
-    adults = models.PositiveSmallIntegerField(verbose_name=_("Anzahl Erwachsener"))
-    children = models.PositiveSmallIntegerField(verbose_name=_("Anzahl Kinder"))
+    adults = models.PositiveSmallIntegerField(verbose_name=_("Anzahl Erwachsener"), validators=[validate_not_negative])
+    children = models.PositiveSmallIntegerField(verbose_name=_("Anzahl Kinder"), validators=[validate_not_negative])
     who = models.CharField(max_length=256, verbose_name=_("Kurze Beschreibung"))
     split = models.BooleanField(verbose_name=_("Gruppe darf geteilt werden"))
     current_housing = models.CharField(choices=CURRENT_ACCOMODATION, max_length=128, verbose_name=_("Aktuelle Unterbringung"))
     arrival_date = models.DateField(verbose_name=_("Ankunftstag"))
     arrival_location = models.CharField(max_length=256, verbose_name=("Ankunftsort"))
     pets = MultiSelectField(choices=PETS, verbose_name=_("Haustiere"))
-    pet_number = models.PositiveSmallIntegerField(verbose_name=_("Anzahl der Haustiere"), null=True)
+    pet_number = models.PositiveSmallIntegerField(verbose_name=_("Anzahl der Haustiere"), null=True, validators=[validate_not_negative])
     car = models.BooleanField(verbose_name=_("Auto verfügbar"))
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Gesprochene Sprachen"))
     vaccination = models.BooleanField(verbose_name=_("Alle Personen vollständig geimpft"))
@@ -55,15 +55,15 @@ class Offer(models.Model):
     last_name = models.CharField(max_length=128, verbose_name=_("Nachname"))
     given_name = models.CharField(max_length=128, verbose_name=_("Vorname"))
     plz = models.CharField(max_length=5, validators=[validate_plz], verbose_name=_("Postleitzahl"))
-    total_number = models.PositiveSmallIntegerField(default=1, verbose_name=_("Gesamtanzahl der Personen"))
-    children_number = models.PositiveSmallIntegerField(null=True, verbose_name=_("davon Kinder unter zwölf"))
+    total_number = models.PositiveSmallIntegerField(default=1, verbose_name=_("Gesamtanzahl der Personen"), validators=[validate_not_negative])
+    children_number = models.PositiveSmallIntegerField(null=True, verbose_name=_("davon Kinder unter zwölf"), validators=[validate_not_negative])
     street = models.CharField(max_length=256, blank=True, verbose_name=_("Straße (optional"))
     city = models.CharField(max_length=256, verbose_name=_("Ort"))
     phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name=_("Telephonnummer"))
     mail = models.CharField(max_length=256, validators=[validate_email], verbose_name=_("E-mail Adresse"))
     language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Gesprochene Sprachen"))
     for_free = models.BooleanField(_("kostenfreie Unterkunft"))
-    cost = models.PositiveSmallIntegerField( verbose_name=_("Monatsmiete"), null=True)
+    cost = models.PositiveSmallIntegerField( verbose_name=_("Monatsmiete"), null=True, validators=[validate_not_negative])
     spontan = models.BooleanField(verbose_name=_("Spontan Verfügbar"))
     available_from = models.DateField(verbose_name=_("Verfügbar Ab"))
     limited_availability = models.BooleanField(verbose_name=_("Nur vorrübergehend Verfügbar"))

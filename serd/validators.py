@@ -26,3 +26,9 @@ def validate_phone(value: str):
         raise ValidationError(
             _('Ungültiges Zeichen in der Telephonnummer')
         )
+
+def validate_not_negative(value: int):
+    if value <0:
+        raise ValidationError(
+            _('Wert darf nicht negativ sein')
+        )
