@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
 from .views import AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate,  index, SuccessOffer, SuccessRequest, RequestFilter, OfferFilter
+from django.conf import settings
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +34,8 @@ urlpatterns = [
     path('request_filter', login_required(RequestFilter.as_view()), name="request_filter"),
     path('offer_filter', login_required(OfferFilter.as_view()), name="offer_filter"),
     path('',index, name='index'),
-
+    path('i18n/', include('django.conf.urls.i18n')),
+   
 ]
 urlpatterns += i18n_patterns(
     path('add_request/',AddRequest.as_view(),name='add_request'),
@@ -38,3 +43,4 @@ urlpatterns += i18n_patterns(
     path('success_request/<request_id>', SuccessRequest.as_view(), name='success_request'),
     path('success_offer/<offer_id>', SuccessOffer.as_view(), name='success_offer')
 )
+urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

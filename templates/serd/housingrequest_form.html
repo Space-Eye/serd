@@ -8,6 +8,39 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
+<table>
+    <tr>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_en" >
+                {% csrf_token %}
+                
+                <input name="language" type="hidden" value="en" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_en" value="Submit"><img width="48", alt="english" src="/media/english.png" /></button>
+        </td>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_de" >
+                {% csrf_token %}
+                <input name="language" type="hidden" value="de" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_de" value="Submit"><img width="48", alt="german" src="/media/german.png" /></button>
+        </td>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_uk" >
+                {% csrf_token %}
+                <input name="language" type="hidden" value="uk" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_uk" value="Submit"><img width="48", alt="ukrainian" src="/media/ukrainian.png" /></button>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_ru" >
+                {% csrf_token %}
+                <input name="language" type="hidden" value="ru" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_ru" value="Submit"><img width="48", alt="russian" src="/media/russian.png" /></button>
+        </td>
+    </tr>
+</table>
+
 <form method="POST" enctype="multipart/form-data">
   
     <!-- Security token -->
@@ -30,5 +63,5 @@
     </div>
     {% endfor %}
       
-    <input class="btn-primary m-3" type="submit" value="Submit" >
+    <input class="btn-primary m-3" type="submit" value="{%trans 'Absenden' %}" >
 </form>
