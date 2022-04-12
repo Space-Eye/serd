@@ -1,14 +1,23 @@
+<!DOCTYPE html>
+<body>
 {% load i18n %}
 {# Load the tag library #}
 {% load bootstrap5 %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
-{% bootstrap_javascript %}
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-
+<style>
+    .errorlist
+        {
+            color: red;
+            font-size: large;
+        }
+    
+    </style>
+    
 <table>
     <tr>
         <td>
@@ -66,3 +75,4 @@
       
     <input class="btn-primary m-3" type="submit" value="{%trans 'Absenden' %}" >
 </form>
+</body>
