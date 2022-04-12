@@ -43,4 +43,4 @@ urlpatterns += i18n_patterns(
     path('success_request/<request_id>', SuccessRequest.as_view(), name='success_request'),
     path('success_offer/<offer_id>', SuccessOffer.as_view(), name='success_offer')
 )
-urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

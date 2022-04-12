@@ -25,7 +25,7 @@ SECRET_KEY = '*ltt^v9^%r5922zgb@@91&5xyr1)ek@buq%e3erb=h^fr=4d@)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['notunterkunft.rgbg-sozial.de','127.0.0.1']
+ALLOWED_HOSTS = ['notunterkunft.rgbg-sozial.de','127.0.0.1','0.0.0.0',"192.168.178.34"]
 
 
 # Application definition
@@ -131,3 +131,6 @@ LANGUAGES= [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
