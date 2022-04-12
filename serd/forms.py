@@ -78,7 +78,7 @@ class RequestForm(forms.ModelForm):
         'car', 'languages', 'vaccination', 'accessability_needs')
     def clean(self):
         pets = self.cleaned_data.get('pets')
-        if len(pets) > 1 and 'none' in pets:
+        if pets and len(pets) > 1 and 'none' in pets:
             self.add_error(field='pets', error=ValueError(
                 _("Ungültige Auswahl: 'Keine' schließt die anderen Wahlmöglichkeiten aus.")
             ))
@@ -93,7 +93,7 @@ class RequestForm(forms.ModelForm):
             self.add_error(field='pets', error=ValueError(
                     _("Wenn keine Haustiere vorhanden sind, muss 'Keine' ausgewählt werden.")
                 ))
-        if 'none' not in pets and len(pets) > self.cleaned_data.get('pet_number'):
+        if pets and 'none' not in pets and len(pets) > self.cleaned_data.get('pet_number'):
             self.add_error(field='pet_number', error=ValueError(
                     _("Mehr Tierarten ausgewählt als Tiere vorhanden")
                 ))
