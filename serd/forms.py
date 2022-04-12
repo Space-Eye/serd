@@ -3,7 +3,7 @@ from slugify import slugify
 
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_STATE
 from .models import HousingRequest, Offer
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
 def isascii(s):
     """Check if the characters in string s are in ASCII, U+0-U+7F."""
@@ -68,9 +68,9 @@ class RequestForm(forms.ModelForm):
     )
     pet_number = forms.IntegerField(required=False)
 
-    representative = forms.CharField(required=False, label=('Stellvertreter'))
-    repr_phone = forms.CharField(required=False, label=('Stellvertreter Telephonnummer'))
-    repr_mail = forms.CharField(required=False, label=('Stellvertreter E-mail'))
+    representative = forms.CharField(required=False, label=(_('Stellvertreter')))
+    repr_phone = forms.CharField(required=False, label=(_('Stellvertreter Telephonnummer')))
+    repr_mail = forms.CharField(required=False, label=(_('Stellvertreter E-mail')))
     class Meta:
         model = HousingRequest
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',

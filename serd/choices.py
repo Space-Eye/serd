@@ -1,3 +1,5 @@
+from django.utils.translation import gettext as _
+
 REQUEST_STATE = (
     ('new','Neu'),
     ('contacted','Kontaktiert'),
@@ -6,15 +8,15 @@ REQUEST_STATE = (
     ('arrived','In Unterkunft angekommen')
 )
 LANGUAGE_CHOICE = (
-    ('de', 'Deutsch'),
-    ('uk', 'Ukrainisch'),
-    ('ru', 'Russisch'),
-    ('en', 'Englisch')
+    ('de', _('Deutsch')),
+    ('uk', _('Ukrainisch')),
+    ('ru', _('Russisch')),
+    ('en', _('Englisch'))
 )
 LIVING_WITH = (
-    ('single','alleine'),
-    ('family','mit Familie'),
-    ('friends', 'mit Freunden')
+    ('single',_('alleine')),
+    ('family',_('mit Familie')),
+    ('friends', _('mit Freunden'))
 )
 
 OFFER_STATE = (
@@ -32,21 +34,21 @@ PRIORITY_CHOICE = (
     ('high','Hoch')
 )
 CURRENT_ACCOMODATION = (
-    ('none', 'Ich habe keinen Schlafplatz'),
-    ('friends', 'Bei Freunden oder Verwandten'),
-    ('shelter', 'Staatliche Notunterkunft'),
-    ('hotel1', 'Hotel Bischofshof'),
-    ('hotel2', 'Hotel Bohemian'),
-    ('hotel3', 'Hotel Greenspirit'),
-    ('hotel4', 'Hotel Includio'),
-    ('hotel5', 'Hotel Jugendherberge'),
-    ('hotel6', 'Hotel Katholische Akademie'),
-    ('hotel7', 'Hotel Weidenhof'),
-    ('hotel8', 'anderes Hotel')
+    ('none', _('Ich habe keinen Schlafplatz')),
+    ('friends', _('Bei Freunden oder Verwandten')),
+    ('shelter', _('Staatliche Notunterkunft')),
+    ('hotel1', _('Hotel Bischofshof')),
+    ('hotel2', _('Hotel Bohemian')),
+    ('hotel3', _('Hotel Greenspirit')),
+    ('hotel4', _('Hotel Includio')),
+    ('hotel5', _('Hotel Jugendherberge')),
+    ('hotel6', _('Hotel Katholische Akademie')),
+    ('hotel7', _('Hotel Weidenhof')),
+    ('hotel8', _('anderes Hotel'))
 )
 PETS = (
-    ('dog', 'Hund'),
-    ('cat', 'Katze'),
-    ('small', 'Kleintier'),
-    ('none', 'Keine')
+    ('dog', _('Hund')),
+    ('cat', _('Katze')),
+    ('small', _('Kleintier')),
+    ('none', _('Keine'))
 )
