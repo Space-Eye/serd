@@ -18,6 +18,7 @@ class OfferForm(forms.ModelForm):
     available_until =  forms.DateField(
         label=_('Verfügbar bis'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
+    cost = forms.IntegerField(label=_("Mietpreis"), required=False)
     def clean(self):
         if not self.cleaned_data['total_number'] > self.cleaned_data['children_number']:
             self.add_error(field='total_number', error=
@@ -36,6 +37,17 @@ class OfferForm(forms.ModelForm):
             self.add_error(field='living_with', error=
             ValueError(
                 _("Eigene Wohnsituation muss angegeben werden, wenn die Unterbringung nicht in einer getrennten Wohnung erfolgt")
+            ))
+        if not self.cleaned_data.get('for_free') and not self.cleaned_data.get('cost'):
+            self.add_error(field='for_free', error=
+            ValueError(
+                _("Bitte Bestätigen dass die Wohnung kostenfrei überlassen wird, oder Preis eingeben")
+            ))
+        print(self.cleaned_data.keys())
+        if self.cleaned_data.get('for_free') and self.cleaned_data.get('cost'):
+            self.add_error(field='cost', error=
+                ValueError(
+                _("Bei kostenfreier Wohnung kein Mietpreis möglich")
             ))
         return self.cleaned_data
         
