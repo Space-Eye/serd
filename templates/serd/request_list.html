@@ -8,12 +8,29 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-<body>
+<html>
+<head>
+<style>
+    .header{
+        position:sticky;
+        top:0;
+        z-index:1;
+    }
 
-<div class="main">
- 
+    .tableFixHead { overflow: auto; height: 90vh; }
+
+    #table-head {
+        background-color:#FFFFFF; 
+    }
+
+    table  { border-collapse: collapse; width: 100%; }
+</style>
+</head>
+
+<body>
+<div class="tableFixHead">
     <table class="table">
-    <thead >
+    <thead class="header" id="table-head">
         <th>ID</th>
         <th>Name</th>
         <th>Tel</th>
@@ -22,6 +39,7 @@
         <th>Kinder</th>
         <th>Gesamt</th>
         <th>Wer</th>
+        <th>Auto</th>
         <th>Stellvertreter</th>
         <th>Stv. Tel</th>
         <th>Stv. Mail</th>
@@ -39,7 +57,7 @@
         <th>Interner Kommentar</th>
     </thead>
     <tbody>
-    {% for data in dataset %}.
+    {% for data in dataset %}
         {%if data.state == "new"%}    
             <tr style="background-color:white">
         {%elif data.state == "contacted" %}
@@ -68,6 +86,7 @@
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.persons}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
+           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.car |yesno:'Ja,Nein'}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.representative}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.repr_phone}}</span></td>
            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.repr_mail}}</span></td>
@@ -87,6 +106,9 @@
            </tr>
         {% endfor %}
         </tbody>
+    
+    
+    </tbody>
     </table>
 </div>
 
@@ -103,4 +125,6 @@
         {% url 'index' as index_url%}
         {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
     </div>
+</div>
 </body>
+</html>
