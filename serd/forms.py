@@ -104,13 +104,9 @@ class RequestForm(forms.ModelForm):
         can't read cyrillic 
         """
         housingrequest = super(RequestForm, self).save(commit=False, **kwargs)
-        slug = ""
-        if not isascii(housingrequest.given_name):
-            slug = slugify(housingrequest.given_name)+" "
-        if not isascii(housingrequest.last_name):
-            slug += slugify(housingrequest.last_name)
-        housingrequest.name_slug = slug
-
+        if not isascii(housingrequest.given_name) or not isascii(housingrequest.last_name):
+            housingrequest.name_slug = slug = slugify(housingrequest.given_name)+" "+ slugify(housingrequest.last_name)
+        
         if commit:
             housingrequest.save()
         return housingrequest
