@@ -76,5 +76,6 @@ class Offer(models.Model):
     state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"),default="new")
     comment = models.CharField(blank=True, verbose_name=_("Kommentar"), max_length=512)
     private_comment = models.CharField(blank=True, verbose_name=("Interner Kommentar"), default="", max_length=512)
+    by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.id)])

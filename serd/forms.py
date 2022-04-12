@@ -43,7 +43,7 @@ class OfferForm(forms.ModelForm):
 class OfferEditForm(OfferForm):
     class Meta:
         model = Offer
-        fields = OfferForm.Meta.fields + ('private_comment', 'state')
+        fields = OfferForm.Meta.fields + ('by_municipality', 'private_comment', 'state')
 
 class RequestForm(forms.ModelForm):
     template_name = 'form_snippet.html'
