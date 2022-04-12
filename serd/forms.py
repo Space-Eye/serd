@@ -19,6 +19,11 @@ class OfferForm(forms.ModelForm):
         label=_('Verfügbar bis'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     def clean(self):
+        if not self.cleaned_data['total_number'] > self.cleaned_data['children_number']:
+            self.add_error(field='total_number', error=
+            ValueError(
+                _("Mindestens eine Erwachsene Person!")
+                ))
         if self.cleaned_data['limited_availability']:
             available_from = self.cleaned_data['available_from']
             available_until = self.cleaned_data['available_until']
