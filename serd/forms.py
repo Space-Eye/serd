@@ -27,7 +27,11 @@ class OfferForm(forms.ModelForm):
                 ValueError(
                     _("Ende der Verfügbarkeit muss später als der Beginn sein")
                 ))
-
+        if not self.cleaned_data['seperate_appartment'] and not self.cleaned_data['living_with']:
+            self.add_error(field='living_with', error=
+            ValueError(
+                _("Eigene Wohnsituation muss angegeben werden, wenn die Unterbringung nicht in einer getrennten Wohnung erfolgt")
+            ))
         return self.cleaned_data
         
     class Meta :

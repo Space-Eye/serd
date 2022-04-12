@@ -71,7 +71,7 @@ class Offer(models.Model):
     public_transport = models.BooleanField(verbose_name=_("Mit ÖPNV Erreichbar"))
     rooms = models.SmallIntegerField(verbose_name=_("Anzahl Zimmer"))
     seperate_appartment = models.BooleanField(verbose_name=_("Unterkunft ist eine eigenständige Wohnung"))
-    living_with = models.CharField(choices=LIVING_WITH, max_length=64, verbose_name=_("Meine Wohnsituation"))
+    living_with = models.CharField(choices=LIVING_WITH, max_length=64, verbose_name=_("Meine Wohnsituation"), blank=True)
     pets = MultiSelectField(choices=PETS,verbose_name=_("Haustiere Erlaubt"))
     state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"),default="new")
     comment = models.TextField(blank=True, verbose_name=_("Kommentar"))
