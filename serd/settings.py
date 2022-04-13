@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import configparser
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -134,3 +135,13 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
+CONFIG_FILE = '/etc/serd/serd.conf'
+
+config = configparser.ConfigParser()
+config.read(CONFIG_FILE)
+EMAIL_PORT = config['mail'].get('smtp-port')
+EMAIL_HOST_USER = config['mail'].get('from-address')
+EMAIL_HOST_PASSWORD= config['mail'].get('smtp-password')
+EMAIL_HOST = config['mail'].get('smtp-host')
+EMAIL_USE_SSL = True

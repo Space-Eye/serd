@@ -4,6 +4,7 @@ from slugify import slugify
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_STATE
 from .models import HousingRequest, Offer
 from django.utils.translation import gettext as _
+from .mail import Mailer
 
 def isascii(s):
     """Check if the characters in string s are in ASCII, U+0-U+7F."""
@@ -19,6 +20,7 @@ class OfferForm(forms.ModelForm):
         label=_('Verfügbar bis'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     cost = forms.IntegerField(label=_("Mietpreis"), required=False)
+
     def clean(self):
         if not self.cleaned_data.get('total_number') > self.cleaned_data.get('children_number'):
             self.add_error(field='total_number', error=
@@ -49,6 +51,15 @@ class OfferForm(forms.ModelForm):
                 _("Bei kostenfreier Wohnung kein Mietpreis möglich")
             ))
         return self.cleaned_data
+
+    def save(self, commit=True, **kwargs):
+        offer = super(OfferForm, self).save(commit=False, **kwargs)
+        if commit:
+             offer.save()
+        mailer = Mailer()
+        mailer.send_offer_confirmation_mail(offer)
+        return offer
+
         
     class Meta :
         model = Offer
@@ -105,10 +116,13 @@ class RequestForm(forms.ModelForm):
         """
         housingrequest = super(RequestForm, self).save(commit=False, **kwargs)
         if not isascii(housingrequest.given_name) or not isascii(housingrequest.last_name):
-            housingrequest.name_slug = slug = slugify(housingrequest.given_name)+" "+ slugify(housingrequest.last_name)
+            housingrequest.name_slug  = slugify(housingrequest.given_name)+" "+ slugify(housingrequest.last_name)
         
         if commit:
             housingrequest.save()
+
+        mailer = Mailer()
+        mailer.send_request_confirmation_mail(housingrequest)
         return housingrequest
 
 

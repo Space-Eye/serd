@@ -16,7 +16,7 @@ class AnnotationManager(models.Manager):
         return super().get_queryset().annotate(**self.annotations)
 
 class  HousingRequest(models.Model):
-    id = models.AutoField(primary_key=True)
+    number = models.AutoField(primary_key=True)
     last_name = models.CharField(max_length=128, verbose_name=_("Nachname"))
     given_name = models.CharField(max_length=128, verbose_name=_("Vorname"))
     name_slug = models.CharField(max_length=256, blank=True, default="")
@@ -47,11 +47,11 @@ class  HousingRequest(models.Model):
 
     objects = AnnotationManager(persons=models.F('adults')+models.F('children'))
     def __str__(self):
-        return "_".join([self.last_name, self.given_name,str(self.id)])
+        return "_".join([self.last_name, self.given_name,str(self.number)])
 
 
 class Offer(models.Model):
-    id = models.AutoField(primary_key=True)
+    number = models.AutoField(primary_key=True)
     last_name = models.CharField(max_length=128, verbose_name=_("Nachname"))
     given_name = models.CharField(max_length=128, verbose_name=_("Vorname"))
     plz = models.CharField(max_length=5, validators=[validate_plz], verbose_name=_("Postleitzahl"))
@@ -79,4 +79,4 @@ class Offer(models.Model):
     private_comment = models.CharField(blank=True, verbose_name=("Interner Kommentar"), default="", max_length=512)
     by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
     def __str__(self):
-        return "_".join([self.last_name, self.given_name,str(self.id)])
+        return "_".join([self.last_name, self.given_name,str(self.number)])

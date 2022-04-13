@@ -72,37 +72,37 @@
 
 
 
-           <td> {{data.id}}</td>
+           <td> {{data.number}}</td>
            <td> {{ data.given_name}}, {{data.last_name}}
                {%if data.name_slug %}
                <br> {{data.name_slug}}
                {%endif%}
            </td>
          
-            <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.phone}}</span></td>
+            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.phone}}</span></td>
             
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.mail}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.adults}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.persons}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.car |yesno:'Ja,Nein'}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.representative}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.repr_phone}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.repr_mail}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.split |yesno:'Ja,Nein'}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_date}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_location}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.pet_number}} {{data.pets}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.languages}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.accessability_needs |yesno:'Ja,Nein'}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"> {{data.placed_at}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.priority}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.case_handler}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.get_state_display}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}">{{data.private_comment}}</span></td>
-           <td>  <span title="{{data.id}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.id}}">edit </a></span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.mail}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.adults}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.persons}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.car |yesno:'Ja,Nein'}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.representative}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.repr_phone}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.repr_mail}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.split |yesno:'Ja,Nein'}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_date}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_location}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.pet_number}} {{data.pets}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.languages}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.accessability_needs |yesno:'Ja,Nein'}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.placed_at}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.priority}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.case_handler}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.get_state_display}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.private_comment}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.number}}">edit </a></span></td>
            </tr>
         {% endfor %}
         </tbody>
