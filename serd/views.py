@@ -2,7 +2,7 @@
 from django.urls import reverse
 
 from serd.choices import PETS
-from .models import HousingRequest, Offer
+from .models import Hotel, HousingRequest, Offer
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
@@ -23,16 +23,8 @@ class AddRequest(CreateView):
     model = HousingRequest
     form_class = RequestForm
     def get_success_url(self) -> str:
-        return reverse('success_request', args=(self.object.id,))
+        return reverse('success_request', args=(self.object.number,))
 
-def add_request(request):
-    if request.method == 'POST':
-        form = RequestForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/success_request/')
-    else:
-        form = RequestForm()
-    return render(request, 'name.html', {'form': form})  
 
 class AddOffer(CreateView):
     model = Offer
@@ -40,7 +32,7 @@ class AddOffer(CreateView):
     
     def get_success_url(self) -> str:
 
-        return reverse('success_offer', args=(self.object.id,))
+        return reverse('success_offer', args=(self.object.number,))
 
    
 @login_required
@@ -56,6 +48,13 @@ def offer_list(request):
     context["dataset"] = Offer.objects.all()
     return render(request, "serd/offer_list.html", context)
    
+
+
+@login_required
+def hotel_list(request):
+    context = {}
+    context["dataset"] = Hotel.objects.all()
+    return render(request, "serd/hotel_list.html", context)
 
 class OfferUpdate(UpdateView):
     success_url = "/offers"
@@ -181,3 +180,4 @@ class OfferFilter(FormView):
         context = {}
         context['dataset'] = queryset
         return render(None,'serd/offer_list.html', context)
+

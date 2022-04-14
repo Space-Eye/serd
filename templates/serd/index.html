@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+
+<head>
+    <title>SERD</title>
+</head>
 {# Load the tag library #}
 {% load bootstrap5 %}
 
@@ -8,10 +13,6 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-
-<header>
-    <title>SERD</title>
-</header>
 <body>
     <div class="container">
         <div class="m-3">
@@ -29,6 +30,10 @@
         <div class="m-3">
             {% url 'offers' as show_offers_url%}
             {% bootstrap_button "Wohnungsangebote ansehen" button_type="link" href=show_offers_url button_class="btn-secondary" %}
+        </div>
+        <div class="m-3">
+            {% url 'hotels' as show_hotels_url%}
+            {% bootstrap_button "Hotels ansehen" button_type="link" href=show_hotels_url button_class="btn-secondary" %}
         </div>
     </div>
 </body>

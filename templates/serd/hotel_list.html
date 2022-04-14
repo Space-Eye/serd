@@ -1,0 +1,140 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<html>
+<head>
+<style>
+    .header{
+        position:sticky;
+        top:0;
+        z-index:1;
+    }
+
+    .tableFixHead { overflow: auto; height: 90vh; }
+
+    #table-head {
+        background-color:#FFFFFF; 
+    }
+
+    table  { border-collapse: collapse; width: 100%; }
+</style>
+</head>
+
+<body>
+<div class="tableFixHead">
+    <table class="table">
+    <thead class="header" id="table-head">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Adresse</th>
+        <th>Status</th>
+        <th>Ansprechpartner Hotel</th>
+        <th>Telefon</th>
+        <th>E-Mail</th>
+        <th>Zuständig Meldung</th>
+        <th>Team Gesamt</th>
+        <th>Verpflegung</th>
+        <th>Kosten</th>
+        <th>Belegung Aktuell</th>
+        <th>Betten Erwachsene</th>
+        <th>Betten Kinder</th>
+        <th>Betten Erwachsene Frei</th>
+        <th>Betten Kinder Frei</th>
+        <th>Info</th>
+        <th></th>
+    </thead>
+    <tbody>
+    {% for data in dataset %}
+        {%if data.state == "active"%}    
+            <tr style="background-color:white">
+        {%elif data.state == "open" %}
+            <tr style="background-color:yellow">
+        {%elif data.state == "full" %}
+            <tr style="background-color:red">
+        {%endif%}
+
+           <td> {{data.number}}</td>
+           <td> {{data.name}}</td>
+           <td> {{data.address}}</td>
+            <td> {{data.get_state_display}}</td>
+            <td>
+                {%for partner in data.ansprechpartner.all %}
+                    {{partner.name}}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {%for partner in data.ansprechpartner.all %}
+                    {{partner.tel}}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {%for partner in data.ansprechpartner.all %}
+                    {{partner.mail}}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {{data.responsible}}
+            </td>
+            <td>
+                {% for member in data.team_gesamt.all %}
+                {{ member }}
+                {% endfor %}
+            </td>
+            <td>
+                {{ data.get_food_display }}
+            </td>
+            <td>
+                {{ data.cost }}
+            </td>
+            <td>
+                {% for request in data.requests.all %}
+                {{request}}
+                {% endfor %}
+            </td>
+            <td>
+                {{ data.beds_adults }}
+            </td>
+            <td>
+                {{ data.beds_children }}
+            </td>
+            <td>
+                {{data.adults_free}}
+            </td>
+            <td>
+                {{data.children_free}}
+            </td>
+            <td>
+                {{ data.info }}
+            </td>
+           </tr>
+        {% endfor %}
+        </tbody>
+    
+    
+    </tbody>
+    </table>
+</div>
+
+<div class="d-flex flex-row">
+    <div class="m-3">
+        {% url 'request_filter' as request_filter_url %}
+        {% bootstrap_button "Filter" button_type="link" href=request_filter_url button_class="btn-primary" %}
+    </div>
+    <div class="m-3">
+        {% url 'logout' as logout_url%}
+        {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}
+    </div>
+    <div class="m-3">
+        {% url 'index' as index_url%}
+        {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
+    </div>
+</div>
+</body>
+</html>

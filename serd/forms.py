@@ -3,7 +3,7 @@ from slugify import slugify
 
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_STATE
 from .models import HousingRequest, Offer
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from .mail import Mailer
 
 def isascii(s):
