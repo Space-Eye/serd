@@ -60,13 +60,13 @@ def offer_list(request):
 class OfferUpdate(UpdateView):
     success_url = "/offers"
     def get_object(self, queryset=None):
-        return Offer.objects.get(id=self.kwargs["offer_id"])
+        return Offer.objects.get(number=self.kwargs["offer_id"])
     form_class = OfferEditForm
 
 class RequestUpdate(UpdateView):
     success_url = "/requests"
     def get_object(self, queryset=None):
-        return HousingRequest.objects.get(id=self.kwargs["request_id"])
+        return HousingRequest.objects.get(number=self.kwargs["request_id"])
     form_class = RequestEditForm
 
         
