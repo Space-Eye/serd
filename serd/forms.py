@@ -155,3 +155,4 @@ class OfferFilterForm(forms.Form):
     pets = forms.MultipleChoiceField(choices=PETS, required=False, label='Haustiere', widget=forms.CheckboxSelectMultiple)
     accessability = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
     state = forms.ChoiceField(choices=(('null','Egal'),)+OFFER_STATE, label='Status')
+    for_free = forms.ChoiceField(choices=BOOL_CHOICES, label='Gratis')
