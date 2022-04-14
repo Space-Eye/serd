@@ -179,7 +179,7 @@ class OfferFilter(FormView):
             queryset = queryset.filter(state__exact=state)
         for_free = data['for_free']
         if for_free != 'null':
-            queryset = queryset.filter(forfree__exact=for_free)
+            queryset = queryset.filter(for_free__exact=for_free)
         context = {}
         context['dataset'] = queryset
         return render(None,'serd/offer_list.html', context)
