@@ -9,9 +9,10 @@ def handler(sender, instance, **kwargs):
         adults = 0
         children = 0
         hotel = instance.hotel
-        for request in hotel.requests.all():
-            adults += request.adults
-            children += request.children
-        hotel.adults_free = hotel.beds_adults - adults
-        hotel.children_free = hotel.beds_children - children
-        hotel.save()
+        if hotel:
+            for request in hotel.requests.all():
+                adults += request.adults
+                children += request.children
+            hotel.adults_free = hotel.beds_adults - adults
+            hotel.children_free = hotel.beds_children - children
+            hotel.save()
