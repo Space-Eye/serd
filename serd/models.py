@@ -3,7 +3,7 @@ from django.db import models
 from multiselectfield import MultiSelectField
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
-from .choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
+from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
 from .validators import validate_plz, validate_phone, validate_not_negative
 
 class AnnotationManager(models.Manager):
@@ -41,6 +41,7 @@ class  HousingRequest(models.Model):
     case_handler = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Sachbearbeiter:in"))
     priority = models.CharField(choices=PRIORITY_CHOICE, max_length=64, verbose_name=_("Priorität"))
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
+    hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, verbose_name="Hotel")
     state = models.CharField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new", max_length=64)
     private_comment = models.CharField(blank=True, null=True, verbose_name=_("Interner Kommentar"), default="", max_length=64)
     _persons = None
@@ -80,3 +81,32 @@ class Offer(models.Model):
     by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.number)])
+
+
+
+class AnsprechpartnerHotel(models.Model):
+    number = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128, verbose_name="Name")
+    tel = models.CharField(max_length=128, validators=[validate_phone], verbose_name="Telefonnummer")
+    mail = models.CharField(max_length=128, verbose_name="E-mail", validators=[validate_email])
+    hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True)
+    def __str__(self) -> str:
+        return "_".join([str(self.number), self.name])
+
+
+class Hotel(models.Model):
+    number = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=64, verbose_name="Name")
+    address = models.TextField(verbose_name="Adresse")
+    state = models.CharField(max_length=64, choices=HOTEL_STATE, verbose_name="Status")
+    responsible =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, 
+                                    blank=True, verbose_name="Zuständig Meldung", related_name='responsible_for_hotel')
+    team_gesamt = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name="Team gesamt", related_name='tem_for_hotel')
+    food = models.CharField(choices=FOOD_CHOICES, max_length=64, verbose_name="Verpflegung")
+    cost = models.CharField(max_length=128, verbose_name="Kosten")
+    beds_adults = models.PositiveSmallIntegerField(verbose_name="Betten Erwachsene", validators=[validate_not_negative])
+    beds_children = models.PositiveSmallIntegerField(verbose_name="Betten Kinder", validators=[validate_not_negative])
+    info = models.TextField(verbose_name="Info", blank=True)
+    def __str__(self) -> str:
+        return "_".join([str(self.number), self.name])
+

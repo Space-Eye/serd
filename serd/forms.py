@@ -129,7 +129,7 @@ class RequestForm(forms.ModelForm):
 class RequestEditForm(RequestForm):
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('state','case_handler','placed_at', 'priority','private_comment')
+        fields = RequestForm.Meta.fields + ('state','case_handler', 'placed_at', 'hotel', 'priority','private_comment')
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
 class RequestFilterForm(forms.Form):

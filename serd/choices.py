@@ -37,18 +37,22 @@ CURRENT_ACCOMODATION = (
     ('none', _('Ich habe keinen Schlafplatz')),
     ('friends', _('Bei Freunden oder Verwandten')),
     ('shelter', _('Staatliche Notunterkunft')),
-    ('hotel1', _('Hotel Bischofshof')),
-    ('hotel2', _('Hotel Bohemian')),
-    ('hotel3', _('Hotel Greenspirit')),
-    ('hotel4', _('Hotel Includio')),
-    ('hotel5', _('Hotel Jugendherberge')),
-    ('hotel6', _('Hotel Katholische Akademie')),
-    ('hotel7', _('Hotel Weidenhof')),
-    ('hotel8', _('anderes Hotel'))
+    ('hotel', _('Im Hotel')),
 )
 PETS = (
     ('dog', _('Hund')),
     ('cat', _('Katze')),
     ('small', _('Kleintier')),
     ('none', _('Keine'))
+)
+
+HOTEL_STATE = (
+    ('aktive', 'Aktiv'),
+    ('open', 'offen'),
+    ('full', 'Keine Kapaizitäten')
+)
+FOOD_CHOICES = (
+    ('breakfast', 'Frühstück'),
+    ('inclusive', 'Inklusive'),
+    ('space-eye', 'Durch Space-Eye')
 )
