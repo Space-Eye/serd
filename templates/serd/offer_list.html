@@ -149,7 +149,7 @@
         </td>
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
-            >{{data.limited_availability}}</span
+            >{{data.limited_availability |yesno:'Ja,Nein'}}</span
           >
         </td>
         <td>
