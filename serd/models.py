@@ -51,7 +51,8 @@ class  HousingRequest(models.Model):
     objects = AnnotationManager(persons=models.F('adults')+models.F('children'))
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.number)])
-
+    class Meta:
+        app_label ='serd'
 
 class Offer(models.Model):
     number = models.AutoField(primary_key=True)
@@ -84,6 +85,8 @@ class Offer(models.Model):
     created_at = models.DateField(auto_now_add=True)
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.number)])
+    class Meta:
+        app_label ='serd'
 
 
 
@@ -96,6 +99,8 @@ class AnsprechpartnerHotel(models.Model):
     def __str__(self) -> str:
         return "_".join([str(self.number), self.name])
 
+    class Meta:
+        app_label ='serd'
 
 class Hotel(models.Model):
     number = models.AutoField(primary_key=True)
@@ -123,4 +128,6 @@ class Hotel(models.Model):
         self.adults_free = self.beds_adults - adults
         self.children_free = self.beds_children -children
         super(Hotel, self).save(*args, **kwargs)
+    class Meta:
+        app_label ='serd'
 
