@@ -89,6 +89,19 @@ class Offer(models.Model):
     class Meta:
         app_label ='serd'
 
+
+class AnsprechpartnerHotel(models.Model):
+    number = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128, verbose_name="Name")
+    tel = models.CharField(max_length=128, validators=[validate_phone], verbose_name="Telefonnummer", blank=True)
+    mail = models.CharField(max_length=128, verbose_name="E-mail", validators=[validate_email], blank=True)
+    hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, related_name="ansprechpartner")
+    def __str__(self) -> str:
+        return "_".join([str(self.number), self.name])
+    class Meta:
+        app_label ='serd'
+
+
 class Hotel(models.Model):
     number = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64, verbose_name="Name")
