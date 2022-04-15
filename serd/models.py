@@ -24,7 +24,7 @@ class  HousingRequest(models.Model):
     mail = models.CharField(max_length=256, validators=[validate_email],verbose_name=_("E-Mail Adresse"))
     representative = models.CharField(max_length=256, blank='true')
     repr_phone = models.CharField(max_length=256, blank='true', validators=[validate_phone])
-    repr_mail = models.CharField(max_length=256, validators=[validate_email])
+    repr_mail = models.CharField(max_length=256, validators=[validate_email], blank=True)
     adults = models.PositiveSmallIntegerField(verbose_name=_("Anzahl Erwachsener"), validators=[validate_not_negative])
     children = models.PositiveSmallIntegerField(verbose_name=_("Anzahl Kinder"), validators=[validate_not_negative])
     who = models.CharField(max_length=256, verbose_name=_("Kurze Beschreibung"))
