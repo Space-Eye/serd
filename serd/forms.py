@@ -77,7 +77,6 @@ class RequestForm(forms.ModelForm):
     arrival_date = forms.DateTimeField(label=_('Ankunftstag'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))
     )
-    pet_number = forms.IntegerField(required=False)
 
     class Meta:
         model = HousingRequest

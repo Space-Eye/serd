@@ -33,7 +33,7 @@ class  HousingRequest(models.Model):
     arrival_date = models.DateField(verbose_name=_("Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"))
     arrival_location = models.CharField(max_length=256, verbose_name=_("Wo in Regensburg kommen Sie an?"), help_text=_("zum Beispiel Regensburg Hauptbahnhof"))
     pets = MultiSelectField(choices=PETS, verbose_name=_("Welche Haustiere haben Sie?"))
-    pet_number = models.PositiveSmallIntegerField(verbose_name=_("Wie viele Haustiere haben Sie?"), null=True, validators=[validate_not_negative])
+    pet_number = models.PositiveSmallIntegerField(verbose_name=_("Wie viele Haustiere haben Sie?"), validators=[validate_not_negative], blank=True, null=True)
     car = models.BooleanField(verbose_name=_("Haben Sie ein Auto?"))
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Sprachkenntnisse"))
     vaccination = models.BooleanField(verbose_name=_("Sind alle Personen in Ihrer Gruppe vollständig gegen COVID-19 geimpft?"))
