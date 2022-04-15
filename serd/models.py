@@ -5,7 +5,7 @@ from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
 from .validators import validate_plz, validate_phone, validate_not_negative
-
+from django.contrib.auth.models import User
 class AnnotationManager(models.Manager):
 
     def __init__(self, **kwargs):
@@ -38,7 +38,7 @@ class  HousingRequest(models.Model):
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Gesprochene Sprachen"))
     vaccination = models.BooleanField(verbose_name=_("Alle Personen vollständig geimpft"))
     accessability_needs = models.BooleanField(_("Barrierefreie Wohnung benötigt"))
-    case_handler = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Sachbearbeiter:in"))
+    case_handler = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Sachbearbeiter:in"))
     priority = models.CharField(choices=PRIORITY_CHOICE, max_length=64, verbose_name=_("Priorität"))
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
     hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, verbose_name="Hotel", related_name='requests', blank=True)
