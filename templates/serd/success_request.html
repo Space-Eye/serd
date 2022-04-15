@@ -2,7 +2,7 @@
     <title>Erfolg </title>
 </head>
 <body>
-Das Wohnungsgesuch mit der ID {{ view.kwargs.request_id }} wurde erfolgreich gespeichert.<br>
+{% translate Das Wohnungsgesuch mit der ID {{ view.kwargs.request_id }} wurde erfolgreich gespeichert. %}<br>
 <br>
 <a href="{% url 'index' %}">Startseite</a>
 </body>

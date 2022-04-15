@@ -15,16 +15,16 @@ def validate_plz(value: str):
 def validate_phone(value: str):
     if len(value) < 6:
         raise ValidationError(
-            _('Telephonnumer muss mindestens sechstellig sein')
+            _('Telefonnummer muss mindestens sechsstellig sein')
         )
     if value[0] != '0' and value[0] != '+':
         raise ValidationError(
-            _('Telephonnummer muss mit + oder 0 beginnen')
+            _('Telefonnummer muss mit + oder 0 beginnen')
         )
     allowed = set(string.digits + ' '+ '-')
     if not set(value[1:]) <= allowed:
         raise ValidationError(
-            _('Ungültiges Zeichen in der Telephonnummer')
+            _('Ungültiges Zeichen in der Telefonnummer')
         )
 
 def validate_not_negative(value: int):

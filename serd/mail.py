@@ -7,19 +7,19 @@ def yesno(boolean):
     else:
         return _("Nein")
 
-REQUEST_CONFIRMATION_SUBJECT = _("Wohnungsgesuch mit der Nummer {id} Erfolgreich eingetragen")
-OFFER_CONFIRMATION_SUBJECT = _("Wohnungsangebot mit der Nummer {id} Erfolgreich eingetragen")
+REQUEST_CONFIRMATION_SUBJECT = _("Wohnungsgesuch mit der Nummer {id} erfolgreich eingetragen")
+OFFER_CONFIRMATION_SUBJECT = _("Wohnungsangebot mit der Nummer {id} erfolgreich eingetragen")
 OFFER_CONFIRMATION_TEXT = _("""Guten Tag,
 Ihr Wohnungsangebot wurde mit folgenden Daten erfolgreich in die Space-Eye Datenbank aufgenommen:
 {table}
-Sollten sich Änderungen ergeben teilen Sie uns diese bitte unter 'kontakt@space-eye.org' mit
-und gebben dabei die Nr {id} an.
+Sollten sich Änderungen ergeben, teilen Sie uns diese bitte unter 'kontakt@space-eye.org' mit
+und geben dabei die Nr {id} an.
 """)
 REQUEST_CONFIRMATION_TEXT = _("""Guten Tag,
 Ihr Wohnungsgesuch wurde mit folgenden Daten erfolgreich in die Space-Eye Datenbank aufgenommen:
 {table}
-Sollten sich Änderungen ergeben teilen Sie uns diese bitte unter 'kontakt@space-eye.org' mit
-und gebben dabei die Nr {id} an.
+Sollten sich Änderungen ergeben, teilen Sie uns diese bitte unter 'kontakt@space-eye.org' mit
+und geben dabei die Nr {id} an.
 """)
 
 def create_offer_table_string(offer):
@@ -31,7 +31,7 @@ Ort:\t{city}
     if offer.street:
         string += _("Straße:\t{street}").format(street=offer.street)
     string +=_("""Telefon:\t{phone}
-E-mail:\t{mail}
+E-Mail:\t{mail}
 Sprachen:\t{language}
 Anzahl Personen:\t{total_number}
 Davon Kinder:\t{children_number}
@@ -43,13 +43,13 @@ Kostenfreie Unterkunft:\t{for_free}
         string += _("Miete:\t{cost}\n").format(cost=offer.cost)
     string += _("""Spontan Verfügbar:\t{spontan}
 Verfügbar ab:\t{available_from}
-Nur Vorrübergehend Verfügbar:\t{limited_availability}
+Nur vorrübergehend verfügbar:\t{limited_availability}
 """).format(spontan=yesno(offer.spontan), available_from = offer.available_from, limited_availability=yesno(offer.limited_availability))
     
     if offer.limited_availability:
         string += _("Verfügbar bis:\t{available_until}\n").format(available_until=offer.available_until)
     string += _("""Mit ÖPNV erreichbar:\t{public_transport}
-Zimmer:\t{rooms}
+Zahl der Zimmer:\t{rooms}
 Eigenständige Wohnung:\t{seperate_appartment}
 """).format(public_transport=yesno(offer.public_transport), rooms=offer.rooms, seperate_appartment=yesno(offer.seperate_appartment))
     if not offer.seperate_appartment:
@@ -65,24 +65,24 @@ Telefon:\t{phone}
 Erwachsene:\t{adults}
 Kinder:\t{children}
 Beschreibung:\t{who}
-Gruppe Teilbar:\t{split}
+Gruppe teilbar:\t{split}
 Aktuelle Unterkunft:\t{current_housing}
 """).format(given_name=request.given_name, last_name=request.last_name, phone=request.phone,
             adults=request.adults, children=request.children, split=yesno(request.split),
             who=request.who, current_housing=request.get_current_housing_display())
     if request.representative:
-        string+=_("""Stellvertreter:\t{representative}
-Stellvertreter Telefon:\t{repr_phone}
-Stellvertreter e-mail:\t{repr_mail}
+        string+=_("""Stellvertreter:in :\t{representative}
+Stellvertreter:in Telefon:\t{repr_phone}
+Stellvertreter:in E-Mail:\t{repr_mail}
 """).format(representative=request.representative, repr_phone=request.repr_phone,
             repr_mail=request.repr_mail)
     string += _("""Ankunftsdatum:\t{arrival_date}
 Ankunftsort:\t{arrival_location}
 Haustiere:\t{pets}
 Anzahl Haustiere\t{pet_number}
-Auto Vorhanden\t{car}
+Auto vorhanden\t{car}
 Sprachen:\t{languages}
-Geimptf:\t{vaccination}
+Impfung:\t{vaccination}
 Barrierefrei:\t{accessability_needs}
 """).format(arrival_date=request.arrival_date, arrival_location=request.arrival_location,
             pets=request.get_pets_display(), pet_number=request.pet_number,

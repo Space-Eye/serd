@@ -19,13 +19,13 @@ class OfferForm(forms.ModelForm):
     available_until =  forms.DateField(
         label=_('Verfügbar bis'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
-    cost = forms.IntegerField(label=_("Mietpreis"), required=False)
+    cost = forms.IntegerField(label=_("falls verlangt, Monatsmiete warm"), required=False)
 
     def clean(self):
         if not self.cleaned_data.get('total_number') > self.cleaned_data.get('children_number'):
             self.add_error(field='total_number', error=
             ValueError(
-                _("Mindestens eine Erwachsene Person!")
+                _("Mindestens eine erwachsene Person")
                 ))
         if self.cleaned_data.get('limited_availability'):
             available_from = self.cleaned_data.get('available_from')
@@ -43,12 +43,12 @@ class OfferForm(forms.ModelForm):
         if not self.cleaned_data.get('for_free') and not self.cleaned_data.get('cost'):
             self.add_error(field='for_free', error=
             ValueError(
-                _("Bitte Bestätigen dass die Wohnung kostenfrei überlassen wird, oder Preis eingeben")
+                _("Bitte bestätigen Sie, dass die Unterkunft kostenfrei überlassen wird, oder geben Sie die Miethöhe an")
             ))
         if self.cleaned_data.get('for_free') and self.cleaned_data.get('cost'):
             self.add_error(field='cost', error=
                 ValueError(
-                _("Bei kostenfreier Wohnung kein Mietpreis möglich")
+                _("Bei kostenfreier Unterkunft ist keine Mietangabe möglich")
             ))
         return self.cleaned_data
 
@@ -65,7 +65,7 @@ class OfferForm(forms.ModelForm):
         model = Offer
         fields =('given_name', 'last_name',  'plz','city', 'street', 'phone', 'mail',
         'language', 'total_number' , 'children_number' , 'for_free' , 'cost', 'spontan', 'available_from', 'limited_availability', 'available_until',
-        'accessability', 'public_transport', 'rooms', 'seperate_appartment', 'living_with', 'pets', 'comment')
+        'accessability', 'public_transport', 'rooms', 'seperate_appartment', 'living_with', 'pets', 'covid', 'comment')
     
 class OfferEditForm(OfferForm):
     class Meta:
@@ -79,13 +79,10 @@ class RequestForm(forms.ModelForm):
     )
     pet_number = forms.IntegerField(required=False)
 
-    representative = forms.CharField(required=False, label=(_('Stellvertreter')))
-    repr_phone = forms.CharField(required=False, label=(_('Stellvertreter Telephonnummer')))
-    repr_mail = forms.CharField(required=False, label=(_('Stellvertreter E-mail')))
     class Meta:
         model = HousingRequest
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',
-        'split', 'current_housing', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 'arrival_location', 'pets', 'pet_number',
+        'split', 'current_housing', 'can_pay', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 'arrival_location', 'pets', 'pet_number',
         'car', 'languages', 'vaccination', 'accessability_needs')
     def clean(self):
         pets = self.cleaned_data.get('pets')
@@ -96,7 +93,7 @@ class RequestForm(forms.ModelForm):
         if pets == ['none']:
             if self.cleaned_data.get('pet_number'):
                 self.add_error(field='pet_number', error=ValueError(
-                    _("Auswahl 'Keine' bei Haustier widerspricht Anzahl ≠ 0")
+                    _("Auswahl 'Keine' bei Haustier widerspricht Anzahl 0")
                 ))
             else:
                 self.cleaned_data['pet_number'] = 0

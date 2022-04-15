@@ -140,8 +140,8 @@ CONFIG_FILE = '/etc/serd/serd.conf'
 
 config = configparser.ConfigParser()
 config.read(CONFIG_FILE)
-EMAIL_PORT = config['mail'].get('smtp-port')
-EMAIL_HOST_USER = config['mail'].get('from-address')
-EMAIL_HOST_PASSWORD= config['mail'].get('smtp-password')
-EMAIL_HOST = config['mail'].get('smtp-host')
+EMAIL_PORT = None
+EMAIL_HOST_USER = None
+EMAIL_HOST_PASSWORD= None
+EMAIL_HOST = None
 EMAIL_USE_SSL = True

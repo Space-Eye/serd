@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-02 21:03+0200\n"
+"POT-Creation-Date: 2022-04-15 16:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,156 +18,458 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: serd/choices.py:11
+msgid "Deutsch"
+msgstr ""
+
+#: serd/choices.py:12
+msgid "Ukrainisch"
+msgstr ""
+
+#: serd/choices.py:13
+msgid "Russisch"
+msgstr ""
+
+#: serd/choices.py:14
+msgid "Englisch"
+msgstr ""
+
+#: serd/choices.py:17
+msgid "alleine"
+msgstr ""
+
+#: serd/choices.py:18
+msgid "mit Familie"
+msgstr ""
+
+#: serd/choices.py:19
+msgid "mit Freunden"
+msgstr ""
+
+#: serd/choices.py:37
+msgid "Ich habe keinen Schlafplatz"
+msgstr ""
+
+#: serd/choices.py:38
+msgid "Bei Freunden oder Verwandten"
+msgstr ""
+
+#: serd/choices.py:39
+msgid "Staatliche Notunterkunft"
+msgstr ""
+
+#: serd/choices.py:40
+msgid "Im Hotel"
+msgstr ""
+
+#: serd/choices.py:43
+msgid "Hund"
+msgstr ""
+
+#: serd/choices.py:44
+msgid "Katze"
+msgstr ""
+
+#: serd/choices.py:45
+msgid "Kleintier"
+msgstr ""
+
+#: serd/choices.py:46
+msgid "Keine"
+msgstr ""
+
 #: serd/forms.py:17
-msgid "Ende der Verfügbarkeit muss später als der Beginn sein"
+msgid "Verfügbar ab"
 msgstr ""
 
-#: serd/models.py:13 serd/models.py:44
-msgid "Nachname"
-msgstr ""
-
-#: serd/models.py:14 serd/models.py:45
-msgid "Vorname"
-msgstr ""
-
-#: serd/models.py:15 serd/models.py:49
-msgid "Telephonnummer"
-msgstr ""
-
-#: serd/models.py:16
-msgid "E-Mail Adresse"
-msgstr ""
-
-#: serd/models.py:20
-msgid "Anzahl Erwachsener"
-msgstr ""
-
-#: serd/models.py:21
-msgid "Anzahl Kinder"
-msgstr ""
-
-#: serd/models.py:22
-msgid "Kurze Beschreibung"
-msgstr ""
-
-#: serd/models.py:23
-msgid "Gruppe darf geteilt werden"
-msgstr ""
-
-#: serd/models.py:24
-msgid "Aktuelle Unterbringung"
-msgstr ""
-
-#: serd/models.py:25
-msgid "Ankunftstag"
-msgstr ""
-
-#: serd/models.py:27
-msgid "Haustiere"
-msgstr ""
-
-#: serd/models.py:28
-msgid "Anzahl der Haustiere"
-msgstr ""
-
-#: serd/models.py:29
-msgid "Auto verfügbar"
-msgstr ""
-
-#: serd/models.py:30 serd/models.py:51
-msgid "Gesprochene Sprachen"
-msgstr ""
-
-#: serd/models.py:31
-msgid "Alle Personen vollständig geimpft"
-msgstr ""
-
-#: serd/models.py:32
-msgid "Barrierefreie Wohnung benötigt"
-msgstr ""
-
-#: serd/models.py:33
-msgid "Sachbearbeiter:in"
-msgstr ""
-
-#: serd/models.py:34
-msgid "Priorität"
-msgstr ""
-
-#: serd/models.py:35
-msgid "Vermitttelt an"
-msgstr ""
-
-#: serd/models.py:36 serd/models.py:63
-msgid "Status"
-msgstr ""
-
-#: serd/models.py:37
-msgid "Interner Kommentar"
-msgstr ""
-
-#: serd/models.py:46
-msgid "Postleitzahl"
-msgstr ""
-
-#: serd/models.py:47
-msgid "Straße (optional"
-msgstr ""
-
-#: serd/models.py:48
-msgid "Ort"
-msgstr ""
-
-#: serd/models.py:50
-msgid "E-mail Adresse"
-msgstr ""
-
-#: serd/models.py:52
-msgid "Monatsmiete"
-msgstr ""
-
-#: serd/models.py:53
-msgid "Spontan Verfügbar"
-msgstr ""
-
-#: serd/models.py:54
-msgid "Verfügbar Ab"
-msgstr ""
-
-#: serd/models.py:55
-msgid "Nur vorrübergehend Verfügbar"
-msgstr ""
-
-#: serd/models.py:56
+#: serd/forms.py:20
 msgid "Verfügbar bis"
 msgstr ""
 
-#: serd/models.py:57
-msgid "Barrierefrei"
+#: serd/forms.py:22
+msgid "falls verlangt, Monatsmiete warm"
 msgstr ""
 
-#: serd/models.py:58
-msgid "Mit ÖPNV Erreichbar"
+#: serd/forms.py:28
+msgid "Mindestens eine erwachsene Person"
+msgstr ""
+
+#: serd/forms.py:36
+msgid "Ende der Verfügbarkeit muss später als der Beginn sein"
+msgstr ""
+
+#: serd/forms.py:41
+msgid ""
+"Eigene Wohnsituation muss angegeben werden, wenn die Unterbringung nicht in "
+"einer getrennten Wohnung erfolgt"
+msgstr ""
+
+#: serd/forms.py:46
+msgid ""
+"Bitte bestätigen Sie, dass die Unterkunft kostenfrei überlassen wird, oder "
+"geben Sie die Miethöhe an"
+msgstr ""
+
+#: serd/forms.py:51
+msgid "Bei kostenfreier Unterkunft ist keine Mietangabe möglich"
+msgstr ""
+
+#: serd/forms.py:77
+msgid "Ankunftstag"
+msgstr ""
+
+#: serd/forms.py:91
+msgid "Ungültige Auswahl: 'Keine' schließt die anderen Wahlmöglichkeiten aus."
+msgstr ""
+
+#: serd/forms.py:96
+msgid "Auswahl 'Keine' bei Haustier widerspricht Anzahl 0"
+msgstr ""
+
+#: serd/forms.py:102
+msgid "Wenn keine Haustiere vorhanden sind, muss 'Keine' ausgewählt werden."
+msgstr ""
+
+#: serd/forms.py:106
+msgid "Mehr Tierarten ausgewählt als Tiere vorhanden"
+msgstr ""
+
+#: serd/mail.py:6
+msgid "Ja"
+msgstr ""
+
+#: serd/mail.py:8
+msgid "Nein"
+msgstr ""
+
+#: serd/mail.py:10
+#, python-brace-format
+msgid "Wohnungsgesuch mit der Nummer {id} erfolgreich eingetragen"
+msgstr ""
+
+#: serd/mail.py:11
+#, python-brace-format
+msgid "Wohnungsangebot mit der Nummer {id} erfolgreich eingetragen"
+msgstr ""
+
+#: serd/mail.py:12
+#, python-brace-format
+msgid ""
+"Guten Tag,\n"
+"Ihr Wohnungsangebot wurde mit folgenden Daten erfolgreich in die Space-Eye "
+"Datenbank aufgenommen:\n"
+"{table}\n"
+"Sollten sich Änderungen ergeben, teilen Sie uns diese bitte unter "
+"'kontakt@space-eye.org' mit\n"
+"und geben dabei die Nr {id} an.\n"
+msgstr ""
+
+#: serd/mail.py:18
+#, python-brace-format
+msgid ""
+"Guten Tag,\n"
+"Ihr Wohnungsgesuch wurde mit folgenden Daten erfolgreich in die Space-Eye "
+"Datenbank aufgenommen:\n"
+"{table}\n"
+"Sollten sich Änderungen ergeben, teilen Sie uns diese bitte unter "
+"'kontakt@space-eye.org' mit\n"
+"und geben dabei die Nr {id} an.\n"
+msgstr ""
+
+#: serd/mail.py:26
+#, python-brace-format
+msgid ""
+"Vorname:\t{given_name}\n"
+"Nachname:\t{last_name}\n"
+"PLZ:\t{plz}\n"
+"Ort:\t{city}\n"
+msgstr ""
+
+#: serd/mail.py:32
+#, python-brace-format
+msgid "Straße:\t{street}"
+msgstr ""
+
+#: serd/mail.py:33
+#, python-brace-format
+msgid ""
+"Telefon:\t{phone}\n"
+"E-Mail:\t{mail}\n"
+"Sprachen:\t{language}\n"
+"Anzahl Personen:\t{total_number}\n"
+"Davon Kinder:\t{children_number}\n"
+"Kostenfreie Unterkunft:\t{for_free}\n"
+msgstr ""
+
+#: serd/mail.py:43
+#, python-brace-format
+msgid "Miete:\t{cost}\n"
+msgstr ""
+
+#: serd/mail.py:44
+#, python-brace-format
+msgid ""
+"Spontan Verfügbar:\t{spontan}\n"
+"Verfügbar ab:\t{available_from}\n"
+"Nur vorrübergehend verfügbar:\t{limited_availability}\n"
+msgstr ""
+
+#: serd/mail.py:50
+#, python-brace-format
+msgid "Verfügbar bis:\t{available_until}\n"
+msgstr ""
+
+#: serd/mail.py:51
+#, python-brace-format
+msgid ""
+"Mit ÖPNV erreichbar:\t{public_transport}\n"
+"Zahl der Zimmer:\t{rooms}\n"
+"Eigenständige Wohnung:\t{seperate_appartment}\n"
+msgstr ""
+
+#: serd/mail.py:56
+#, python-brace-format
+msgid "Meine Wohnsituation:\t{living_with}\n"
+msgstr ""
+
+#: serd/mail.py:57
+#, python-brace-format
+msgid ""
+"Erlaubte Haustiere:\t{pets}\n"
+"Kommentar:\t{comment}"
+msgstr ""
+
+#: serd/mail.py:62
+#, python-brace-format
+msgid ""
+"Vorname:\t{given_name}\n"
+"Nachname:\t{last_name}\n"
+"Telefon:\t{phone}\n"
+"Erwachsene:\t{adults}\n"
+"Kinder:\t{children}\n"
+"Beschreibung:\t{who}\n"
+"Gruppe teilbar:\t{split}\n"
+"Aktuelle Unterkunft:\t{current_housing}\n"
+msgstr ""
+
+#: serd/mail.py:74
+#, python-brace-format
+msgid ""
+"Stellvertreter:in :\t{representative}\n"
+"Stellvertreter:in Telefon:\t{repr_phone}\n"
+"Stellvertreter:in E-Mail:\t{repr_mail}\n"
+msgstr ""
+
+#: serd/mail.py:79
+#, python-brace-format
+msgid ""
+"Ankunftsdatum:\t{arrival_date}\n"
+"Ankunftsort:\t{arrival_location}\n"
+"Haustiere:\t{pets}\n"
+"Anzahl Haustiere\t{pet_number}\n"
+"Auto vorhanden\t{car}\n"
+"Sprachen:\t{languages}\n"
+"Impfung:\t{vaccination}\n"
+"Barrierefrei:\t{accessability_needs}\n"
+msgstr ""
+
+#: serd/models.py:20 serd/models.py:57
+msgid "Nachname"
+msgstr ""
+
+#: serd/models.py:21 serd/models.py:58
+msgid "Vorname"
+msgstr ""
+
+#: serd/models.py:23 serd/models.py:64
+msgid "Telefonnummer"
+msgstr ""
+
+#: serd/models.py:24 serd/models.py:65
+msgid "E-Mail-Adresse"
+msgstr ""
+
+#: serd/models.py:25
+msgid "Name einer stellvertretenden Person"
+msgstr ""
+
+#: serd/models.py:25
+msgid "falls zutreffend"
+msgstr ""
+
+#: serd/models.py:26
+msgid "Telefonnummer der stellvertretenden Person"
+msgstr ""
+
+#: serd/models.py:27
+msgid "E-Mail-Adresse der stellvertretenden Person"
+msgstr ""
+
+#: serd/models.py:28
+msgid "Anzahl der Erwachsenen und Kindern ab 12 Jahren"
+msgstr ""
+
+#: serd/models.py:29
+msgid "Anzahl der Kinder unter 12"
+msgstr ""
+
+#: serd/models.py:30
+msgid "Bitte beschreiben Sie Ihre Gruppe kurz (Alter, Geschlecht, ...)"
+msgstr ""
+
+#: serd/models.py:31
+msgid "Ab fünf Personen: Gruppe darf geteilt werden"
+msgstr ""
+
+#: serd/models.py:31
+msgid "notfalls kann eine Unterbringung in zwei Unterkünften erfolgen"
+msgstr ""
+
+#: serd/models.py:32
+msgid "Wo sind Sie aktuell untergebracht?"
+msgstr ""
+
+#: serd/models.py:33
+msgid "Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"
+msgstr ""
+
+#: serd/models.py:34
+msgid "Wo in Regensburg kommen Sie an?"
+msgstr ""
+
+#: serd/models.py:34
+msgid "zum Beispiel Regensburg Hauptbahnhof"
+msgstr ""
+
+#: serd/models.py:35
+msgid "Welche Haustiere haben Sie?"
+msgstr ""
+
+#: serd/models.py:36
+msgid "Wie viele Haustiere haben Sie?"
+msgstr ""
+
+#: serd/models.py:37
+msgid "Haben Sie ein Auto?"
+msgstr ""
+
+#: serd/models.py:38
+msgid "Sprachkenntnisse"
+msgstr ""
+
+#: serd/models.py:39
+msgid "Sind alle Personen in Ihrer Gruppe vollständig gegen COVID-19 geimpft?"
+msgstr ""
+
+#: serd/models.py:40
+msgid "Wird eine barrierefreie Wohnung benötigt?"
+msgstr ""
+
+#: serd/models.py:41
+msgid "Können Sie für Ihre Unterkunft zahlen?"
+msgstr ""
+
+#: serd/models.py:41
+msgid "Keine Voraussetzung für die Vermittlung einer privaten Notunterkunft"
+msgstr ""
+
+#: serd/models.py:42
+msgid "Sachbearbeiter:in"
+msgstr ""
+
+#: serd/models.py:43
+msgid "Priorität"
+msgstr ""
+
+#: serd/models.py:44
+msgid "Vermitttelt an"
+msgstr ""
+
+#: serd/models.py:46 serd/models.py:79
+msgid "Status"
+msgstr ""
+
+#: serd/models.py:47
+msgid "Interner Kommentar"
 msgstr ""
 
 #: serd/models.py:59
-msgid "Anzahl Zimmer"
+msgid "Postleitzahl"
 msgstr ""
 
 #: serd/models.py:60
-msgid "Unterkunft ist eine eigenständige Wohnung"
+msgid ""
+"Anzahl der Personen, die in dieser Wohnung eine Unterkunft finden können."
 msgstr ""
 
 #: serd/models.py:61
-msgid "Meine Wohnsituation"
+msgid ""
+"Anzahl der zuvor genannten Plätze, die nur für Kinder unter 12 geeignet sind."
 msgstr ""
 
 #: serd/models.py:62
-msgid "Haustiere Erlaubt"
+msgid "Straße, Hausnummer (optional)"
 msgstr ""
 
-#: serd/models.py:64
-msgid "Kommentar"
+#: serd/models.py:63
+msgid "Ort"
+msgstr ""
+
+#: serd/models.py:66
+msgid "Welche Sprachen sprechen Sie?"
+msgstr ""
+
+#: serd/models.py:67
+msgid ""
+"Ich stelle die Unterkunft mindestens vorübergehend kostenlos zur Verfügung."
+msgstr ""
+
+#: serd/models.py:69
+msgid "spontanes zur Verfügung stellen ist möglich"
+msgstr ""
+
+#: serd/models.py:69
+msgid "innerhalb eines Tages"
+msgstr ""
+
+#: serd/models.py:70
+msgid "Ab wann steht die Unterkunft zur Verfügung?"
+msgstr ""
+
+#: serd/models.py:71
+msgid "Die Unterkunft wird nur zeitlich begrenzt zur Verfügung gestellt."
+msgstr ""
+
+#: serd/models.py:73
+msgid "Ist die Unterkunft barrierefrei?"
+msgstr ""
+
+#: serd/models.py:74
+msgid "Ist die Unterkunft mit öffentlichen Verkehrsmitteln erreichbar? "
+msgstr ""
+
+#: serd/models.py:75
+msgid "Anzahl der zur Verfügung gestellten Zimmer"
+msgstr ""
+
+#: serd/models.py:76
+msgid "Unterkunft erfolgt in einer separaten Wohnung."
+msgstr ""
+
+#: serd/models.py:77
+msgid "Bei Unterbringung in der eigenen Wohnung: Ich wohne"
+msgstr ""
+
+#: serd/models.py:78
+msgid "Folgende Haustiere sind erlaubt."
+msgstr ""
+
+#: serd/models.py:80
+msgid "Weiterer Kommentar (max. 250 Zeichen)"
+msgstr ""
+
+#: serd/models.py:83
+msgid "Eine COVID-19-Impfung ist zwingend notwendig."
 msgstr ""
 
 #: serd/validators.py:8
@@ -179,13 +481,21 @@ msgid "PLZ darf nur Ziffern enthalten"
 msgstr ""
 
 #: serd/validators.py:18
-msgid "Telephonnumer muss mindestens sechstellig sein"
+msgid "Telefonnummer muss mindestens sechsstellig sein"
 msgstr ""
 
 #: serd/validators.py:22
-msgid "Telephonnummer muss mit + oder 0 beginnen"
+msgid "Telefonnummer muss mit + oder 0 beginnen"
 msgstr ""
 
 #: serd/validators.py:27
-msgid "Ungültiges Zeichen in der Telephonnummer"
+msgid "Ungültiges Zeichen in der Telefonnummer"
+msgstr ""
+
+#: serd/validators.py:33
+msgid "Wert darf nicht negativ sein"
+msgstr ""
+
+#: templates/serd/housingrequest_form.html:76 templates/serd/offer_form.html:75
+msgid "Absenden"
 msgstr ""
