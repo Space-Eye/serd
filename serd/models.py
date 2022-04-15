@@ -70,7 +70,7 @@ class Offer(models.Model):
     spontan = models.BooleanField(verbose_name=_("Spontan Verfügbar"))
     available_from = models.DateField(verbose_name=_("Verfügbar Ab"))
     limited_availability = models.BooleanField(verbose_name=_("Nur vorrübergehend Verfügbar"))
-    available_until = models.DateField( verbose_name=_("Verfügbar bis"))
+    available_until = models.DateField( verbose_name=_("Verfügbar bis"), null=True)
     accessability = models.BooleanField( verbose_name=_("Barrierefrei"))
     public_transport = models.BooleanField(verbose_name=_("Mit ÖPNV Erreichbar"))
     rooms = models.SmallIntegerField(verbose_name=_("Anzahl Zimmer"))
