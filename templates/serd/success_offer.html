@@ -3,7 +3,9 @@
     <title>Erfolg </title>
 </head>
 <body>
-{% translate "Das Wohnungsangebot mit der ID {{ view.kwargs.offer_id }} wurde erfolgreich gespeichert." %}<br>
+{% blocktrans with nr=view.kwargs.offer_id %}
+Das Wohnungsangebot mit der ID {{ nr }} wurde erfolgreich gespeichert. <br>
+{% endblocktrans %}
 <br>
 <a href="{% url 'index' %}">Startseite</a>
 </body>
