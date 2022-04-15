@@ -5,7 +5,7 @@ from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
 from .validators import validate_plz, validate_phone, validate_not_negative
-
+from django.contrib.auth.models import User
 class AnnotationManager(models.Manager):
 
     def __init__(self, **kwargs):
@@ -45,12 +45,15 @@ class  HousingRequest(models.Model):
     hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, verbose_name="Hotel", related_name='requests', blank=True)
     state = models.CharField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new", max_length=64)
     private_comment = models.CharField(blank=True, null=True, verbose_name=_("Interner Kommentar"), default="", max_length=64)
+    created_at = models.DateField(auto_now_add=True)
+
     _persons = None
 
     objects = AnnotationManager(persons=models.F('adults')+models.F('children'))
     def __str__(self):
         return "_".join([self.last_name, self.given_name,str(self.number)])
-
+    class Meta:
+        app_label ='serd'
 
 class Offer(models.Model):
     number = models.AutoField(primary_key=True)
@@ -61,7 +64,6 @@ class Offer(models.Model):
     children_number = models.PositiveSmallIntegerField(null=True, verbose_name=_("Anzahl der zuvor genannten Plätze, die nur für Kinder unter 12 geeignet sind."), validators=[validate_not_negative])
     street = models.CharField(max_length=256, blank=True, verbose_name=_("Straße, Hausnummer (optional)"))
     city = models.CharField(max_length=256, verbose_name=_("Ort"))
-    phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name=_("Telefonnummer"))
     mail = models.CharField(max_length=256, validators=[validate_email], verbose_name=_("E-Mail-Adresse"))
     language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Welche Sprachen sprechen Sie?"))
     for_free = models.BooleanField(verbose_name=_("Ich stelle die Unterkunft mindestens vorübergehend kostenlos zur Verfügung."))
@@ -77,17 +79,6 @@ class Offer(models.Model):
     living_with = models.CharField(choices=LIVING_WITH, max_length=64, verbose_name=_("Bei Unterbringung in der eigenen Wohnung: Ich wohne"), blank=True)
     pets = MultiSelectField(choices=PETS,verbose_name=_("Folgende Haustiere sind erlaubt."))
     state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"),default="new")
-    comment = models.CharField(blank=True, verbose_name=_("Weiterer Kommentar (max. 250 Zeichen)"), max_length=250)
-    private_comment = models.CharField(blank=True, verbose_name=("Interner Kommentar"), default="", max_length=512)
-    by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
-    covid = models.BooleanField(default=False, verbose_name=_("Eine COVID-19-Impfung ist zwingend notwendig."))
-    def __str__(self):
-        return "_".join([self.last_name, self.given_name,str(self.number)])
-
-
-
-class AnsprechpartnerHotel(models.Model):
-    number = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128, verbose_name="Name")
     tel = models.CharField(max_length=128, validators=[validate_phone], verbose_name="Telefonnummer", blank=True)
     mail = models.CharField(max_length=128, verbose_name="E-mail", validators=[validate_email], blank=True)
@@ -95,6 +86,8 @@ class AnsprechpartnerHotel(models.Model):
     def __str__(self) -> str:
         return "_".join([str(self.number), self.name])
 
+    class Meta:
+        app_label ='serd'
 
 class Hotel(models.Model):
     number = models.AutoField(primary_key=True)
@@ -122,4 +115,6 @@ class Hotel(models.Model):
         self.adults_free = self.beds_adults - adults
         self.children_free = self.beds_children -children
         super(Hotel, self).save(*args, **kwargs)
+    class Meta:
+        app_label ='serd'
 
