@@ -5,7 +5,8 @@ REQUEST_STATE = (
     ('contacted','Kontaktiert'),
     ('stale', 'nicht mehr aktuell'),
     ('housing_contact', 'Kontakt mit Unterkunft'),
-    ('arrived','In Unterkunft angekommen')
+    ('arrived','In Unterkunft angekommen'),
+    ('no', 'Nicht vermittelbar')
 )
 LANGUAGE_CHOICE = (
     ('de', _('Deutsch')),
@@ -26,7 +27,8 @@ OFFER_STATE = (
     ('arrived', 'Gast ist Angekommen'),
     ('stale', 'Nicht mehr verfügbar'),
     ('free', 'Unterkunft wieder Verfügbar'),
-    ('reserved', 'Reserviert')
+    ('reserved', 'Reserviert'),
+    ('no', 'Nicht Tragbar')
 )
 PRIORITY_CHOICE = (
     ('normal','Normal'),
