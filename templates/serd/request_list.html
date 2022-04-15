@@ -94,12 +94,13 @@
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.repr_mail}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.split |yesno:'Ja,Nein'}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.can_pay |yesno:'Ja,Nein'}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_date}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_location}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.pet_number}} {{data.pets}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.languages}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.accessability_needs |yesno:'Ja,Nein'}}</span></td>
-           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.placed_at |default:""}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> <a href="/offers/edit/{{data.placed_at.number}}"> {{data.placed_at |default:""}}</a></span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.hotel |default:""}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.get_priority_display}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.case_handler |default:""}}</span></td>

@@ -95,7 +95,9 @@
             </td>
             <td>
                 {% for request in data.requests.all %}
+                <a href="/requests/edit/{{request.number}}">
                 {{request}}
+            </a>&emsp;
                 {% endfor %}
             </td>
             <td>
