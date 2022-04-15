@@ -80,14 +80,15 @@ class Offer(models.Model):
     pets = MultiSelectField(choices=PETS,verbose_name=_("Folgende Haustiere sind erlaubt."))
     state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"),default="new")
     name = models.CharField(max_length=128, verbose_name="Name")
-    tel = models.CharField(max_length=128, validators=[validate_phone], verbose_name="Telefonnummer", blank=True)
+    phone = models.CharField(max_length=128, validators=[validate_phone], verbose_name="Telefonnummer", blank=True)
     mail = models.CharField(max_length=128, verbose_name="E-mail", validators=[validate_email], blank=True)
-    hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, related_name="ansprechpartner")
-    def __str__(self) -> str:
-        return "_".join([str(self.number), self.name])
+    comment = models.CharField(blank=True, verbose_name=_("Weiterer Kommentar (max. 250 Zeichen)"), max_length=250)
+    private_comment = models.CharField(blank=True, verbose_name=("Interner Kommentar"), default="", max_length=512)
+    by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
+    covid = models.BooleanField(default=False, verbose_name=_("Eine COVID-19-Impfung ist zwingend notwendig."))
+    def __str__(self):
+        return "_".join([self.last_name, self.given_name,str(self.number)])
 
-    class Meta:
-        app_label ='serd'
 
 
 class AnsprechpartnerHotel(models.Model):
