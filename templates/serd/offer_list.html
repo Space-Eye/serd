@@ -36,25 +36,25 @@
         <th>Ort</th>
         <th>Gesamtanzahl der Personen</th>
         <th>davon Kinder unter zwölf</th>
+        <th>Gratis</th>
+        <th>Kosten</th>
+        <th>Sprachen</th>
+        <th>Barrierefrei</th>
+        <th>Haustiere</th>
+        <th>Kommentar</th>
         <th>Straße</th>
         <th>Tel</th>
         <th>mail</th>
-        <th>Sprachen</th>
-        <th>Gratis</th>
-        <th>Kosten</th>
         <th>spontan</th>
         <th>verfügbar ab</th>
         <th>begrenzt verfügbar</th>
         <th>verfügbar bis</th>
-        <th>Barrierefrei</th>
         <th>ÖPNV</th>
         <th>Zimmer</th>
         <th>Eigene Wohnung</th>
         <th>Wohnsituation</th>
-        <th>Haustiere</th>
         <th>Status</th>
         <th>Vermittelt</th>
-        <th>Kommentar</th>
         <th>Stadt</th>
         <th>Interner Kommentar</th>
       </thead>
@@ -109,6 +109,36 @@
         </td>
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.for_free|yesno:'Ja,Nein'}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.cost}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.language}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.accessability|yesno:'Ja,Nein'}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
+            >{{data.pets}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}">
+            {{data.comment}}</span
+          >
+        </td>
+        <td>
+          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
             >{{data.street}}</span
           >
         </td>
@@ -120,21 +150,6 @@
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
             >{{data.mail}}</span
-          >
-        </td>
-        <td>
-          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
-            >{{data.language}}</span
-          >
-        </td>
-        <td>
-          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
-            >{{data.for_free|yesno:'Ja,Nein'}}</span
-          >
-        </td>
-        <td>
-          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
-            >{{data.cost}}</span
           >
         </td>
         <td>
@@ -159,11 +174,6 @@
         </td>
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
-            >{{data.accessability|yesno:'Ja,Nein'}}</span
-          >
-        </td>
-        <td>
-          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
             >{{data.public_transport|yesno:'Ja,Nein'}}</span
           >
         </td>
@@ -184,22 +194,12 @@
         </td>
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
-            >{{data.pets}}</span
-          >
-        </td>
-        <td>
-          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
             >{{data.get_state_display}}</span
           >
         </td>
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
             >{% for req in data.housingrequest_set.all %}<a href="/requests/edit/{{req.number}}" style="color:black; text-decoration:underline"> {{ req }}</a> <br> {% endfor%}</span
-          >
-        </td>
-        <td>
-          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}">
-            {{data.comment}}</span
           >
         </td>
         <td>
