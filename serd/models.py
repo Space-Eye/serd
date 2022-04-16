@@ -86,6 +86,7 @@ class Offer(models.Model):
     private_comment = models.CharField(blank=True, verbose_name=("Interner Kommentar"), default="", max_length=512)
     by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
     covid = models.BooleanField(default=False, verbose_name=_("Eine COVID-19-Impfung ist zwingend notwendig."))
+    created_at = models.DateField(auto_now_add=True)
     def __str__(self):
         return "_".join([str(self.number),self.last_name, self.given_name])
 
