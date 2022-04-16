@@ -51,7 +51,7 @@ PETS = (
 HOTEL_STATE = (
     ('aktive', 'Aktiv'),
     ('open', 'offen'),
-    ('full', 'Keine Kapaizitäten')
+    ('full', 'Keine Kapazitäten')
 )
 FOOD_CHOICES = (
     ('breakfast', 'Frühstück'),
