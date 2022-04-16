@@ -51,7 +51,7 @@ class  HousingRequest(models.Model):
 
     objects = AnnotationManager(persons=models.F('adults')+models.F('children'))
     def __str__(self):
-        return "_".join([self.last_name, self.given_name,str(self.number)])
+        return "_".join([str(self.number),self.last_name, self.given_name])
     class Meta:
         app_label ='serd'
 
@@ -87,7 +87,7 @@ class Offer(models.Model):
     by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
     covid = models.BooleanField(default=False, verbose_name=_("Eine COVID-19-Impfung ist zwingend notwendig."))
     def __str__(self):
-        return "_".join([self.last_name, self.given_name,str(self.number)])
+        return "_".join([str(self.number),self.last_name, self.given_name])
 
 
 
