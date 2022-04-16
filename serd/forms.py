@@ -56,8 +56,9 @@ class OfferForm(forms.ModelForm):
         offer = super(OfferForm, self).save(commit=False, **kwargs)
         if commit:
              offer.save()
-        mailer = Mailer()
-        mailer.send_offer_confirmation_mail(offer)
+        if not isinstance(self, OfferEditForm):
+            mailer = Mailer()
+            mailer.send_offer_confirmation_mail(offer)
         return offer
 
         
@@ -116,9 +117,9 @@ class RequestForm(forms.ModelForm):
         
         if commit:
             housingrequest.save()
-
-        mailer = Mailer()
-        mailer.send_request_confirmation_mail(housingrequest)
+        if not isinstance(self, RequestEditForm):
+            mailer = Mailer()
+            mailer.send_request_confirmation_mail(housingrequest)
         return housingrequest
 
 
