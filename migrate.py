@@ -225,6 +225,7 @@ for raw_offer in offers:
     offer.comment = raw_offer['Kommentar']
     offer.private_comment = raw_offer['Notizen']
     offer.by_municipality = get_bool(raw_offer['Stadt'])
+    offer.covid = get_bool(raw_offer['Impfung'])
     offer.save()
 offer_file.close()
 
@@ -281,7 +282,8 @@ for raw_request in requests:
     request.priority = get_priority(raw_request['Priorität'])
     request.placed_at = None
     request.private_comment = raw_request['Notizen']
-    request.case_handler = get_handler(raw_request['Sachbearbeiter'])
+    request.case_handler = None
+    request.can_pay = get_bool(raw_request['pay'])
     request.save()
     #print(raw_request.keys())
 request_file.close()
