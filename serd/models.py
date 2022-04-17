@@ -60,7 +60,7 @@ class Offer(models.Model):
     last_name = models.CharField(max_length=128, verbose_name=_("Nachname"))
     given_name = models.CharField(max_length=128, verbose_name=_("Vorname"))
     plz = models.CharField(max_length=5, validators=[validate_plz], verbose_name=_("Postleitzahl"))
-    total_number = models.PositiveSmallIntegerField(default=1, verbose_name=_("Anzahl der Personen, die in dieser Wohnung eine Unterkunft finden können."), validators=[validate_not_negative])
+    total_number = models.PositiveSmallIntegerField(verbose_name=_("Anzahl der Personen, die in dieser Wohnung eine Unterkunft finden können."), validators=[validate_not_negative])
     children_number = models.PositiveSmallIntegerField(null=True, verbose_name=_("Anzahl der zuvor genannten Plätze, die nur für Kinder unter 12 geeignet sind."), validators=[validate_not_negative])
     street = models.CharField(max_length=256, blank=True, verbose_name=_("Straße, Hausnummer (optional)"))
     city = models.CharField(max_length=256, verbose_name=_("Ort"))
