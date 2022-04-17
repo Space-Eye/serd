@@ -44,7 +44,7 @@ class  HousingRequest(models.Model):
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
     hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, verbose_name="Hotel", related_name='requests', blank=True)
     state = models.CharField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new", max_length=64)
-    private_comment = models.CharField(blank=True, null=True, verbose_name=_("Interner Kommentar"), default="", max_length=64)
+    private_comment = models.CharField(blank=True, null=True, verbose_name=_("Interner Kommentar"), default="", max_length=150)
     created_at = models.DateField(auto_now_add=True)
 
     _persons = None
