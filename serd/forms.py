@@ -101,7 +101,8 @@ class RequestForm(forms.ModelForm):
             self.add_error(field='pets', error=ValueError(
                     _("Wenn keine Haustiere vorhanden sind, muss 'Keine' ausgewählt werden.")
                 ))
-        if pets and 'none' not in pets and len(pets) > self.cleaned_data.get('pet_number'):
+        
+        elif pets and 'none' not in pets and len(pets) > self.cleaned_data.get('pet_number'):
             self.add_error(field='pet_number', error=ValueError(
                     _("Mehr Tierarten ausgewählt als Tiere vorhanden")
                 ))
