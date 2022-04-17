@@ -65,6 +65,9 @@
         {{ field.errors }}
         <label for="{{ field.id_for_label }}" class="col-lg-4 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ field.help_text|safe }}">
             {{ field.label}}
+            {% if field.field.required %}
+                *
+            {% endif %}
         </label>
         <div class="col-lg-4 my-auto" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ field.help_text|safe }}">
             {{ field }}
