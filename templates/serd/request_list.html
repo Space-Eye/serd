@@ -24,6 +24,26 @@
     }
 
     table  { border-collapse: collapse; width: 100%; }
+
+    .sticky-col {
+        position: -webkit-sticky;
+        position: sticky;
+        background-color: white;
+      }
+      
+      .first-col {
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+        left: 0px;
+      }
+      
+      .second-col {
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;
+        left: 100px;
+      }
 </style>
 </head>
 
@@ -32,8 +52,8 @@
 <div class="tableFixHead">
     <table class="table">
     <thead class="header" id="table-head">
-        <th>ID</th>
-        <th>Name</th>
+        <th class="sticky-col first-col" style="background-color: white">ID</th>
+        <th class="sticky-col second-col" style="background-color: white">Name</th>
         <th>Tel</th>
         <th>email</th>
         <th>Erwachsene</th>
@@ -75,8 +95,8 @@
 
 
 
-           <td> {{data.number}}</td>
-           <td> {{ data.given_name}}, {{data.last_name}}
+           <td class="sticky-col first-col"> {{data.number}}</td>
+           <td class="sticky-col second-col"> {{ data.given_name}}, {{data.last_name}}
                {%if data.name_slug %}
                <br> {{data.name_slug}}
                {%endif%}
