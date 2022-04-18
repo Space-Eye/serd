@@ -44,6 +44,11 @@
         max-width: 150px;
         left: 100px;
       }
+
+      .comment-col {
+        width: 35em;
+        min-width: 35em;
+      }
 </style>
 </head>
 
@@ -57,7 +62,7 @@
         <th>Erwachsene</th>
         <th>Kinder</th>
         <th>Gesamt</th>
-        <th>Wer</th>
+        <th class="comment-col">Wer</th>
         <th>Haustiere</th>
         <th>Barrierfrei</th>
         <th>Tel</th>
@@ -77,7 +82,7 @@
         <th>Priorität</th>
         <th>Sachbearbeiter:in</th>
         <th>Status</th>
-        <th>Interner Kommentar</th>
+        <th class="comment-col">Interner Kommentar</th>
     </thead>
     <tbody>
     {% for data in dataset %}
@@ -105,7 +110,7 @@
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.adults}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.persons}}</span></td>
-           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
+           <td class="comment-col">  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.pet_number}} {{data.pets}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.accessability_needs |yesno:'Ja,Nein'}}</span></td>
            
@@ -126,7 +131,7 @@
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.get_priority_display}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.case_handler |default:""}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.get_state_display |default:""}}</span></td>
-           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.private_comment |default:""}}</span></td>
+           <td class="comment-col">  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.private_comment |default:""}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.number}} "style="color:black; text-decoration:underline" >edit </a></span></td>
            </tr>
         {% endfor %}
