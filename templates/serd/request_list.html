@@ -88,20 +88,32 @@
     {% for data in dataset %}
         {%if data.state == "new"%}    
             <tr style="background-color:white">
+           <td class="sticky-col first-col" style="background-color: white"> {{data.number}}</td>
+           <td class="sticky-col second-col" style="background-color: white"> {{ data.given_name}}, {{data.last_name}}
         {%elif data.state == "contacted" %}
-            <tr style="background-color:yellow">
-        {%elif data.state == "housing_contact" %}
+        <tr style="background-color:yellow">
+        <td class="sticky-col first-col" style="background-color: yellow"> {{data.number}}</td>
+        <td class="sticky-col second-col" style="background-color: yellow"> {{ data.given_name}}, {{data.last_name}}
+         {%elif data.state == "housing_contact" %}
             <tr style="background-color:lightblue">
+           <td class="sticky-col first-col" style="background-color: lightblue"> {{data.number}}</td>
+           <td class="sticky-col second-col" style="background-color: lightblue"> {{ data.given_name}}, {{data.last_name}}
         {%elif data.state == "stale" %}
-            <tr style="background-color:grey">
+            <tr style="background-color:lightgray">
+           <td class="sticky-col first-col" style="background-color: lightgray"> {{data.number}}</td>
+           <td class="sticky-col second-col" style="background-color: lightgray"> {{ data.given_name}}, {{data.last_name}}
         {%elif data.state == "arrived" %}
             <tr style="background-color:green">
+           <td class="sticky-col first-col" style="background-color: green"> {{data.number}}</td>
+           <td class="sticky-col second-col" style="background-color: green"> {{ data.given_name}}, {{data.last_name}}
+        %elif data.state == "no" %}
+            <tr style="background-color:darkgray">
+           <td class="sticky-col first-col" style="background-color: darkgray"> {{data.number}}</td>
+           <td class="sticky-col second-col" style="background-color: darkgray"> {{ data.given_name}}, {{data.last_name}}
         {%endif%}
 
 
 
-           <td class="sticky-col first-col" style="background-color: white"> {{data.number}}</td>
-           <td class="sticky-col second-col" style="background-color: white"> {{ data.given_name}}, {{data.last_name}}
                {%if data.name_slug %}
                <br> {{data.name_slug}}
                {%endif%}
