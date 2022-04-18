@@ -123,8 +123,11 @@ class RequestFilter(FormView):
             queryset = queryset.filter(q)
         
         state = form.cleaned_data['state']
-        if state != 'null':
-            queryset = queryset.filter(state__exact=state)
+        if state:
+            q = Q()
+            for stat in state:
+                q = q | Q(state=stat)
+            queryset = queryset.filter(q)
 
         context = {}
         context['dataset'] = queryset
@@ -175,8 +178,11 @@ class OfferFilter(FormView):
         if accessability != 'null':
             queryset = queryset.filter(accessability__exact=accessability)
         state = data['state']
-        if state != 'null':
-            queryset = queryset.filter(state__exact=state)
+        if state:
+            q = Q()
+            for stat in state:
+                q = q | Q(state=stat)
+            queryset = queryset.filter(q)
         for_free = data['for_free']
         if for_free != 'null':
             queryset = queryset.filter(for_free__exact=for_free)

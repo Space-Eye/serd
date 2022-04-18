@@ -139,7 +139,7 @@ class RequestFilterForm(forms.Form):
     languages = forms.MultipleChoiceField(choices=LANGUAGE_CHOICE, required=False, widget=forms.CheckboxSelectMultiple, label="Sprachen")
     accessability_needs = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
     priority = forms.MultipleChoiceField(choices=PRIORITY_CHOICE, required=False, label="Priorität", widget=forms.CheckboxSelectMultiple)
-    state = forms.ChoiceField(choices=(('null','Egal'),)+REQUEST_STATE, required=False, label="Status")
+    state = forms.MultipleChoiceField(choices=REQUEST_STATE, required=False, label="Status", widget=forms.CheckboxSelectMultiple)
 
 class OfferFilterForm(forms.Form):
     PLZ = forms.CharField(max_length=5, required=False, label='PLZ')
@@ -152,5 +152,5 @@ class OfferFilterForm(forms.Form):
     appartment = forms.ChoiceField(choices=BOOL_CHOICES, label='Eigene Wohnung')
     pets = forms.MultipleChoiceField(choices=PETS, required=False, label='Haustiere', widget=forms.CheckboxSelectMultiple)
     accessability = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
-    state = forms.ChoiceField(choices=(('null','Egal'),)+OFFER_STATE, label='Status')
+    state = forms.MultipleChoiceField(choices=OFFER_STATE, label='Status', widget=forms.CheckboxSelectMultiple)
     for_free = forms.ChoiceField(choices=BOOL_CHOICES, label='Gratis')
