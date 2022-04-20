@@ -129,6 +129,9 @@ class RequestFilter(FormView):
             for stat in state:
                 q = q | Q(state=stat)
             queryset = queryset.filter(q)
+        no_handler = form.cleaned_data['no_handler']
+        if no_handler:
+            queryset = queryset.filter(case_handler__isnull=True)
 
         context = {}
         context['dataset'] = queryset

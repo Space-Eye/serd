@@ -207,6 +207,7 @@ class RequestFilterForm(forms.Form):
     accessability_needs = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
     priority = forms.MultipleChoiceField(choices=PRIORITY_CHOICE, required=False, label="Priorität", widget=forms.CheckboxSelectMultiple)
     state = forms.MultipleChoiceField(choices=REQUEST_STATE, required=False, label="Status", widget=forms.CheckboxSelectMultiple)
+    no_handler = forms.BooleanField(label="Kein Sachbearbeiter", required=False)
 
 class OfferFilterForm(forms.Form):
     PLZ = forms.CharField(max_length=5, required=False, label='PLZ')
