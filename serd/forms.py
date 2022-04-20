@@ -191,9 +191,9 @@ class RequestForm(forms.ModelForm):
 
 
 class RequestEditForm(RequestForm):
+    private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
     class Meta:
         model = HousingRequest
-        private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
         fields = RequestForm.Meta.fields + ('state','case_handler', 'placed_at', 'hotel', 'priority','private_comment')
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
