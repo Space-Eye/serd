@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import configparser
-
+import secrets
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*ltt^v9^%r5922zgb@@91&5xyr1)ek@buq%e3erb=h^fr=4d@)'
+SECRET_KEY = secrets.token_hex(25)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
