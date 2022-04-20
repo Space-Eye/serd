@@ -1,6 +1,8 @@
 {% load i18n %}
+{% load static %}
 <head>
     <title>Erfolg </title>
+    <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
 </head>
 <body>
 {% blocktrans with nr=view.kwargs.offer_id %}

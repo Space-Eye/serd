@@ -15,6 +15,7 @@ import datetime
 def success(request):
     return HttpResponse("success")
 
+@login_required
 def index(request):
     return render(request, "serd/index.html")
 
