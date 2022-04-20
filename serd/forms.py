@@ -1,7 +1,7 @@
-import imp
+from datetime import datetime
 from django import forms
 from slugify import slugify
-
+from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_STATE
 from .models import HousingRequest, Offer
 from django.utils.translation import gettext_lazy as _
@@ -11,18 +11,49 @@ def isascii(s):
     """Check if the characters in string s are in ASCII, U+0-U+7F."""
     return len(s) == len(s.encode())
 
-
+PFLICHT = ValidationError(_("Pflichtfeld"))
 class OfferForm(forms.ModelForm):
+    def test_required(self, field:str):
+        data = self.cleaned_data[field]
+        if data is None or data == "":
+            self.add_error(field=field, error=PFLICHT)
+        return data
+
     template_name = 'serd/form_snippet.html'
     available_from =  forms.DateField(
         label=_('Verfügbar ab'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     available_until =  forms.DateField(
-        label=_('Verfügbar bis'),
+        label=_('Verfügbar bis'), required=False,
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     cost = forms.IntegerField(label=_("falls verlangt, Monatsmiete warm"), required=False)
 
+    def clean_last_name(self):
+        return self.test_required('last_name')
+
+    def clean_given_name(self):
+        return self.test_required('given_name')
+    
+    def clean_plz(self):
+        return self.test_required('plz')
+
+    def clean_total_number(self):
+        return self.test_required('total_number')
+    
+    def clean_children_number(self):
+        return self.test_required('children_number')
+
+    def clean_city(self):
+        return self.test_required('city')
+    def clean_mail(self):
+        return self.test_required('mail')
+    
+    def clean_rooms(self):
+        return self.test_required('rooms')
+
     def clean(self):
+        if self.errors:
+            return self.cleaned_data
         if not self.cleaned_data.get('total_number') > self.cleaned_data.get('children_number'):
             self.add_error(field='total_number', error=
             ValueError(
@@ -77,6 +108,12 @@ class OfferEditForm(OfferForm):
 
 class RequestForm(forms.ModelForm):
     template_name = 'form_snippet.html'
+    def test_required(self, field:str):
+        data = self.cleaned_data[field]
+        if data is None or data == "":
+            self.add_error(field=field, error=PFLICHT)
+        return data
+
     arrival_date = forms.DateTimeField(label=_('Ankunftstag'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))
     )
@@ -86,6 +123,30 @@ class RequestForm(forms.ModelForm):
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',
         'split', 'current_housing', 'can_pay', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 
         'arrival_location', 'pets', 'pet_number', 'car', 'languages', 'additional_languages', 'vaccination', 'accessability_needs')
+    def clean_given_name(self):
+        return self.test_required('given_name')
+    def clean_last_name(self):
+        return self.test_required('last_name')
+    def clean_phone(self):
+        return self.test_required('phone')
+    def clean_mail(self):
+        return self.test_required('mail')
+    def clean_adults(self):
+        return self.test_required('adults')
+    def clean_children(self):
+        return self.test_required('children')
+    def clean_who(self):
+        return self.test_required('who')
+    def clean_arrival_location(self):
+        return self.test_required('arrival_location')
+    def clean_arrival_date(self):
+        date = self.cleaned_data['arrival_date']
+        if date.date() == datetime.strptime("01.01.22","%d.%m.%y").date():
+            self.add_error(field='arrival_date', error=PFLICHT)
+        return date
+    def clean_current_housing(self):
+        return self.test_required('current_housing')
+
     def clean(self):
         pets = self.cleaned_data.get('pets')
         if pets and len(pets) > 1 and 'none' in pets:

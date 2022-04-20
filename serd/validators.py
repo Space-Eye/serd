@@ -32,3 +32,9 @@ def validate_not_negative(value: int):
         raise ValidationError(
             _('Wert darf nicht negativ sein')
         )
+
+def validate_not_empty(value):
+    if value == "" or value is None:
+        raise ValidationError(
+            _("Pflichtfeld")
+        )
