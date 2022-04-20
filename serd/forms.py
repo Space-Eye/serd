@@ -1,3 +1,4 @@
+import imp
 from django import forms
 from slugify import slugify
 
@@ -65,8 +66,9 @@ class OfferForm(forms.ModelForm):
     class Meta :
         model = Offer
         fields =('given_name', 'last_name',  'plz','city', 'street', 'phone', 'mail',
-        'language', 'total_number' , 'children_number' , 'for_free' , 'cost', 'spontan', 'available_from', 'limited_availability', 'available_until',
-        'accessability', 'public_transport', 'rooms', 'seperate_appartment', 'living_with', 'pets', 'covid', 'comment')
+        'language', 'additional_languages', 'total_number' , 'children_number' , 'for_free' , 'cost', 'spontan', 
+        'available_from', 'limited_availability', 'available_until','accessability', 'public_transport', 
+        'rooms', 'seperate_appartment', 'living_with', 'pets', 'covid', 'comment')
     
 class OfferEditForm(OfferForm):
     class Meta:
@@ -82,8 +84,8 @@ class RequestForm(forms.ModelForm):
     class Meta:
         model = HousingRequest
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',
-        'split', 'current_housing', 'can_pay', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 'arrival_location', 'pets', 'pet_number',
-        'car', 'languages', 'vaccination', 'accessability_needs')
+        'split', 'current_housing', 'can_pay', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 
+        'arrival_location', 'pets', 'pet_number', 'car', 'languages', 'additional_languages', 'vaccination', 'accessability_needs')
     def clean(self):
         pets = self.cleaned_data.get('pets')
         if pets and len(pets) > 1 and 'none' in pets:

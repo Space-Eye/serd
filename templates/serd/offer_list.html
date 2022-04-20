@@ -163,7 +163,11 @@
         </td>
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
-            >{{data.language}}</span
+            >{{data.language}}
+            {% if data.additional_languages %}
+              <br> {{data.additional_languages}}
+            {% endif %}
+            </span
           >
         </td>
         <td>

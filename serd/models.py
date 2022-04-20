@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
 from .validators import validate_plz, validate_phone, validate_not_negative
 from django.contrib.auth.models import User
+
 class AnnotationManager(models.Manager):
 
     def __init__(self, **kwargs):
@@ -17,7 +18,7 @@ class AnnotationManager(models.Manager):
 
 class  HousingRequest(models.Model):
     number = models.AutoField(primary_key=True)
-    last_name = models.CharField(max_length=128, verbose_name=_("Nachname"))
+    last_name = models.CharField(max_length=128, verbose_name=_("Nachname"),)
     given_name = models.CharField(max_length=128, verbose_name=_("Vorname"))
     name_slug = models.CharField(max_length=256, blank=True, default="")
     phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name=_("Telefonnummer"))
@@ -36,6 +37,7 @@ class  HousingRequest(models.Model):
     pet_number = models.PositiveSmallIntegerField(verbose_name=_("Wie viele Haustiere haben Sie?"), validators=[validate_not_negative], blank=True, null=True)
     car = models.BooleanField(verbose_name=_("Haben Sie ein Auto?"))
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Sprachkenntnisse"))
+    additional_languages = models.CharField(verbose_name=_("Weitere Sprachen"), max_length=64, blank=True)
     vaccination = models.BooleanField(verbose_name=_("Sind alle Personen in Ihrer Gruppe vollständig gegen COVID-19 geimpft?"))
     accessability_needs = models.BooleanField(_("Wird eine barrierefreie Wohnung benötigt?"))
     can_pay = models.BooleanField(verbose_name=_("Können Sie für Ihre Unterkunft zahlen?"), help_text=_("Keine Voraussetzung für die Vermittlung einer privaten Notunterkunft"))
@@ -66,6 +68,7 @@ class Offer(models.Model):
     city = models.CharField(max_length=256, verbose_name=_("Ort"))
     mail = models.CharField(max_length=256, validators=[validate_email], verbose_name=_("E-Mail-Adresse"))
     language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Welche Sprachen sprechen Sie?"))
+    additional_languages = models.CharField(verbose_name=_("Weitere Sprachen"), max_length=64, blank=True)
     for_free = models.BooleanField(verbose_name=_("Ich stelle die Unterkunft mindestens vorübergehend kostenlos zur Verfügung."))
     cost = models.PositiveSmallIntegerField(null=True, validators=[validate_not_negative])
     spontan = models.BooleanField(verbose_name=_("spontanes zur Verfügung stellen ist möglich"), help_text=_("innerhalb eines Tages"))
