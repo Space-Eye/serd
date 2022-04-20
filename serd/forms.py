@@ -27,6 +27,7 @@ class OfferForm(forms.ModelForm):
         label=_('Verfügbar bis'), required=False,
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     cost = forms.IntegerField(label=_("falls verlangt, Monatsmiete warm"), required=False)
+    comment = forms.CharField(required=False, label=_("Weiterer Kommentar (max. 250 Zeichen)"), widget=forms.Textarea)
 
     def clean_last_name(self):
         return self.test_required('last_name')
@@ -102,6 +103,7 @@ class OfferForm(forms.ModelForm):
         'rooms', 'seperate_appartment', 'living_with', 'pets', 'covid', 'comment')
     
 class OfferEditForm(OfferForm):
+    private_comment = forms.CharField(required=False, label=_("Interner Kommentar"), widget=forms.Textarea)
     class Meta:
         model = Offer
         fields = OfferForm.Meta.fields + ('by_municipality', 'private_comment', 'state')
@@ -117,6 +119,7 @@ class RequestForm(forms.ModelForm):
     arrival_date = forms.DateTimeField(label=_('Ankunftstag'),
         widget=forms.SelectDateWidget(years=range(2022, 2024))
     )
+    who = forms.CharField(label=_("Bitte beschreiben Sie Ihre Gruppe kurz (Alter, Geschlecht, ...)"), required=False, widget=forms.Textarea)
 
     class Meta:
         model = HousingRequest
@@ -190,6 +193,7 @@ class RequestForm(forms.ModelForm):
 class RequestEditForm(RequestForm):
     class Meta:
         model = HousingRequest
+        private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
         fields = RequestForm.Meta.fields + ('state','case_handler', 'placed_at', 'hotel', 'priority','private_comment')
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))

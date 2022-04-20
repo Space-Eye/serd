@@ -28,7 +28,7 @@ class  HousingRequest(models.Model):
     repr_mail = models.CharField(max_length=256, blank=True, validators=[validate_email], verbose_name=_("E-Mail-Adresse der stellvertretenden Person"))
     adults = models.PositiveSmallIntegerField(verbose_name=_("Anzahl der Erwachsenen und Kindern ab 12 Jahren"), validators=[validate_not_negative], blank=True)
     children = models.PositiveSmallIntegerField(verbose_name=_("Anzahl der Kinder unter 12"), validators=[validate_not_negative], blank=True)
-    who = models.CharField(max_length=256, verbose_name=_("Bitte beschreiben Sie Ihre Gruppe kurz (Alter, Geschlecht, ...)"), blank=True)
+    who = models.CharField(max_length=256, blank=True)
     split = models.BooleanField(verbose_name=_("Ab fünf Personen: Gruppe darf geteilt werden"), help_text=_("notfalls kann eine Unterbringung in zwei Unterkünften erfolgen"))
     current_housing = models.CharField(choices=CURRENT_ACCOMODATION, max_length=128, verbose_name=_("Wo sind Sie aktuell untergebracht?"), blank=True)
     arrival_date = models.DateField(verbose_name=_("Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"), null=True)
@@ -46,7 +46,7 @@ class  HousingRequest(models.Model):
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
     hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, verbose_name="Hotel", related_name='requests', blank=True)
     state = models.CharField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new", max_length=64)
-    private_comment = models.CharField(blank=True, null=True, verbose_name=_("Interner Kommentar"), default="", max_length=150)
+    private_comment = models.CharField(blank=True, null=True,  default="", max_length=512)
     created_at = models.DateField(auto_now_add=True)
 
     _persons = None
@@ -84,8 +84,8 @@ class Offer(models.Model):
     state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"),default="new")
     phone = models.CharField(max_length=128, validators=[validate_phone], verbose_name="Telefonnummer", blank=True)
     mail = models.CharField(max_length=128, verbose_name="E-mail", validators=[validate_email], blank=True)
-    comment = models.CharField(blank=True, verbose_name=_("Weiterer Kommentar (max. 250 Zeichen)"), max_length=250)
-    private_comment = models.CharField(blank=True, verbose_name=("Interner Kommentar"), default="", max_length=512)
+    comment = models.CharField(blank=True, max_length=250)
+    private_comment = models.CharField(blank=True, default="", max_length=512)
     by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
     covid = models.BooleanField(default=False, verbose_name=_("Eine COVID-19-Impfung ist zwingend notwendig."))
     created_at = models.DateField(auto_now_add=True)
