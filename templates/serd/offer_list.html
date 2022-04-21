@@ -71,6 +71,7 @@
         <th>Barrierefrei</th>
         <th>Haustiere</th>
         <th class="comment-col">Kommentar</th>
+        <th class="comment-col">Interner Kommentar</th>
         <th>Straße</th>
         <th>Tel</th>
         <th>mail</th>
@@ -85,7 +86,6 @@
         <th>Status</th>
         <th>Vermittelt</th>
         <th>Stadt</th>
-        <th class="comment-col">Interner Kommentar</th>
       </thead>
       <tbody>
       {% for data in dataset %} {%if data.state == "new"%}
@@ -188,6 +188,11 @@
             {{data.comment}}</span
           >
         </td>
+        <td  class="comment-col">
+          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}">
+            {{data.private_comment}}</span
+          >
+        </td>
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
             >{{data.street}}</span
@@ -256,11 +261,6 @@
         <td>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}">
             {{data.by_municipality |yesno:'Ja,Nein'}}</span
-          >
-        </td>
-        <td  class="comment-col">
-          <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}">
-            {{data.private_comment}}</span
           >
         </td>
         <td>
