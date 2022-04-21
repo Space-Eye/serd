@@ -48,6 +48,7 @@ class  HousingRequest(models.Model):
     state = models.CharField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new", max_length=64)
     private_comment = models.CharField(blank=True, null=True,  default="", max_length=512)
     created_at = models.DateField(auto_now_add=True)
+    possible_hosts = models.ManyToManyField(to='Offer', related_name="possible_guests", blank=True, verbose_name="Mögliche Gastgeber")
 
     _persons = None
 
