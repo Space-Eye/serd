@@ -91,48 +91,48 @@
       {% for data in dataset %} {%if data.state == "new"%}
       <tr  style="background-color: white">
         <td class="sticky-col first-col" style="background-color: white">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: white">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: white">{{ data.given_name}} {{data.last_name}}</td>
       {%elif data.state == "contacted" %}
       
 
       <tr style="background-color: yellow">
         <td class="sticky-col first-col" style="background-color: yellow">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: yellow">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: yellow">{{ data.given_name}} {{data.last_name}}</td>
       {%elif data.state == "request_contact" %}
       
 
       <tr style="background-color: lightblue">
         <td class="sticky-col first-col" style="background-color: lightblue">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: lightblue">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: lightblue">{{ data.given_name}} {{data.last_name}}</td>
       {%elif data.state == "stale" %}
       
 
         
       <tr style="background-color: lightgray">
         <td class="sticky-col first-col" style="background-color: lightgrey">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: lightgrey">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: lightgrey">{{ data.given_name}} {{data.last_name}}</td>
       {%elif data.state == "arrived" %}
       
 
       <tr style="background-color: green">
         <td class="sticky-col first-col" style="background-color: green">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: green">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: green">{{ data.given_name}} {{data.last_name}}</td>
         {%elif data.state == "free" %}
       
 
       <tr style="background-color: orange">
         <td class="sticky-col first-col" style="background-color: orange">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: orange">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: orange">{{ data.given_name}} {{data.last_name}}</td>
         {%elif data.state == "reserved" %}
       
 
       <tr style="background-color: red">
         <td class="sticky-col first-col" style="background-color: red">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: red">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: red">{{ data.given_name}} {{data.last_name}}</td>
        {%elif data.state == "no" %}
        <tr style="background-color: darkgray">
         <td class="sticky-col first-col" style="background-color: darkgray">{{data.number}}</td>
-        <td class="sticky-col second-col" style="background-color: darkgray">{{ data.given_name}}, {{data.last_name}}</td>
+        <td class="sticky-col second-col" style="background-color: darkgray">{{ data.given_name}} {{data.last_name}}</td>
         {%endif%}
         
         <td>
