@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
 from .views import (AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate,  index, SuccessOffer,
-                    SuccessRequest, RequestFilter, OfferFilter, hotel_list)
+                    SuccessRequest, RequestFilter, OfferFilter, hotel_list, OfferAutocomplete)
 from django.conf import settings
 
 
@@ -37,6 +37,8 @@ urlpatterns = [
     path('',index, name='index'),
     path('hotels/', hotel_list, name='hotels'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('autocomplete-offer', login_required(OfferAutocomplete.as_view()), name='offer-autocomplete'),
+
    
 ]
 urlpatterns += i18n_patterns(
