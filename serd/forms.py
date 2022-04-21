@@ -1,4 +1,6 @@
 from datetime import datetime
+from urllib import request
+from dal import autocomplete
 from django import forms
 from slugify import slugify
 from django.core.exceptions import ValidationError
@@ -7,7 +9,7 @@ from .models import HousingRequest, Offer
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from .mail import Mailer
-
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 def isascii(s):
     """Check if the characters in string s are in ASCII, U+0-U+7F."""
@@ -203,10 +205,18 @@ class RequestEditForm(RequestForm):
     def clean_arrival_location(self):
         data = self.cleaned_data['arrival_location']
         return data
+    
+    def save(self, commit=True):
+        request = super(RequestEditForm, self).save(commit=False)
+        hosts = self.cleaned_data['possible_hosts']
+        if hosts:
+            request.possible_hosts.add(*hosts)
+        return request
 
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel', 'priority','private_comment')
+        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel', 'priority','private_comment', 'possible_hosts')
+        widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
 class RequestFilterForm(forms.Form):
@@ -220,7 +230,7 @@ class RequestFilterForm(forms.Form):
     priority = forms.MultipleChoiceField(choices=PRIORITY_CHOICE, required=False, label="Priorität", widget=forms.CheckboxSelectMultiple)
     state = forms.MultipleChoiceField(choices=REQUEST_STATE, required=False, label="Status", widget=forms.CheckboxSelectMultiple)
     no_handler = forms.BooleanField(label="Kein Sachbearbeiter", required=False)
-    case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'))
+    case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'), required=False)
 
 class OfferFilterForm(forms.Form):
     PLZ = forms.CharField(max_length=5, required=False, label='PLZ')

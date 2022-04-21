@@ -85,6 +85,8 @@
         <th>Priorität</th>
         <th>Sachbearbeiter:in</th>
         <th>Status</th>
+        <th>Mögliche Gastgeber</th>
+
     </thead>
     <tbody>
     {% for data in dataset %}
@@ -150,6 +152,12 @@
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.get_priority_display}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.case_handler |default:""}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.get_state_display |default:""}}</span></td>
+           <td>  
+                {% for offer in data.possible_hosts.all %}
+                    <a href="/offers/edit/{{offer.number}} "style="color:black; text-decoration:underline" > {{offer}} </a>
+                {% endfor %}
+
+           </td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.number}} "style="color:black; text-decoration:underline" >edit </a></span></td>
            </tr>
         {% endfor %}
