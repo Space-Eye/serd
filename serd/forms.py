@@ -104,9 +104,10 @@ class OfferForm(forms.ModelForm):
     
 class OfferEditForm(OfferForm):
     private_comment = forms.CharField(required=False, label=_("Interner Kommentar"), widget=forms.Textarea)
+    number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
     class Meta:
         model = Offer
-        fields = OfferForm.Meta.fields + ('by_municipality', 'private_comment', 'state')
+        fields = OfferForm.Meta.fields + ('number', 'by_municipality', 'private_comment', 'state')
 
 class RequestForm(forms.ModelForm):
     template_name = 'form_snippet.html'
@@ -192,6 +193,7 @@ class RequestForm(forms.ModelForm):
 
 class RequestEditForm(RequestForm):
     private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
+    number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
     # override here with do nothing clean method to allow empty arrival location when editing
     def clean_arrival_location(self):
         data = self.cleaned_data['arrival_location']
@@ -199,7 +201,7 @@ class RequestEditForm(RequestForm):
 
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('state','case_handler', 'placed_at', 'hotel', 'priority','private_comment')
+        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel', 'priority','private_comment')
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
 class RequestFilterForm(forms.Form):
