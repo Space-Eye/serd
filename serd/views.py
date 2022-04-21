@@ -10,7 +10,21 @@ from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm
-import datetime
+from dal import autocomplete
+
+
+class OfferAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        print("callled")
+        if not self.request.user.is_authenticated:
+            return Offer.objects.none()
+        qs = Offer.objects.all()
+        if self.q:
+            try:
+                qs = qs.filter(number=int(self.q))
+            except:
+                qs =qs.filter(last_name__istartswith=self.q)
+        return qs
 
 def success(request):
     return HttpResponse("success")
