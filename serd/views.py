@@ -132,7 +132,9 @@ class RequestFilter(FormView):
         no_handler = form.cleaned_data['no_handler']
         if no_handler:
             queryset = queryset.filter(case_handler__isnull=True)
-
+        handler = form.cleaned_data['case_handler']
+        if handler:
+            queryset = queryset.filter(case_handler=handler)
         context = {}
         context['dataset'] = queryset
         return render(None,'serd/request_list.html', context)
