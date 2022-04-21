@@ -192,6 +192,11 @@ class RequestForm(forms.ModelForm):
 
 class RequestEditForm(RequestForm):
     private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
+    # override here with do nothing clean method to allow empty arrival location when editing
+    def clean_arrival_location(self):
+        data = self.cleaned_data['arrival_location']
+        return data
+
     class Meta:
         model = HousingRequest
         fields = RequestForm.Meta.fields + ('state','case_handler', 'placed_at', 'hotel', 'priority','private_comment')
