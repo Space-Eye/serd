@@ -150,5 +150,6 @@ EMAIL_HOST_USER = config['mail'].get('smtp-user')
 EMAIL_HOST_PASSWORD= config['mail'].get('smtp-pass')
 EMAIL_HOST = config['mail'].get('smtp-host')
 EMAIL_USE_SSL= True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # don't use get to force exception on empty key
 SECRET_KEY = config['key']['key']
