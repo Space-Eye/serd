@@ -5,7 +5,9 @@ from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_STATE
 from .models import HousingRequest, Offer
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 from .mail import Mailer
+
 
 def isascii(s):
     """Check if the characters in string s are in ASCII, U+0-U+7F."""
@@ -195,6 +197,9 @@ class RequestEditForm(RequestForm):
     private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
     number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
     # override here with do nothing clean method to allow empty arrival location when editing
+    def __init__(self, *args, **kwargs):
+        super(RequestForm, self).__init__(*args, **kwargs)
+        self.fields['case_handler'].queryset = User.objects.order_by('username')
     def clean_arrival_location(self):
         data = self.cleaned_data['arrival_location']
         return data
