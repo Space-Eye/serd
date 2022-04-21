@@ -230,7 +230,7 @@ class RequestFilterForm(forms.Form):
     priority = forms.MultipleChoiceField(choices=PRIORITY_CHOICE, required=False, label="Priorität", widget=forms.CheckboxSelectMultiple)
     state = forms.MultipleChoiceField(choices=REQUEST_STATE, required=False, label="Status", widget=forms.CheckboxSelectMultiple)
     no_handler = forms.BooleanField(label="Kein Sachbearbeiter", required=False)
-    case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'))
+    case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'), required=False)
 
 class OfferFilterForm(forms.Form):
     PLZ = forms.CharField(max_length=5, required=False, label='PLZ')

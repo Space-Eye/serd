@@ -102,7 +102,7 @@ class RequestFilter(FormView):
             queryset = queryset.filter(persons__gte=num_min)
         num_max = form.cleaned_data['num_max']
         if num_max:
-            queryset = queryset.filter(persons__lte=num_min)
+            queryset = queryset.filter(persons__lte=num_max)
         split = form.cleaned_data['split']
         if split != 'null':
             queryset = queryset.filter(split__exact=split)
