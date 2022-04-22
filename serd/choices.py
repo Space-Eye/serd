@@ -58,3 +58,20 @@ FOOD_CHOICES = (
     ('inclusive', 'Inklusive'),
     ('space-eye', 'Durch Space-Eye')
 )
+
+REQUEST_SORT = (
+    ('number', 'Nummer'),
+    ('last_name', 'Nachname'),
+    ('priority', 'Priorität'),
+)
+
+OFFER_SORT = (
+    ('number', 'Nummer'),
+    ('last_name', 'Nachname'),
+    ('plz', 'PLZ'),
+    ('cost', 'Kosten')
+)
+SORT_DIRECTION = (
+    ('asc', 'Aufsteigend'),
+    ('desc', 'Absteigend')
+)
