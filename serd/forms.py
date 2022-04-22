@@ -233,6 +233,8 @@ class RequestFilterForm(forms.Form):
     case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'), required=False)
 
 class OfferFilterForm(forms.Form):
+    num_min = forms.IntegerField(min_value=0,required=False, label="Personen von")
+    num_max = forms.IntegerField(min_value=0, required=False, label="Personen bis")
     PLZ = forms.CharField(max_length=5, required=False, label='PLZ')
     city = forms.CharField(max_length=128, required=False, label='Ort')
     cost_min = forms.IntegerField(min_value=0, required=False, label='Kosten von')
