@@ -211,6 +211,8 @@ class RequestEditForm(RequestForm):
         hosts = self.cleaned_data['possible_hosts']
         if hosts:
             request.possible_hosts.add(*hosts)
+        if commit:
+            request.save()
         return request
 
     class Meta:
