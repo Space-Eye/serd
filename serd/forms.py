@@ -4,7 +4,7 @@ from dal import autocomplete
 from django import forms
 from slugify import slugify
 from django.core.exceptions import ValidationError
-from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_STATE
+from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
 from .models import HousingRequest, Offer
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
@@ -233,6 +233,8 @@ class RequestFilterForm(forms.Form):
     state = forms.MultipleChoiceField(choices=REQUEST_STATE, required=False, label="Status", widget=forms.CheckboxSelectMultiple)
     no_handler = forms.BooleanField(label="Kein Sachbearbeiter", required=False)
     case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'), required=False)
+    sort = forms.ChoiceField(choices=REQUEST_SORT, initial='number', label='Sortierung')
+    sort_direction = forms.ChoiceField(choices=SORT_DIRECTION, initial='asc', label='Auf/Absteigend')
 
 class OfferFilterForm(forms.Form):
     num_min = forms.IntegerField(min_value=0,required=False, label="Personen von")
@@ -249,3 +251,5 @@ class OfferFilterForm(forms.Form):
     accessability = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
     state = forms.MultipleChoiceField(choices=OFFER_STATE, label='Status', widget=forms.CheckboxSelectMultiple, required=False)
     for_free = forms.ChoiceField(choices=BOOL_CHOICES, label='Gratis')
+    sort = forms.ChoiceField(choices=OFFER_SORT, initial='number', label='Sortierung')
+    sort_direction = forms.ChoiceField(choices=SORT_DIRECTION, initial='asc', label='Auf/Absteigend')

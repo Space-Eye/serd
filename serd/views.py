@@ -149,8 +149,12 @@ class RequestFilter(FormView):
         handler = form.cleaned_data['case_handler']
         if handler:
             queryset = queryset.filter(case_handler=handler)
+
+        sort = form.cleaned_data['sort']
+        direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
+        
         context = {}
-        context['dataset'] = queryset
+        context['dataset'] = queryset.order_by(direction+sort)
         return render(None,'serd/request_list.html', context)
 
 class OfferFilter(FormView):
@@ -212,7 +216,11 @@ class OfferFilter(FormView):
         for_free = data['for_free']
         if for_free != 'null':
             queryset = queryset.filter(for_free__exact=for_free)
+        
+        sort = form.cleaned_data['sort']
+        direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
+
         context = {}
-        context['dataset'] = queryset
+        context['dataset'] = queryset.order_by(direction+sort)
         return render(None,'serd/offer_list.html', context)
 
