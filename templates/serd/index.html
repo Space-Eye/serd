@@ -38,5 +38,9 @@
             {% url 'hotels' as show_hotels_url%}
             {% bootstrap_button "Hotels ansehen" button_type="link" href=show_hotels_url button_class="btn-secondary" %}
         </div>
+        <div class="m-3">
+            {% url 'statistics' as show_statistics_url%}
+            {% bootstrap_button "Statistiken" button_type="link" href=show_statistics_url button_class="btn-secondary" %}
+        </div>
     </div>
 </body>
