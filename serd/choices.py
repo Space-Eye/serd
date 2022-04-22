@@ -31,9 +31,9 @@ OFFER_STATE = (
     ('no', 'Nicht Tragbar')
 )
 PRIORITY_CHOICE = (
-    ('normal','Normal'),
-    ('elevated','Erhöht'),
-    ('high','Hoch')
+    ('1normal','Normal'),
+    ('2elevated','Erhöht'),
+    ('3high','Hoch')
 )
 CURRENT_ACCOMODATION = (
     ('none', _('Ich habe keinen Schlafplatz')),
