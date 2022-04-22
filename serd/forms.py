@@ -243,5 +243,5 @@ class OfferFilterForm(forms.Form):
     appartment = forms.ChoiceField(choices=BOOL_CHOICES, label='Eigene Wohnung')
     pets = forms.MultipleChoiceField(choices=PETS, required=False, label='Haustiere', widget=forms.CheckboxSelectMultiple)
     accessability = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
-    state = forms.MultipleChoiceField(choices=OFFER_STATE, label='Status', widget=forms.CheckboxSelectMultiple)
+    state = forms.MultipleChoiceField(choices=OFFER_STATE, label='Status', widget=forms.CheckboxSelectMultiple, required=False)
     for_free = forms.ChoiceField(choices=BOOL_CHOICES, label='Gratis')
