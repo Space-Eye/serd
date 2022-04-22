@@ -160,6 +160,12 @@ class OfferFilter(FormView):
     def form_valid(self, form) -> HttpResponse:
         queryset = Offer.objects.all()
         data = form.cleaned_data
+        num_min = data['num_min']
+        if num_min:
+            queryset = queryset.filter(total_number__gte=num_min)
+        num_max = data['num_max']
+        if num_max:
+            queryset = queryset.filter(total_number__lte=num_max)
 
         plz = data['PLZ']
         if plz:
