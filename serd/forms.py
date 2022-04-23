@@ -164,7 +164,7 @@ class RequestForm(forms.ModelForm):
         if pets == ['none']:
             if self.cleaned_data.get('pet_number'):
                 self.add_error(field='pet_number', error=ValueError(
-                    _("Auswahl 'Keine' bei Haustier widerspricht Anzahl 0")
+                    _("Auswahl 'Keine' bei Haustier widerspricht Anzahl ungleich 0")
                 ))
             else:
                 self.cleaned_data['pet_number'] = 0

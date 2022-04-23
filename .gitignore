@@ -10,3 +10,6 @@ db.sqlite3
 *.bak 
 
 static
+
+# translations #
+*.mo
