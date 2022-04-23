@@ -32,7 +32,6 @@ class  HousingRequest(models.Model):
     split = models.BooleanField(verbose_name=_("Ab fünf Personen: Gruppe darf geteilt werden"), help_text=_("notfalls kann eine Unterbringung in zwei Unterkünften erfolgen"))
     current_housing = models.CharField(choices=CURRENT_ACCOMODATION, max_length=128, verbose_name=_("Wo sind Sie aktuell untergebracht?"), blank=True)
     arrival_date = models.DateField(verbose_name=_("Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"), null=True)
-    arrival_location = models.CharField(max_length=256, verbose_name=_("Wo in Regensburg kommen Sie an?"), help_text=_("zum Beispiel Regensburg Hauptbahnhof"),blank=True)
     pets = MultiSelectField(choices=PETS, verbose_name=_("Welche Haustiere haben Sie?"), null=True)
     pet_number = models.PositiveSmallIntegerField(verbose_name=_("Wie viele Haustiere haben Sie?"), validators=[validate_not_negative], blank=True, null=True)
     car = models.BooleanField(verbose_name=_("Haben Sie ein Auto?"))
