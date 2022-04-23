@@ -82,11 +82,11 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/serd/debug.log',
+            'filename': '/var/log/serd/default.log',
         },
     },
     'loggers': {
-        'django': {
+        'default': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,

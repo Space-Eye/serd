@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core import mail
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('default')
 
 def yesno(boolean):
     if boolean:
