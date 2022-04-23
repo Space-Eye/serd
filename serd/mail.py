@@ -1,6 +1,10 @@
+from cmath import log
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core import mail
+import logging
+logger = logging.getLogger(__name__)
+
 def yesno(boolean):
     if boolean:
         return _("Ja")
@@ -93,21 +97,28 @@ class Mailer:
     def send_offer_confirmation_mail(self, offer):
         subject = OFFER_CONFIRMATION_SUBJECT.format(id=offer.number)
         text = OFFER_CONFIRMATION_TEXT.format(id=offer.number, table=create_offer_table_string(offer))
-        with mail.get_connection() as connection:
-            try:
-                mail.EmailMessage(subject, text, settings.EMAIL_HOST_USER, [offer.mail]).send()
-            except Exception as e:
-                print("*******************")
-                print("Error sending mail:")
-                print(e)
+        logger.debug("connecting to mail server")
+        try:
+            with mail.get_connection() as connection:
+                logger.debug("Sending offer confirmation mail to %s, for offer %s", offer.mail, offer.number)
+                try:
+                    mail.EmailMessage(subject, text, settings.EMAIL_HOST_USER, [offer.mail]).send()
+                    logger.debug("Success")
+                except Exception as e:
+                    logger.error("Sending failed with %s", str(e))
+        except Exception as e:
+            logger.error("Connecting to mail server failed with %s", str(e))
 
     def send_request_confirmation_mail(self, request):
         subject = REQUEST_CONFIRMATION_SUBJECT.format(id=request.number)
         text = REQUEST_CONFIRMATION_TEXT.format(id=request.number, table=create_request_table_string(request))
-        with mail.get_connection() as connection:
-            try:
-                mail.EmailMessage(subject, text, settings.EMAIL_HOST_USER, [request.mail]).send()
-            except Exception as e:
-                print("*******************")
-                print("Error sending mail:")
-                print(e)
+        logger.debug("connecting to mail server")
+        try:
+            with mail.get_connection() as connection:
+                logger.debug("Sending request confirmation mail to %s for request %s", request.mail, request.number)
+                try:
+                    mail.EmailMessage(subject, text, settings.EMAIL_HOST_USER, [request.mail]).send()
+                except Exception as e:
+                    logger.error("Sending mail failed with %s", str(e))
+        except Exception as e:
+            logger.error("Connecting to mail server failed with %s", str(e))
