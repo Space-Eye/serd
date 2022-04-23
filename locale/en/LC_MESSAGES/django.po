@@ -400,19 +400,19 @@ msgstr "What is your current accomodation"
 msgid "Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"
 msgstr "When do you arrive in Regensburg or how long have you been here?"
 
-#: serd/models.py:35
+#: serd/models.py:36
 msgid "Welche Haustiere haben Sie?"
 msgstr "Which pets do you have"
 
-#: serd/models.py:36
+#: serd/models.py:37
 msgid "Wie viele Haustiere haben Sie?"
 msgstr "How many pets do you have"
 
-#: serd/models.py:37
+#: serd/models.py:38
 msgid "Haben Sie ein Auto?"
 msgstr "Do you have a car?"
 
-#: serd/models.py:38
+#: serd/models.py:39
 msgid "Sprachkenntnisse"
 msgstr "Spoken languages"
 

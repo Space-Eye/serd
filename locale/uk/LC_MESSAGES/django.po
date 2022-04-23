@@ -406,19 +406,19 @@ msgstr "Де ви зараз розміщені?"
 msgid "Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"
 msgstr "Коли ви прибуваєте до Регенсбурга або як довго ви там вже знаходитесь?"
 
-#: serd/models.py:35
+#: serd/models.py:36
 msgid "Welche Haustiere haben Sie?"
 msgstr "Які домашні тварини у вас із собою?"
 
-#: serd/models.py:36
+#: serd/models.py:37
 msgid "Wie viele Haustiere haben Sie?"
 msgstr "Скільки домашніх тварин у вас із собою?"
 
-#: serd/models.py:37
+#: serd/models.py:38
 msgid "Haben Sie ein Auto?"
 msgstr "Чи є у вас автомобіль?"
 
-#: serd/models.py:38
+#: serd/models.py:39
 msgid "Sprachkenntnisse"
 msgstr "Знання мов"
 
