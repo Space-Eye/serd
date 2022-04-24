@@ -41,6 +41,12 @@ class AddRequest(CreateView):
     def get_success_url(self) -> str:
         return reverse('success_request', args=(self.object.number,))
 
+class InternalAddRequest(CreateView):
+    model = HousingRequest
+    form_class = RequestEditForm
+    def get_success_url(self) -> str:
+        return reverse('index')
+
 
 class AddOffer(CreateView):
     model = Offer
@@ -50,7 +56,12 @@ class AddOffer(CreateView):
 
         return reverse('success_offer', args=(self.object.number,))
 
-   
+class InternalAddOffer(CreateView):
+    model = Offer
+    form_class = OfferEditForm
+    def get_success_url(self) -> str:
+        return reverse('index')
+
 @login_required
 def request_list(request):
 
