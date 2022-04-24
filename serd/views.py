@@ -2,7 +2,7 @@
 from django.urls import reverse
 
 from serd.choices import PETS
-from .models import Hotel, HousingRequest, Offer
+from .models import Hotel, HousingRequest, Offer, NewsItem
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
@@ -31,7 +31,8 @@ def success(request):
 
 @login_required
 def index(request):
-    return render(request, "serd/index.html")
+    context = {'dataset': NewsItem.objects.all()}
+    return render(request, "serd/index.html", context)
 
 
 class AddRequest(CreateView):

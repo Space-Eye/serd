@@ -135,3 +135,11 @@ class Hotel(models.Model):
     class Meta:
         app_label ='serd'
 
+
+class NewsItem(models.Model):
+    number = models.AutoField(primary_key=True)
+    created_at = models.DateField(auto_now_add=True)
+    text = models.TextField()
+    headline = models.CharField(max_length=128)
+    class Meta:
+        ordering = ('-number',)
