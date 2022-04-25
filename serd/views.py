@@ -2,14 +2,14 @@
 from django.urls import reverse
 
 from serd.choices import PETS
-from .models import Hotel, HousingRequest, Offer, NewsItem
+from .models import Hotel, HousingRequest, Offer, NewsItem, Profile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm
 from dal import autocomplete
 from django.db.models import Sum
 
@@ -258,3 +258,27 @@ def statistics(request):
     context['requests_all'] = requests_all
     context['hotel'] = hotel
     return render(request, 'serd/statistics.html', context)
+
+@login_required
+def profile_view(request, profile_id):
+    context = {}
+    context['data'] = Profile.objects.get(account__id=profile_id)
+    return render(request, 'serd/profile_view.html', context)
+
+@login_required
+def profile_list(request):
+    context = {}
+    context["dataset"] = Profile.objects.all()
+    return render(request, "serd/profile_list.html", context)
+
+
+class UpdateProfile(UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    success_url = "/"
+    def get_object(self, queryset=None):
+        return Profile.objects.get(account__id=self.request.user.id)
+        
+        
+    
+   

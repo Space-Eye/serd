@@ -5,7 +5,7 @@ from django import forms
 from slugify import slugify
 from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
-from .models import HousingRequest, Offer
+from .models import HousingRequest, Offer, Profile
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from .mail import Mailer
@@ -256,3 +256,11 @@ class OfferFilterForm(forms.Form):
     for_free = forms.ChoiceField(choices=BOOL_CHOICES, label='Gratis')
     sort = forms.ChoiceField(choices=OFFER_SORT, initial='number', label='Sortierung')
     sort_direction = forms.ChoiceField(choices=SORT_DIRECTION, initial='asc', label='Auf/Absteigend')
+
+class ProfileForm(forms.ModelForm):
+    
+    languages = forms.MultipleChoiceField(choices=LANGUAGE_CHOICE, required=False, label="Sprachen", widget=forms.CheckboxSelectMultiple)
+    class Meta:
+        model = Profile
+        fields=('name', 'phone', 'whatsapp', 'signal', 'mail', 'languages')
+

@@ -83,11 +83,15 @@
                 {% endfor %}
             </td>
             <td>
-                {{data.responsible}}
+                <a href="{% url 'profile_view' data.responsible.id %}" style="color: black; text-decoration: underline;">
+                    {{data.responsible}}
+                </a>
             </td>
             <td>
                 {% for member in data.team_gesamt.all %}
-                {{ member }}
+                    <a href="{% url 'profile_view' member.id %}" style="color: black; text-decoration: underline;">
+                        {{ member }}
+                    </a>
                 {% endfor %}
             </td>
             <td>
@@ -116,7 +120,7 @@
                 {{data.children_free}}
             </td>
             <td>
-                {{ data.info }}
+                {{ data.info|linebreaks }}
             </td>
            </tr>
         {% endfor %}

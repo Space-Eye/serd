@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+{# Load the tag library #}
+{% load bootstrap5 %}
+{% load static %}
+{% bootstrap_css %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<head>
+    <title>Profil: {{data.name}} - SERD</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+    <style>
+        .header{
+            position:sticky;
+            top:0;
+            z-index:1;
+        }
+    
+        .tableFixHead { overflow: auto; height: 90vh; }
+    
+        #table-head {
+            background-color:#FFFFFF; 
+        }
+    
+        table  { border-collapse: collapse; width: 100%; }
+    
+        
+    </style>
+</head>
+<body>
+<div class="tableFixHead">
+<table>
+<thead>
+    <th>Name</th>
+    <th>Telefonnummer</th>
+    <th>WhatsApp</th>
+    <th>Signal</th>
+    <th>Telegram</th>
+    <th>Threema</th>
+    <th>E-Mail</th>
+    <th>Sprachen</th>
+</thead>
+<tbody>
+{% for data in dataset %}
+    <tr>
+        <td>{{data.name}}</td>
+        <td>{{data.phone}}</td>
+        <td>{{data.whatsapp|yesno:'Ja,Nein'}}</td>
+        <td>{{data.signal|yesno:'Ja,Nein'}}</td>
+        <td><a href="{{data.telegram}}">{{data.telegram}}</a></td>
+        <td>{{data.threema}}</td>
+        <td>{{data.mail}}</td>
+        <td>{{data.languages}}</td>
+
+    </tr>
+{%endfor%}
+</tbody>
+</table>
+</div>
+<div class="d-flex flex-row">
+    <div class="m-3">
+        {% url 'logout' as logout_url%}
+        {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}
+    </div>
+    <div class="m-3">
+        {% url 'index' as index_url%}
+        {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
+    </div>
+</div>
+</body>
+</html>
+</body>
+</html>
