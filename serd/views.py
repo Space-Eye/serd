@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm
 from dal import autocomplete
 from django.db.models import Sum
 
@@ -270,4 +270,15 @@ def profile_list(request):
     context = {}
     context["dataset"] = Profile.objects.all()
     return render(request, "serd/profile_list.html", context)
+
+
+class UpdateProfile(UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    success_url = "/"
+    def get_object(self, queryset=None):
+        return Profile.objects.get(account__id=self.request.user.id)
+        
+        
+    
    
