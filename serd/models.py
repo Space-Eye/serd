@@ -14,10 +14,10 @@ class Profile(models.Model):
     mail = models.CharField(max_length=256, validators=[validate_email],verbose_name= "E-Mail-Adresse", blank=True)
     phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name= "Telefonnummer", blank=True)
     telegram = models.CharField(max_length=64, verbose_name="Telegram", blank=True)
-    threema = models.CharField(max_length=64, verbose_name="Threema")
+    threema = models.CharField(max_length=64, verbose_name="Threema", blank=True)
     whatsapp = models.BooleanField(verbose_name="Whatsapp")
     signal = models.BooleanField(verbose_name="Signal")
-    languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name="Sprachkenntnisse", null=True)
+    languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name="Sprachkenntnisse", null=True, blank=True)
     def __str__(self) -> str:
         return self.account.username
 
