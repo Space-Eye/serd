@@ -5,7 +5,23 @@ from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
 from .validators import validate_not_empty, validate_plz, validate_phone, validate_not_negative
-from django.contrib.auth.models import User
+
+
+class Profile(models.Model):
+    number = models.AutoField(primary_key=True)
+    account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Account")
+    name = models.CharField(max_length=64, blank=True)
+    mail = models.CharField(max_length=256, validators=[validate_email],verbose_name= "E-Mail-Adresse", blank=True)
+    phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name= "Telefonnummer", blank=True)
+    telegram = models.CharField(max_length=64, verbose_name="Telegram", blank=True)
+    threema = models.CharField(max_length=64, verbose_name="Threema")
+    whatsapp = models.BooleanField(verbose_name="Whatsapp")
+    signal = models.BooleanField(verbose_name="Signal")
+    languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name="Sprachkenntnisse", null=True)
+    def __str__(self) -> str:
+        return self.account.username
+
+
 
 class AnnotationManager(models.Manager):
 
