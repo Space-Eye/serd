@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm
 from dal import autocomplete
-
+from django.db.models import Sum
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
@@ -236,3 +236,15 @@ class OfferFilter(FormView):
         context['dataset'] = queryset.order_by(direction+sort)
         return render(None,'serd/offer_list.html', context)
 
+
+@login_required
+def statistics(request):
+    placed_requests = HousingRequest.objects.filter(state='arrived')
+    persons_placed = placed_requests.aggregate(Sum('persons'))['persons__sum']
+    requests_placed = placed_requests.count()
+    hotel = HousingRequest.objects.filter(hotel__isnull=False).aggregate(Sum('persons'))['persons__sum']
+    context = {}
+    context['persons'] = persons_placed
+    context['requests'] = requests_placed
+    context['hotel'] = hotel
+    return render(request, 'serd/statistics.html', context)

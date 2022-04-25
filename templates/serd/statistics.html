@@ -1,0 +1,43 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+{% load static %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<html>
+<head>
+
+<title>Statistiken - SERD</title>
+<link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+</head>
+
+<body>
+    <table>
+            <tr>
+                <td>Vermittelte Personen: </td><td>{{ persons }}</td>
+            </tr>
+            <tr>
+                <td>Vermittelte Gesuche: </td><td>{{ requests }}</td>
+            </tr>
+            <tr>
+                <td>Im Hotel: </td> <td>{{ hotel }}</td>
+            </tr>
+    </table>
+</div>
+
+<div class="d-flex flex-row">
+    <div class="m-3">
+        {% url 'logout' as logout_url%}
+        {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}
+    </div>
+    <div class="m-3">
+        {% url 'index' as index_url%}
+        {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
+    </div>
+</div>
+</body>
+</html>
