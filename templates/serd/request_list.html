@@ -78,7 +78,6 @@
         <th>Teilbar</th>
         <th>Kann zahlen</th>
         <th> Ankunft Datum</th>
-        <th>Ankunft Ort</th>
         <th>Sprachen</th>
         <th>Vermittelt</th>
         <th>Hotel</th>
@@ -141,7 +140,6 @@
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.split |yesno:'Ja,Nein'}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.can_pay |yesno:'Ja,Nein'}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_date}}</span></td>
-           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.arrival_location}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.languages}}
             {% if data.additional_languages %}
                 <br> {{data.additional_languages}}

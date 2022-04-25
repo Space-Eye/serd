@@ -77,14 +77,13 @@ Stellvertreter:in E-Mail:\t{repr_mail}
 """).format(representative=request.representative, repr_phone=request.repr_phone,
             repr_mail=request.repr_mail)
     string += _("""Ankunftsdatum:\t{arrival_date}
-Ankunftsort:\t{arrival_location}
 Haustiere:\t{pets}
 Anzahl Haustiere\t{pet_number}
 Auto vorhanden\t{car}
 Sprachen:\t{languages}
 Impfung:\t{vaccination}
 Barrierefrei:\t{accessability_needs}
-""").format(arrival_date=request.arrival_date, arrival_location=request.arrival_location,
+""").format(arrival_date=request.arrival_date,
             pets=request.get_pets_display(), pet_number=request.pet_number,
             car=yesno(request.car), languages=request.get_languages_display(),
             vaccination=yesno(request.vaccination), accessability_needs=yesno(request.accessability_needs)

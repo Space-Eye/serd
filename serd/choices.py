@@ -31,9 +31,9 @@ OFFER_STATE = (
     ('no', 'Nicht Tragbar')
 )
 PRIORITY_CHOICE = (
-    ('normal','Normal'),
-    ('elevated','Erhöht'),
-    ('high','Hoch')
+    ('1normal','Normal'),
+    ('2elevated','Erhöht'),
+    ('3high','Hoch')
 )
 CURRENT_ACCOMODATION = (
     ('none', _('Ich habe keinen Schlafplatz')),
@@ -57,4 +57,21 @@ FOOD_CHOICES = (
     ('breakfast', 'Frühstück'),
     ('inclusive', 'Inklusive'),
     ('space-eye', 'Durch Space-Eye')
+)
+
+REQUEST_SORT = (
+    ('number', 'Nummer'),
+    ('last_name', 'Nachname'),
+    ('priority', 'Priorität'),
+)
+
+OFFER_SORT = (
+    ('number', 'Nummer'),
+    ('last_name', 'Nachname'),
+    ('plz', 'PLZ'),
+    ('cost', 'Kosten')
+)
+SORT_DIRECTION = (
+    ('asc', 'Aufsteigend'),
+    ('desc', 'Absteigend')
 )

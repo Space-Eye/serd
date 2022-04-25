@@ -4,7 +4,7 @@ from dal import autocomplete
 from django import forms
 from slugify import slugify
 from django.core.exceptions import ValidationError
-from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_STATE
+from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
 from .models import HousingRequest, Offer
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
@@ -130,7 +130,7 @@ class RequestForm(forms.ModelForm):
         model = HousingRequest
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',
         'split', 'current_housing', 'can_pay', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 
-        'arrival_location', 'pets', 'pet_number', 'car', 'languages', 'additional_languages', 'vaccination', 'accessability_needs')
+        'pets', 'pet_number', 'car', 'languages', 'additional_languages', 'vaccination', 'accessability_needs')
     def clean_given_name(self):
         return self.test_required('given_name')
     def clean_last_name(self):
@@ -164,7 +164,7 @@ class RequestForm(forms.ModelForm):
         if pets == ['none']:
             if self.cleaned_data.get('pet_number'):
                 self.add_error(field='pet_number', error=ValueError(
-                    _("Auswahl 'Keine' bei Haustier widerspricht Anzahl 0")
+                    _("Auswahl 'Keine' bei Haustier widerspricht Anzahl ungleich 0")
                 ))
             else:
                 self.cleaned_data['pet_number'] = 0
@@ -211,6 +211,9 @@ class RequestEditForm(RequestForm):
         hosts = self.cleaned_data['possible_hosts']
         if hosts:
             request.possible_hosts.add(*hosts)
+        if 'state' in self.changed_data:
+            if self.cleaned_data['state'] == 'arrived' or self.cleaned_data['state'] == 'stale':
+                request.hotel = None
         if commit:
             request.save()
         return request
@@ -233,8 +236,12 @@ class RequestFilterForm(forms.Form):
     state = forms.MultipleChoiceField(choices=REQUEST_STATE, required=False, label="Status", widget=forms.CheckboxSelectMultiple)
     no_handler = forms.BooleanField(label="Kein Sachbearbeiter", required=False)
     case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'), required=False)
+    sort = forms.ChoiceField(choices=REQUEST_SORT, initial='number', label='Sortierung')
+    sort_direction = forms.ChoiceField(choices=SORT_DIRECTION, initial='asc', label='Auf/Absteigend')
 
 class OfferFilterForm(forms.Form):
+    num_min = forms.IntegerField(min_value=0,required=False, label="Personen von")
+    num_max = forms.IntegerField(min_value=0, required=False, label="Personen bis")
     PLZ = forms.CharField(max_length=5, required=False, label='PLZ')
     city = forms.CharField(max_length=128, required=False, label='Ort')
     cost_min = forms.IntegerField(min_value=0, required=False, label='Kosten von')
@@ -245,5 +252,7 @@ class OfferFilterForm(forms.Form):
     appartment = forms.ChoiceField(choices=BOOL_CHOICES, label='Eigene Wohnung')
     pets = forms.MultipleChoiceField(choices=PETS, required=False, label='Haustiere', widget=forms.CheckboxSelectMultiple)
     accessability = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
-    state = forms.MultipleChoiceField(choices=OFFER_STATE, label='Status', widget=forms.CheckboxSelectMultiple)
+    state = forms.MultipleChoiceField(choices=OFFER_STATE, label='Status', widget=forms.CheckboxSelectMultiple, required=False)
     for_free = forms.ChoiceField(choices=BOOL_CHOICES, label='Gratis')
+    sort = forms.ChoiceField(choices=OFFER_SORT, initial='number', label='Sortierung')
+    sort_direction = forms.ChoiceField(choices=SORT_DIRECTION, initial='asc', label='Auf/Absteigend')

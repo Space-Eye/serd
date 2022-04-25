@@ -2,7 +2,7 @@
 from django.urls import reverse
 
 from serd.choices import PETS
-from .models import Hotel, HousingRequest, Offer
+from .models import Hotel, HousingRequest, Offer, NewsItem
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
@@ -31,7 +31,8 @@ def success(request):
 
 @login_required
 def index(request):
-    return render(request, "serd/index.html")
+    context = {'dataset': NewsItem.objects.all()}
+    return render(request, "serd/index.html", context)
 
 
 class AddRequest(CreateView):
@@ -39,6 +40,12 @@ class AddRequest(CreateView):
     form_class = RequestForm
     def get_success_url(self) -> str:
         return reverse('success_request', args=(self.object.number,))
+
+class InternalAddRequest(CreateView):
+    model = HousingRequest
+    form_class = RequestEditForm
+    def get_success_url(self) -> str:
+        return reverse('index')
 
 
 class AddOffer(CreateView):
@@ -49,7 +56,12 @@ class AddOffer(CreateView):
 
         return reverse('success_offer', args=(self.object.number,))
 
-   
+class InternalAddOffer(CreateView):
+    model = Offer
+    form_class = OfferEditForm
+    def get_success_url(self) -> str:
+        return reverse('index')
+
 @login_required
 def request_list(request):
 
@@ -149,8 +161,12 @@ class RequestFilter(FormView):
         handler = form.cleaned_data['case_handler']
         if handler:
             queryset = queryset.filter(case_handler=handler)
+
+        sort = form.cleaned_data['sort']
+        direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
+        
         context = {}
-        context['dataset'] = queryset
+        context['dataset'] = queryset.order_by(direction+sort)
         return render(None,'serd/request_list.html', context)
 
 class OfferFilter(FormView):
@@ -160,6 +176,12 @@ class OfferFilter(FormView):
     def form_valid(self, form) -> HttpResponse:
         queryset = Offer.objects.all()
         data = form.cleaned_data
+        num_min = data['num_min']
+        if num_min:
+            queryset = queryset.filter(total_number__gte=num_min)
+        num_max = data['num_max']
+        if num_max:
+            queryset = queryset.filter(total_number__lte=num_max)
 
         plz = data['PLZ']
         if plz:
@@ -206,8 +228,12 @@ class OfferFilter(FormView):
         for_free = data['for_free']
         if for_free != 'null':
             queryset = queryset.filter(for_free__exact=for_free)
+        
+        sort = form.cleaned_data['sort']
+        direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
+
         context = {}
-        context['dataset'] = queryset
+        context['dataset'] = queryset.order_by(direction+sort)
         return render(None,'serd/offer_list.html', context)
 
 
