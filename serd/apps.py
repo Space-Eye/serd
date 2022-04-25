@@ -5,5 +5,4 @@ class serdConfig(AppConfig):
     name = 'serd'
     verbose_name = 'SERD'
     def ready(self) -> None:
-        from .signals import handler, post_save
-        post_save.connect(handler)
+        from .signals import  delete_handler, save_handler
