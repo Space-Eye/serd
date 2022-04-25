@@ -62,8 +62,12 @@
             {% bootstrap_button "Angebot eintragen - Intern" button_type="link" href=internal_add_offer_url button_class="btn-primary" %}
         </div>
         <div class="m-3">
+            {% url 'profile_list' as profile_list_url %}
+            {% bootstrap_button "Profile" button_type="link" href=profile_list_url button_class="btn-success" %}
+        </div>
+        <div class="m-3">
             {% url 'profile_edit' as profile_edit_url %}
-            {% bootstrap_button "Profil bearbeiten" button_type="link" href=profile_edit_url button_class="btn-primary" %}
+            {% bootstrap_button "Profil bearbeiten" button_type="link" href=profile_edit_url button_class="btn-success" %}
         </div>
     </div>
 </body>
