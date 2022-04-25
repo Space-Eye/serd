@@ -240,11 +240,21 @@ class OfferFilter(FormView):
 @login_required
 def statistics(request):
     placed_requests = HousingRequest.objects.filter(state='arrived')
+    stale_requests = HousingRequest.objects.filter(state='stale')
     persons_placed = placed_requests.aggregate(Sum('persons'))['persons__sum']
     requests_placed = placed_requests.count()
+    requests_stale = stale_requests.count()
+    persons_stale = stale_requests.aggregate(Sum('persons'))['persons__sum']
+    all_requests = HousingRequest.objects.all()
+    requests_all =  all_requests.count()
+    persons_all = all_requests.aggregate(Sum('persons'))['persons__sum']
     hotel = HousingRequest.objects.filter(hotel__isnull=False).aggregate(Sum('persons'))['persons__sum']
     context = {}
-    context['persons'] = persons_placed
-    context['requests'] = requests_placed
+    context['persons_placed'] = persons_placed
+    context['requests_placed'] = requests_placed
+    context['persons_stale'] = persons_stale
+    context['requests_stale'] = requests_stale
+    context['persons_all'] = persons_all
+    context['requests_all'] = requests_all
     context['hotel'] = hotel
     return render(request, 'serd/statistics.html', context)

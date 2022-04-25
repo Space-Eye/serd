@@ -18,12 +18,17 @@
 <body>
     <table>
             <tr>
-                <td>Vermittelte Personen: </td><td>{{ persons }}</td>
+                <td>Vermittelte Personen: </td><td>{{ persons_placed }}</td>
             </tr>
             <tr>
-                <td>Vermittelte Gesuche: </td><td>{{ requests }}</td>
+                <td>Vermittelte Gesuche: </td><td>{{ requests_placed }}</td>
             </tr>
+            <tr><td>Personen nicht mehr aktuell</td><td>{{ persons_stale }}</td></tr>
+            <tr><td>Gesuche nicht mehr aktuell</td><td>{{ requests_stale }}</td></tr>
+            <tr><td>Personen Gesamt</td><td>{{ persons_all }}</td></tr>
+            <tr><td>Gesuche Gesamt</td><td>{{ requests_all }}</td></tr>
             <tr>
+
                 <td>Im Hotel: </td> <td>{{ hotel }}</td>
             </tr>
     </table>
