@@ -21,7 +21,7 @@ def validate_phone(value: str):
         raise ValidationError(
             _('Telefonnummer muss mit + oder 0 beginnen')
         )
-    allowed = set(string.digits + ' '+ '-')
+    allowed = set(string.digits + ' ' + '-' + '/')
     if not set(value[1:]) <= allowed:
         raise ValidationError(
             _('Ungültiges Zeichen in der Telefonnummer')
