@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+{# Load the tag library #}
+{% load bootstrap5 %}
+{% load static %}
+{% bootstrap_css %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<head>
+    <title>Profil: {{data.name}} - SERD</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+</head>
+<body>
+<table style="margin-left:5vh;margin-right:auto;">
+    <tr><td>Name: </td><td>{{data.name}}</td></tr>
+    <tr><td>Telefonnummer:</td><td>{{data.phone}}</td></tr>
+    <tr><td>Whatsapp:</td><td>{{data.whatsapp |yesno:'Ja,Nein'}}</td></tr>
+    <tr><td>Signal:</td><td>{{data.signal|yesno:'Ja,Nein'}}</td></tr>
+    <tr><td>Telegram:</td><td><a href="{{data.telegram}}">{{data.telegram}}</a></td</tr>
+    <tr><td>Threema:</td><td>{{data.threema}}</td</tr>
+    <tr><td>Email:</td><td>{{data.mail}}</td></tr>
+    <tr><td>Sprachen:</td><td>{{data.languages}}</td</tr>
+</table>
+
+<div class="d-flex flex-row">
+    <div class="m-3">
+        {% url 'logout' as logout_url%}
+        {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}
+    </div>
+    <div class="m-3">
+        {% url 'index' as index_url%}
+        {% bootstrap_button "Startseite" button_type="link" href=index_url button_class="btn-secondary" %}
+    </div>
+</div>
+</body>
+</html>

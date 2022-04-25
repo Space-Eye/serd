@@ -2,7 +2,7 @@
 from django.urls import reverse
 
 from serd.choices import PETS
-from .models import Hotel, HousingRequest, Offer, NewsItem
+from .models import Hotel, HousingRequest, Offer, NewsItem, Profile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
@@ -258,3 +258,16 @@ def statistics(request):
     context['requests_all'] = requests_all
     context['hotel'] = hotel
     return render(request, 'serd/statistics.html', context)
+
+@login_required
+def profile_view(request, profile_id):
+    context = {}
+    context['data'] = Profile.objects.get(account__id=profile_id)
+    return render(request, 'serd/profile_view.html', context)
+
+@login_required
+def profile_list(request):
+    context = {}
+    context["dataset"] = Profile.objects.all()
+    return render(request, "serd/profile_list.html", context)
+   
