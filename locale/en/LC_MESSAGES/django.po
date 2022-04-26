@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-23 19:44+0000\n"
-"PO-Revision-Date: 2022-04-23 21:45+0200\n"
+"POT-Creation-Date: 2022-04-26 16:07+0000\n"
+"PO-Revision-Date: 2022-04-26 18:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -327,7 +327,6 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Ankunftsdatum:\t{arrival_date}\n"
-"Ankunftsort:\t{arrival_location}\n"
 "Haustiere:\t{pets}\n"
 "Anzahl Haustiere\t{pet_number}\n"
 "Auto vorhanden\t{car}\n"
@@ -335,202 +334,201 @@ msgid ""
 "Impfung:\t{vaccination}\n"
 "Barrierefrei:\t{accessability_needs}\n"
 msgstr ""
-"Ankunftsdatum:\t{arrival_date}\n"
-"Ankunftsort:\t{arrival_location}\n"
-"Haustiere:\t{pets}\n"
-"Anzahl Haustiere\t{pet_number}\n"
-"Auto vorhanden\t{car}\n"
-"Sprachen:\t{languages}\n"
-"Impfung:\t{vaccination}\n"
-"Barrierefrei:\t{accessability_needs}\n"
+"Arrival date:\t{arrival_date}\n"
+"Pets:\t{pets}\n"
+"Number of pets\t{pet_number}\n"
+"Car available\t{car}\n"
+"Languages spoken:\t{languages}\n"
+"COID vaccination:\t{vaccination}\n"
+"accessability needs:\t{accessability_needs}\n"
 
-#: serd/models.py:21 serd/models.py:62
+#: serd/models.py:38 serd/models.py:79
 msgid "Nachname"
 msgstr "last name"
 
-#: serd/models.py:22 serd/models.py:63
+#: serd/models.py:39 serd/models.py:80
 msgid "Vorname"
 msgstr "given name"
 
-#: serd/models.py:24 serd/models.py:85
+#: serd/models.py:41 serd/models.py:102
 msgid "Telefonnummer"
 msgstr "phone number"
 
-#: serd/models.py:25 serd/models.py:69
+#: serd/models.py:42 serd/models.py:86
 msgid "E-Mail-Adresse"
 msgstr "e-mail address"
 
-#: serd/models.py:26
+#: serd/models.py:43
 msgid "Name einer stellvertretenden Person"
 msgstr "Name of an reperesentative"
 
-#: serd/models.py:26
+#: serd/models.py:43
 msgid "falls zutreffend"
 msgstr "if applicable"
 
-#: serd/models.py:27
+#: serd/models.py:44
 msgid "Telefonnummer der stellvertretenden Person"
 msgstr "Phone  number of the representative"
 
-#: serd/models.py:28
+#: serd/models.py:45
 msgid "E-Mail-Adresse der stellvertretenden Person"
 msgstr "E-mail address of the representative"
 
-#: serd/models.py:29
+#: serd/models.py:46
 msgid "Anzahl der Erwachsenen und Kindern ab 12 Jahren"
 msgstr "Number of adults and children aged 12 and over"
 
-#: serd/models.py:30
+#: serd/models.py:47
 msgid "Anzahl der Kinder unter 12"
 msgstr "Number of children under 12"
 
-#: serd/models.py:32
+#: serd/models.py:49
 msgid "Ab fünf Personen: Gruppe darf geteilt werden"
 msgstr "for more then five persons: group may be split"
 
-#: serd/models.py:32
+#: serd/models.py:49
 msgid "notfalls kann eine Unterbringung in zwei Unterkünften erfolgen"
 msgstr "if necessary, accommodation at two separate locations is possible"
 
-#: serd/models.py:33
+#: serd/models.py:50
 msgid "Wo sind Sie aktuell untergebracht?"
 msgstr "What is your current accomodation"
 
-#: serd/models.py:34
+#: serd/models.py:51
 msgid "Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"
 msgstr "When do you arrive in Regensburg or how long have you been here?"
 
-#: serd/models.py:36
+#: serd/models.py:52
 msgid "Welche Haustiere haben Sie?"
 msgstr "Which pets do you have"
 
-#: serd/models.py:37
+#: serd/models.py:53
 msgid "Wie viele Haustiere haben Sie?"
 msgstr "How many pets do you have"
 
-#: serd/models.py:38
+#: serd/models.py:54
 msgid "Haben Sie ein Auto?"
 msgstr "Do you have a car?"
 
-#: serd/models.py:39
+#: serd/models.py:55
 msgid "Sprachkenntnisse"
 msgstr "Spoken languages"
 
-#: serd/models.py:39 serd/models.py:71
+#: serd/models.py:56 serd/models.py:88
 msgid "Weitere Sprachen"
 msgstr "Additional languages"
 
-#: serd/models.py:40
+#: serd/models.py:57
 msgid "Sind alle Personen in Ihrer Gruppe vollständig gegen COVID-19 geimpft?"
 msgstr "Are all members of your group fully vaccinated against COVID-19?"
 
-#: serd/models.py:41
+#: serd/models.py:58
 msgid "Wird eine barrierefreie Wohnung benötigt?"
 msgstr "Do you have accessibility needs?"
 
-#: serd/models.py:42
+#: serd/models.py:59
 msgid "Können Sie für Ihre Unterkunft zahlen?"
 msgstr "Can you pay for your accommodation?"
 
-#: serd/models.py:42
+#: serd/models.py:59
 msgid "Keine Voraussetzung für die Vermittlung einer privaten Notunterkunft"
 msgstr "Ne prerequisite for the provision of a private accomodation"
 
-#: serd/models.py:43
+#: serd/models.py:60
 msgid "Sachbearbeiter:in"
 msgstr "Case handler"
 
-#: serd/models.py:44
+#: serd/models.py:61
 msgid "Priorität"
 msgstr "priority"
 
-#: serd/models.py:45
+#: serd/models.py:62
 msgid "Vermitttelt an"
 msgstr "placed at"
 
-#: serd/models.py:47 serd/models.py:84
+#: serd/models.py:64 serd/models.py:101
 msgid "Status"
 msgstr "state"
 
-#: serd/models.py:64
+#: serd/models.py:81
 msgid "Postleitzahl"
 msgstr "postal code"
 
-#: serd/models.py:65
+#: serd/models.py:82
 msgid ""
 "Anzahl der Personen, die in dieser Wohnung eine Unterkunft finden können."
 msgstr "Total number of persons, who can be housed at this accommodation"
 
-#: serd/models.py:66
+#: serd/models.py:83
 msgid ""
 "Anzahl der zuvor genannten Plätze, die nur für Kinder unter 12 geeignet sind."
 msgstr ""
 "from the previous stated number these are only suitable for children under "
 "the age of 12"
 
-#: serd/models.py:67
+#: serd/models.py:84
 msgid "Straße, Hausnummer (optional)"
 msgstr "street,  house number (optional)"
 
-#: serd/models.py:68
+#: serd/models.py:85
 msgid "Ort"
 msgstr "city"
 
-#: serd/models.py:70
+#: serd/models.py:87
 msgid "Welche Sprachen sprechen Sie?"
 msgstr "Which languages do you speak?"
 
-#: serd/models.py:72
+#: serd/models.py:89
 msgid ""
 "Ich stelle die Unterkunft mindestens vorübergehend kostenlos zur Verfügung."
 msgstr ""
 "I make the accommodation available free of charge, at least temporarily."
 
-#: serd/models.py:74
+#: serd/models.py:91
 msgid "spontanes zur Verfügung stellen ist möglich"
 msgstr "spontaneous availability is possible"
 
-#: serd/models.py:74
+#: serd/models.py:91
 msgid "innerhalb eines Tages"
 msgstr "within days' notice"
 
-#: serd/models.py:75
+#: serd/models.py:92
 msgid "Ab wann steht die Unterkunft zur Verfügung?"
 msgstr "When is the accommodation available?"
 
-#: serd/models.py:76
+#: serd/models.py:93
 msgid "Die Unterkunft wird nur zeitlich begrenzt zur Verfügung gestellt."
 msgstr "Accommodation is only available for a limited time."
 
-#: serd/models.py:78
+#: serd/models.py:95
 msgid "Ist die Unterkunft barrierefrei?"
 msgstr "Is the accommodation accessible for disabled persons?"
 
-#: serd/models.py:79
+#: serd/models.py:96
 msgid "Ist die Unterkunft mit öffentlichen Verkehrsmitteln erreichbar? "
 msgstr "Is the accommodation reachable via public transport?"
 
-#: serd/models.py:80
+#: serd/models.py:97
 msgid "Anzahl der zur Verfügung gestellten Zimmer"
 msgstr "Number of rooms made available"
 
-#: serd/models.py:81
+#: serd/models.py:98
 msgid "Unterkunft erfolgt in einer separaten Wohnung."
 msgstr "The accommodation is a separate appartement"
 
-#: serd/models.py:82
+#: serd/models.py:99
 msgid "Bei Unterbringung in der eigenen Wohnung: Ich wohne"
 msgstr "If the accommodation is within my own apartment: I'm living with"
 
-#: serd/models.py:83
+#: serd/models.py:100
 msgid "Folgende Haustiere sind erlaubt."
 msgstr "The following pets are allowed"
 
-#: serd/models.py:86
+#: serd/models.py:103
 msgid "E-mail"
 msgstr "E-mail"
 
-#: serd/models.py:90
+#: serd/models.py:107
 msgid "Eine COVID-19-Impfung ist zwingend notwendig."
 msgstr "Vaccination against COVID-19 is required"
 
@@ -559,6 +557,7 @@ msgid "Wert darf nicht negativ sein"
 msgstr "Value must not be negative"
 
 #: templates/serd/housingrequest_form.html:81 templates/serd/offer_form.html:80
+#: templates/serd/profile_form.html:49
 msgid "Absenden"
 msgstr "Submit"
 
