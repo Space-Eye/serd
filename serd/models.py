@@ -101,7 +101,7 @@ class Offer(models.Model):
     state = models.CharField(choices=OFFER_STATE, max_length=64, verbose_name=_("Status"),default="new")
     phone = models.CharField(max_length=128, validators=[validate_phone], verbose_name=_("Telefonnummer"), blank=True)
     mail = models.CharField(max_length=128, verbose_name=_("E-mail"), validators=[validate_email], blank=True)
-    comment = models.CharField(blank=True, max_length=250)
+    comment = models.CharField(blank=True, max_length=500)
     private_comment = models.CharField(blank=True, default="", max_length=512)
     by_municipality = models.BooleanField(default=False, verbose_name="Von Stadt Vermittelt")
     covid = models.BooleanField(default=False, verbose_name=_("Eine COVID-19-Impfung ist zwingend notwendig."))
