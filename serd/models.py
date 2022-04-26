@@ -160,3 +160,13 @@ class NewsItem(models.Model):
     headline = models.CharField(max_length=128)
     class Meta:
         ordering = ('-number',)
+
+
+class HotelStay(models.Model):
+    number = models.AutoField(primary_key=True) 
+    arrival_date = models.DateField(verbose_name="Ankunftstag")
+    departure_date = models.DateField(verbose_name="Abreisetag", blank=True, null=True)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='stays')
+    request = models.ForeignKey(HousingRequest, on_delete=models.CASCADE, related_name='stays')
+    def __str__(self) -> str:
+        return "_".join([str(self.hotel), str(self.request)])
