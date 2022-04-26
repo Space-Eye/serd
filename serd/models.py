@@ -18,6 +18,7 @@ class Profile(models.Model):
     whatsapp = models.BooleanField(verbose_name="Whatsapp")
     signal = models.BooleanField(verbose_name="Signal")
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name="Sprachkenntnisse", null=True, blank=True)
+    comment = models.CharField(max_length=128, verbose_name="Kommentar", blank=True)
     def __str__(self) -> str:
         return self.account.username
 

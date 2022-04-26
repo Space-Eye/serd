@@ -262,5 +262,5 @@ class ProfileForm(forms.ModelForm):
     languages = forms.MultipleChoiceField(choices=LANGUAGE_CHOICE, required=False, label="Sprachen", widget=forms.CheckboxSelectMultiple)
     class Meta:
         model = Profile
-        fields=('name', 'phone', 'whatsapp', 'signal', 'mail', 'languages')
+        fields=('name', 'phone', 'whatsapp', 'signal','threema' ,'telegram', 'mail', 'languages', 'comment')
 
