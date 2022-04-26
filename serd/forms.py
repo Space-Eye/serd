@@ -1,15 +1,16 @@
 from datetime import datetime
+from functools import reduce
 from urllib import request
 from dal import autocomplete
 from django import forms
 from slugify import slugify
 from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
-from .models import HousingRequest, Offer, Profile
+from .models import HousingRequest, Offer, Profile, HotelStay
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from .mail import Mailer
-from django.contrib.admin.widgets import FilteredSelectMultiple
+
 
 def isascii(s):
     """Check if the characters in string s are in ASCII, U+0-U+7F."""
@@ -198,14 +199,44 @@ class RequestForm(forms.ModelForm):
 class RequestEditForm(RequestForm):
     private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
     number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
-    # override here with do nothing clean method to allow empty arrival location when editing
+    departure_date =   forms.DateField(label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     def __init__(self, *args, **kwargs):
         super(RequestForm, self).__init__(*args, **kwargs)
         self.fields['case_handler'].queryset = User.objects.order_by('username')
+        if self.instance.number is not None:
+            stay = HotelStay.objects.filter(request=self.instance).first()
+            if stay:
+                self.fields['departure_date'].initial = stay.departure_date
+    def clean(self):
+        if self.instance.number is not None:
+            if self.cleaned_data['hotel'] and self.instance.hotel:
+                if self.cleaned_data['hotel'] != self.instance.hotel:
+                    self.add_error(field='hotel', error=ValidationError("Hotel kann nachträglich nur von Admins gewechselt werden."))
+
+        return super().clean()
+
+    # override here with do nothing clean method to allow empty arrival location when editing
     def clean_arrival_location(self):
         data = self.cleaned_data['arrival_location']
         return data
-    
+    def check_and_create_stays(self, request: HousingRequest):
+        stay = HotelStay.objects.filter(request=request).first()
+        if  stay:
+            stay.arrival_date = request.arrival_date
+            stay.departure_date = self.cleaned_data['departure_date']
+            stay.save()
+
+        else:
+            if request.hotel is not None:
+                stay = HotelStay()
+                stay.arrival_date = request.arrival_date
+                stay.departure_date = self.cleaned_data['departure_date']
+                stay.hotel = request.hotel
+                stay.request = request
+                stay.save()
+
+
+        
     def save(self, commit=True):
         request = super(RequestEditForm, self).save(commit=False)
         hosts = self.cleaned_data['possible_hosts']
@@ -216,11 +247,12 @@ class RequestEditForm(RequestForm):
                 request.hotel = None
         if commit:
             request.save()
+            self.check_and_create_stays(request)
         return request
 
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel', 'priority','private_comment', 'possible_hosts')
+        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel', 'departure_date', 'priority','private_comment', 'possible_hosts')
         widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
