@@ -23,14 +23,15 @@
             <tr>
                 <td>Vermittelte Gesuche: </td><td>{{ requests_placed }}</td>
             </tr>
+            <tr> <td>Quasi-Vermittelt: Personen</td><td>{{persons_quasi }}</td></tr>
+            <tr> <td>Quasi-Vermittelt: Gesuche</td><td>{{requests_quasi }}</td></tr>
             <tr><td>Personen nicht mehr aktuell</td><td>{{ persons_stale }}</td></tr>
             <tr><td>Gesuche nicht mehr aktuell</td><td>{{ requests_stale }}</td></tr>
             <tr><td>Personen Gesamt</td><td>{{ persons_all }}</td></tr>
             <tr><td>Gesuche Gesamt</td><td>{{ requests_all }}</td></tr>
-            <tr>
-
-                <td>Im Hotel: </td> <td>{{ hotel }}</td>
-            </tr>
+            <tr><td>Im Hotel: </td> <td>{{ hotel }}</td></tr>
+            <tr><td>Angebote der Stadt</td><td>{{offers_city}}</td></tr>
+            <tr><td>Davon Quasi-Vermittelt</td><td>{{city_quasi_placed}}</td></tr>
     </table>
 </div>
 
