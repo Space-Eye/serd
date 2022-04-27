@@ -239,10 +239,13 @@ class RequestEditForm(RequestForm):
     def save(self, commit=True):
         request = super(RequestEditForm, self).save(commit=False)
         hosts = self.cleaned_data['possible_hosts']
-        request.possible_hosts.remove(*request.possible_hosts.difference(hosts))
-        request.possible_hosts.add(*hosts)
+        if request.number:
+            request.possible_hosts.remove(*request.possible_hosts.difference(hosts))
+            request.possible_hosts.add(*hosts)
         if commit:
+            print(request)
             request.save()
+            
             self.check_and_create_stays(request)
         return request
 
