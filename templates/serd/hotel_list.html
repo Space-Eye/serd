@@ -61,6 +61,8 @@
             <tr style="background-color:yellow">
         {%elif data.state == "full" %}
             <tr style="background-color:red">
+        {%elif data.state == "passive" %}
+                <tr style="background-color:darksalmon">
         {%endif%}
 
            <td> {{data.number}}</td>
