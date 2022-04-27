@@ -6,7 +6,7 @@ from django import forms
 from slugify import slugify
 from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
-from .models import HousingRequest, Offer, Profile, HotelStay
+from .models import Hotel, HousingRequest, Offer, Profile, HotelStay
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from .mail import Mailer
@@ -295,4 +295,10 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields=('name', 'phone', 'whatsapp', 'signal','threema' ,'telegram', 'mail', 'languages', 'comment')
+
+
+class InvoiceSelectionForm(forms.Form):
+    hotel = forms.ModelChoiceField(label='Hotel', queryset=Hotel.objects.order_by('number'))
+    start = forms.DateField(label='von', widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    end = forms.DateField(label='bis', widget=forms.SelectDateWidget(years=range(2022, 2024)))
 

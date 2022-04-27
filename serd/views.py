@@ -1,15 +1,15 @@
-# import Http Response from django
 from django.urls import reverse
 
 from serd.choices import PETS
-from .models import Hotel, HousingRequest, Offer, NewsItem, Profile
+from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm
+from datetime import datetime, timedelta
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm
 from dal import autocomplete
 from django.db.models import Sum
 
@@ -281,4 +281,41 @@ class UpdateProfile(UpdateView):
         
         
     
-   
+@login_required
+def invoice_view(request):
+    if request.method =='GET':
+        form = InvoiceSelectionForm()
+        return render(request, 'serd/invoice_select.html', {'form': form} )
+    elif request.method == 'POST':
+        context = {}
+       
+        form = InvoiceSelectionForm(request.POST)
+        hotel: Hotel = Hotel.objects.get(number= int(form['hotel'].value()))
+        start = datetime.strptime(form['start'].value(), '%d.%m.%Y')
+        end = datetime.strptime(form['end'].value(), '%d.%m.%Y')
+        current_date = start
+        current = 0
+        data = []
+        while(current_date < end):
+            row = {}
+            row['date'] = current_date.date()
+            checkin_stays = HotelStay.objects.filter(hotel=hotel, arrival_date=current_date)
+            checkins = 0
+            for stay in checkin_stays:
+                checkins += stay.request.adults + stay.request.children
+            checkout_stays = HotelStay.objects.filter(hotel=hotel, departure_date=current_date)
+            checkouts = 0
+            for stay in checkout_stays:
+                checkouts += stay.request.adults + stay.request.children
+            current += checkins
+            current -= checkouts
+            row['checkins'] = checkins
+            row['checkouts'] = checkouts
+            row['current'] = current
+            current_date+= timedelta(days=1)
+            data.append(row)
+        context['form'] = form
+        context['hotel'] = hotel.name
+        context['data'] = data
+        return render(request, 'serd/invoice_display.html', context)
+        

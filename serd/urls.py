@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
 from .views import (AddOffer, AddRequest, OfferUpdate, offer_list, request_list, RequestUpdate,  index, SuccessOffer,
                     SuccessRequest, RequestFilter, OfferFilter, hotel_list, OfferAutocomplete, statistics, 
-                    InternalAddOffer, InternalAddRequest, profile_view, profile_list, UpdateProfile )
+                    InternalAddOffer, InternalAddRequest, profile_view, profile_list, UpdateProfile, invoice_view )
 from django.conf import settings
 
 
@@ -44,7 +44,8 @@ urlpatterns = [
     path('add_request/intern', login_required(InternalAddRequest.as_view()), name='internal_add_request'),
     path('profiles/<profile_id>/', profile_view, name='profile_view'),
     path('profiles/', profile_list, name='profile_list'),
-    path('profiles_edit/', login_required(UpdateProfile.as_view()), name='profile_edit')
+    path('profiles_edit/', login_required(UpdateProfile.as_view()), name='profile_edit'),
+    path('invoices', invoice_view, name='invoice')
    
 ]
 urlpatterns += i18n_patterns(
