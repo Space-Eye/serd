@@ -65,6 +65,7 @@ class  HousingRequest(models.Model):
     private_comment = models.CharField(blank=True, null=True,  default="", max_length=1024)
     created_at = models.DateField(auto_now_add=True)
     possible_hosts = models.ManyToManyField(to='Offer', related_name="possible_guests", blank=True, verbose_name="Mögliche Gastgeber")
+    room = models.CharField(verbose_name="Zimmernummer", blank=True, max_length=64)
 
     _persons = None
 
@@ -116,7 +117,7 @@ class AnsprechpartnerHotel(models.Model):
     name = models.CharField(max_length=128, verbose_name="Name")
     tel = models.CharField(max_length=128, validators=[validate_phone], verbose_name="Telefonnummer", blank=True)
     mail = models.CharField(max_length=128, verbose_name="E-mail", validators=[validate_email], blank=True)
-    hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, related_name="ansprechpartner")
+    hotel = models.ManyToManyField('Hotel',  null=True, related_name="ansprechpartner")
     def __str__(self) -> str:
         return "_".join([str(self.number), self.name])
     class Meta:

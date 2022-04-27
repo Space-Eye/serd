@@ -240,8 +240,8 @@ class RequestEditForm(RequestForm):
     def save(self, commit=True):
         request = super(RequestEditForm, self).save(commit=False)
         hosts = self.cleaned_data['possible_hosts']
-        if hosts:
-            request.possible_hosts.add(*hosts)
+        request.possible_hosts.remove(*request.possible_hosts.difference(hosts))
+        request.possible_hosts.add(*hosts)
         if 'state' in self.changed_data:
             if self.cleaned_data['state'] == 'arrived' or self.cleaned_data['state'] == 'stale':
                 request.hotel = None
@@ -252,7 +252,7 @@ class RequestEditForm(RequestForm):
 
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel', 'departure_date', 'priority','private_comment', 'possible_hosts')
+        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'departure_date', 'hotel','room', 'priority','private_comment', 'possible_hosts')
         widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
