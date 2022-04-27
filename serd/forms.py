@@ -1,6 +1,4 @@
 from datetime import datetime
-from functools import reduce
-from urllib import request
 from dal import autocomplete
 from django import forms
 from slugify import slugify
@@ -9,6 +7,7 @@ from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFE
 from .models import Hotel, HousingRequest, Offer, Profile, HotelStay
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from django.conf import settings
 from .mail import Mailer
 
 
@@ -118,7 +117,7 @@ class RequestForm(forms.ModelForm):
     template_name = 'form_snippet.html'
     def test_required(self, field:str):
         data = self.cleaned_data[field]
-        if data is None or data == "":
+        if not settings.DEBUG and (data is None or data == ""):
             self.add_error(field=field, error=PFLICHT)
         return data
 
