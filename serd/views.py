@@ -253,6 +253,8 @@ def statistics(request):
     contact_requests = HousingRequest.objects.filter(state="housing_contact")
     requests_contact = contact_requests.count()
     persons_contact = contact_requests.aggregate(Sum('persons'))['persons__sum']
+    city_offers = Offer.objects.filter(by_municipality=True)
+    offers_city = city_offers.count()
     context['persons_placed'] = persons_placed
     context['requests_placed'] = requests_placed
     context['persons_stale'] = persons_stale
@@ -262,6 +264,7 @@ def statistics(request):
     context['requests_quasi'] = requests_placed + requests_contact
     context['persons_quasi'] = persons_placed + persons_contact
     context['hotel'] = hotel
+    context['offers_city'] = offers_city
     return render(request, 'serd/statistics.html', context)
 
 @login_required
