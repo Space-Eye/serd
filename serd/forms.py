@@ -242,9 +242,6 @@ class RequestEditForm(RequestForm):
         hosts = self.cleaned_data['possible_hosts']
         request.possible_hosts.remove(*request.possible_hosts.difference(hosts))
         request.possible_hosts.add(*hosts)
-        if 'state' in self.changed_data:
-            if self.cleaned_data['state'] == 'arrived' or self.cleaned_data['state'] == 'stale':
-                request.hotel = None
         if commit:
             request.save()
             self.check_and_create_stays(request)
