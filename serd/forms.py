@@ -243,9 +243,8 @@ class RequestEditForm(RequestForm):
             request.possible_hosts.remove(*request.possible_hosts.difference(hosts))
             request.possible_hosts.add(*hosts)
         if commit:
-            print(request)
             request.save()
-            
+            # this modifies the db, only call when we really are modifying data
             self.check_and_create_stays(request)
         return request
 
