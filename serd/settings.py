@@ -139,7 +139,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale/'),
 )
 
-USE_TZ = True
+USE_TZ = False
 LANGUAGES= [
     ('en', 'English'),
     ('de', 'German'),

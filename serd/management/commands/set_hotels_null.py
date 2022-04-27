@@ -1,17 +1,16 @@
 from asyncio.log import logger
-from cmath import log
 import logging
 from django.core.management.base import BaseCommand, CommandError
 from serd.models import HotelStay, HousingRequest
-from django.utils import timezone
+from datetime import datetime
 
 logger = logging.getLogger('default')
 class Command(BaseCommand):
     help = 'Sets hotel to null for all requests that depart today.'
 
     def handle(self, *args, **options):
-        today = timezone.localdate()
-        logger.info("set_hotels_null executed at %s", str(timezone.localtime()))
+        today = datetime.now().date()
+        logger.info("set_hotels_null executed at %s", str(datetime.now()))
         try:
             departing = HotelStay.objects.filter(departure_date=today)
         except Exception as e:
