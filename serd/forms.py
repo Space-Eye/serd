@@ -199,7 +199,7 @@ class RequestForm(forms.ModelForm):
 class RequestEditForm(RequestForm):
     private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
     number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
-    departure_date =   forms.DateField(label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024))) 
+    departure_date = forms.DateField(required= False, label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
     def __init__(self, *args, **kwargs):
         super(RequestForm, self).__init__(*args, **kwargs)
         self.fields['case_handler'].queryset = User.objects.order_by('username')
