@@ -220,7 +220,7 @@ class RequestEditForm(RequestForm):
 
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel', 'priority','private_comment', 'possible_hosts')
+        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel','room', 'priority','private_comment', 'possible_hosts')
         widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))

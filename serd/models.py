@@ -65,6 +65,7 @@ class  HousingRequest(models.Model):
     private_comment = models.CharField(blank=True, null=True,  default="", max_length=1024)
     created_at = models.DateField(auto_now_add=True)
     possible_hosts = models.ManyToManyField(to='Offer', related_name="possible_guests", blank=True, verbose_name="Mögliche Gastgeber")
+    room = models.CharField(verbose_name="Zimmernummer", blank=True, max_length=64)
 
     _persons = None
 
