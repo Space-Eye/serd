@@ -121,9 +121,7 @@ class RequestForm(forms.ModelForm):
             self.add_error(field=field, error=PFLICHT)
         return data
 
-    arrival_date = forms.DateTimeField(label=_('Ankunftstag'),
-        widget=forms.SelectDateWidget(years=range(2022, 2024))
-    )
+    arrival_date = forms.DateField(label=_('Ankunftstag'), required=False, widget=forms.SelectDateWidget(years=range(2022, 2024)))
     who = forms.CharField(label=_("Bitte beschreiben Sie Ihre Gruppe kurz (Alter, Geschlecht, ...)"), required=False, widget=forms.Textarea)
 
     class Meta:
