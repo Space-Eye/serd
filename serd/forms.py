@@ -143,13 +143,8 @@ class RequestForm(forms.ModelForm):
         return self.test_required('children')
     def clean_who(self):
         return self.test_required('who')
-    def clean_arrival_location(self):
-        return self.test_required('arrival_location')
     def clean_arrival_date(self):
-        date = self.cleaned_data['arrival_date']
-        if date.date() == datetime.strptime("01.01.22","%d.%m.%y").date():
-            self.add_error(field='arrival_date', error=PFLICHT)
-        return date
+             return self.test_required('arrival_date')
     def clean_current_housing(self):
         return self.test_required('current_housing')
 
@@ -196,44 +191,12 @@ class RequestForm(forms.ModelForm):
 class RequestEditForm(RequestForm):
     private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
     number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
-    departure_date = forms.DateField(required= False, label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
+
+    
     def __init__(self, *args, **kwargs):
         super(RequestForm, self).__init__(*args, **kwargs)
         self.fields['case_handler'].queryset = User.objects.order_by('username')
-        if self.instance.number is not None:
-            stay = HotelStay.objects.filter(request=self.instance).first()
-            if stay:
-                self.fields['departure_date'].initial = stay.departure_date
-    def clean(self):
-        if self.instance.number is not None:
-            if self.cleaned_data['hotel'] and self.instance.hotel:
-                if self.cleaned_data['hotel'] != self.instance.hotel:
-                    self.add_error(field='hotel', error=ValidationError("Hotel kann nachträglich nur von Admins gewechselt werden."))
 
-        return super().clean()
-
-    # override here with do nothing clean method to allow empty arrival location when editing
-    def clean_arrival_location(self):
-        data = self.cleaned_data['arrival_location']
-        return data
-    def check_and_create_stays(self, request: HousingRequest):
-        stay = HotelStay.objects.filter(request=request).first()
-        if  stay:
-            stay.arrival_date = request.arrival_date
-            stay.departure_date = self.cleaned_data['departure_date']
-            stay.save()
-
-        else:
-            if request.hotel is not None:
-                stay = HotelStay()
-                stay.arrival_date = request.arrival_date
-                stay.departure_date = self.cleaned_data['departure_date']
-                stay.hotel = request.hotel
-                stay.request = request
-                stay.save()
-
-
-        
     def save(self, commit=True):
         request = super(RequestEditForm, self).save(commit=False)
         hosts = self.cleaned_data['possible_hosts']
@@ -242,14 +205,21 @@ class RequestEditForm(RequestForm):
             request.possible_hosts.add(*hosts)
         if commit:
             request.save()
-            # this modifies the db, only call when we really are modifying data
-            self.check_and_create_stays(request)
         return request
 
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'departure_date', 'hotel','room', 'priority','private_comment', 'possible_hosts')
+        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'possible_hosts')
         widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
+
+class HotelStayForm(forms.ModelForm):
+    arrival_date = forms.DateField(required= False, label="Anreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    departure_date = forms.DateField(required= False, label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    hotel= forms.ModelChoiceField(required = False, label="Hotel", queryset=Hotel.objects.all())
+    room = forms.CharField(required=False, label="Zimmer", max_length=64)
+    class Meta:
+        model = HotelStay
+        fields = ('arrival_date', 'departure_date', 'room', 'hotel')
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
 class RequestFilterForm(forms.Form):

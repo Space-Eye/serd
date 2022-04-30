@@ -1,3 +1,4 @@
+from sys import prefix
 from django.urls import reverse
 
 from serd.choices import PETS
@@ -9,9 +10,10 @@ from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, HotelStayForm
 from dal import autocomplete
 from django.db.models import Sum
+from django.forms import modelformset_factory
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
@@ -41,11 +43,28 @@ class AddRequest(CreateView):
     def get_success_url(self) -> str:
         return reverse('success_request', args=(self.object.number,))
 
-class InternalAddRequest(CreateView):
-    model = HousingRequest
-    form_class = RequestEditForm
-    def get_success_url(self) -> str:
-        return reverse('index')
+StaySet = modelformset_factory(HotelStay, HotelStayForm)
+
+@login_required
+def internal_add_housingrequest(request):
+        if request.method =='GET':
+            requestform = RequestEditForm(prefix='request')
+            stayset = StaySet(prefix='stays')
+        
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'requestform': requestform} )
+        elif request.method == 'POST':
+            requestform = RequestEditForm(request.POST, prefix='request')
+            stayset = StaySet(request.POST, prefix='stays')
+            if stayset.is_valid() and requestform.is_valid():
+                req = requestform.save()
+            for stayform in stayset:
+                stay = stayform.save(commit=False)
+                stay.request = req
+                stay.save()            
+                return HttpResponseRedirect(reverse('index'))
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'requestform': requestform})
+            
+
 
 
 class AddOffer(CreateView):
@@ -89,12 +108,30 @@ class OfferUpdate(UpdateView):
         return Offer.objects.get(number=self.kwargs["offer_id"])
     form_class = OfferEditForm
 
-class RequestUpdate(UpdateView):
-    success_url = "/requests"
-    def get_object(self, queryset=None):
-        return HousingRequest.objects.get(number=self.kwargs["request_id"])
-    form_class = RequestEditForm
 
+@login_required
+def request_update(request, request_id):
+        if request.method =='GET':
+            housingreq = HousingRequest.objects.get(number = int(request_id))
+            stays = HotelStay.objects.filter(request = housingreq)
+            requestform = RequestEditForm(instance=housingreq, prefix="request")
+            stayset = StaySet(queryset=stays, prefix='stays')
+            return render(request, 'serd/request_form_intern.html', {'requestform': requestform, 'stayset': stayset} )
+        elif request.method == 'POST':
+            housingreq = housingreq = HousingRequest.objects.get(number = int(request_id))
+            requestform = RequestEditForm(request.POST, instance=housingreq, prefix='request')
+            stays = HotelStay.objects.filter(request = housingreq)
+            stayset = StaySet(request.POST, queryset=stays, prefix='stays')
+            if stayset.is_valid() and requestform.is_valid():
+                request = requestform.save()
+                stays =stayset.save(commit=False)
+                for stay in stays:
+                    if not stay.request:
+                        stay.request = housingreq
+                        stay.save()
+                return HttpResponseRedirect(reverse('index'))
+            
+            return render(request, 'serd/request_form_intern.html', {'requestform': requestform, 'stayset': stayset} )
         
 class SuccessOffer(TemplateView):
     template_name = "serd/success_offer.html"

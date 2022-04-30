@@ -60,12 +60,10 @@ class  HousingRequest(models.Model):
     case_handler = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Sachbearbeiter:in"))
     priority = models.CharField(choices=PRIORITY_CHOICE, max_length=64, verbose_name=_("Priorität"), blank=True)
     placed_at = models.ForeignKey('Offer', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Vermitttelt an"))
-    hotel = models.ForeignKey('Hotel', on_delete=models.SET_NULL, null=True, verbose_name="Hotel", related_name='requests', blank=True)
     state = models.CharField(choices=REQUEST_STATE, verbose_name=_("Status"), default="new", max_length=64)
     private_comment = models.CharField(blank=True, null=True,  default="", max_length=1024)
     created_at = models.DateField(auto_now_add=True)
     possible_hosts = models.ManyToManyField(to='Offer', related_name="possible_guests", blank=True, verbose_name="Mögliche Gastgeber")
-    room = models.CharField(verbose_name="Zimmernummer", blank=True, max_length=64)
 
     _persons = None
 
@@ -134,22 +132,10 @@ class Hotel(models.Model):
     team_gesamt = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name="Team gesamt", related_name='tem_for_hotel')
     food = models.CharField(choices=FOOD_CHOICES, max_length=64, verbose_name="Verpflegung", blank=True)
     cost = models.CharField(max_length=128, verbose_name="Kosten")
-    beds_adults = models.PositiveSmallIntegerField(verbose_name="Betten Erwachsene", validators=[validate_not_negative])
-    beds_children = models.PositiveSmallIntegerField(verbose_name="Betten Kinder", validators=[validate_not_negative])
-    adults_free = models.IntegerField(null=True, blank=True, verbose_name="NICHTS EINTRAGEN, TECHNISCHES FELD, KOMMT BALD WEG")
-    children_free = models.IntegerField(null=True, blank=True, verbose_name="NICHTS EINTRAGEN, TECHNISCHES FELD, KOMMT BALD WEG")
+    beds = models.PositiveSmallIntegerField(verbose_name="Betten", validators=[validate_not_negative])
     info = models.TextField(verbose_name="Info", blank=True)
     def __str__(self) -> str:
         return "_".join([str(self.number), self.name])
-    def save(self, *args, **kwargs):
-        adults = 0
-        children =0
-        for request in self.requests.all():
-            adults += request.adults
-            children += request.children
-        self.adults_free = self.beds_adults - adults
-        self.children_free = self.beds_children -children
-        super(Hotel, self).save(*args, **kwargs)
     class Meta:
         app_label ='serd'
 
@@ -167,6 +153,7 @@ class HotelStay(models.Model):
     number = models.AutoField(primary_key=True) 
     arrival_date = models.DateField(verbose_name="Ankunftstag")
     departure_date = models.DateField(verbose_name="Abreisetag", blank=True, null=True)
+    room = models.CharField(blank=True, max_length=64)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='stays')
     request = models.ForeignKey(HousingRequest, on_delete=models.CASCADE, related_name='stays')
     def __str__(self) -> str:
