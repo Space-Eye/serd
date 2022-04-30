@@ -301,7 +301,6 @@ def statistics(request):
     all_requests = HousingRequest.objects.all()
     requests_all =  all_requests.count()
     persons_all = all_requests.aggregate(Sum('persons'))['persons__sum']
-    hotel = HousingRequest.objects.filter(hotel__isnull=False).aggregate(Sum('persons'))['persons__sum']
     context = {}
     contact_requests = HousingRequest.objects.filter(state="housing_contact")
     requests_contact = contact_requests.count()
@@ -317,7 +316,6 @@ def statistics(request):
     context['requests_all'] = requests_all
     context['requests_quasi'] = requests_placed + requests_contact
     context['persons_quasi'] = persons_placed + persons_contact
-    context['hotel'] = hotel
     context['offers_city'] = offers_city
     context['city_quasi_placed'] = offers_city_quasi_placed
     return render(request, 'serd/statistics.html', context)
