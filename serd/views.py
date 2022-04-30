@@ -8,11 +8,12 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, HotelStayForm
 from dal import autocomplete
 from django.db.models import Sum
 from django.forms import modelformset_factory
+
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
@@ -97,8 +98,22 @@ def offer_list(request):
 
 @login_required
 def hotel_list(request):
+    hotels =  list(Hotel.objects.all())
+
+    for hotel in hotels:
+        stays = HotelStay.objects.filter(hotel=hotel, arrival_date__lte=date.today())
+        stays = stays.filter(Q(departure_date__gte=date.today())| Q(departure_date__isnull=True))
+        adults = stays.aggregate(Sum('request__adults'))['request__adults__sum']
+        if not adults:
+            adults = 0 # Can't do math with none
+        children =  stays.aggregate(Sum('request__children'))['request__children__sum']
+        if not children:
+            children = 0 # Can't do math with none
+        hotel.beds_free = hotel.beds -adults - children
+        hotel.requests = HousingRequest.objects.filter(stays__in =stays)
     context = {}
-    context["dataset"] = Hotel.objects.all()
+    context["dataset"] = hotels
+    
     return render(request, "serd/hotel_list.html", context)
 
 class OfferUpdate(UpdateView):
