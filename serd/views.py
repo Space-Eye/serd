@@ -1,4 +1,3 @@
-from sys import prefix
 from django.urls import reverse
 
 from serd.choices import PETS
@@ -126,9 +125,11 @@ def request_update(request, request_id):
                 request = requestform.save()
                 stays =stayset.save(commit=False)
                 for stay in stays:
-                    if not stay.request:
+                    try:
+                        stay.request
+                    except HousingRequest.DoesNotExist:
                         stay.request = housingreq
-                        stay.save()
+                    stay.save()
                 return HttpResponseRedirect(reverse('index'))
             
             return render(request, 'serd/request_form_intern.html', {'requestform': requestform, 'stayset': stayset} )
