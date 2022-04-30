@@ -1,3 +1,4 @@
 django-bootstrap-v5
 django-multiselectfield
 python-slugify
+django-autocomplete-light
