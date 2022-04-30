@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    {% load static %}
+    <script src="{% static 'popup.js' %}"></script>   
+    <title>Housingrequest - SERD</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+</head>
+<body>
+{% load i18n %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<style>
+    .errorlist
+        {
+            color: red;
+            font-size: large;
+        }
+    
+    </style>
+    
+
+<form method="POST" enctype="multipart/form-data">
+  
+    <!-- Security token -->
+    {% csrf_token %}
+  
+    
+    {% for field in requestform %}
+    <div class="fieldWrapper form-group row m-1">
+        {{ field.errors }}
+        <label for="{{ field.id_for_label }}"  class="col-lg-4 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ field.help_text|safe }}">
+            {{ field.label}}
+            {% if field.field.required %}
+                *
+            {% endif %}
+        </label>
+        <div class="col-lg-auto my-auto" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ field.help_text|safe }}">
+            {{ field }}
+        </div>
+    </div>
+    {% endfor %}
+    <table>
+        {{ stayset }}
+    </table>
+        
+    <input class="btn-primary m-3" type="submit" value="{%trans 'Absenden' %}" >
+</form>
+{% block footer %}
+<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+{{ form.media }}
+
+<script>
+(function($) {
+    $('#add-form').click(function() {
+        var index = $('#id_inline_test_models-TOTAL_FORMS').val()
+        var newTable = $('#id_inline_test_models-__prefix__-DELETE').parents('table').clone()
+        newTable.find(':input').each(function() {
+            for (attr of ['name', 'id'])
+                $(this).attr(
+                    attr,
+                    $(this).attr(attr).replace('__prefix__', index)
+                )
+        })
+        newTable.insertBefore($(this))
+        $('#id_inline_test_models-TOTAL_FORMS').val(
+            parseInt($('#id_inline_test_models-TOTAL_FORMS').val()) + 1
+        )
+        newTable.slideDown()
+    })
+})($)
+</script>
+{% endblock %}
+
+</body>
