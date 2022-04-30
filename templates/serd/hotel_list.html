@@ -85,9 +85,11 @@
                 {% endfor %}
             </td>
             <td>
+                {%if data.responsible %}
                 <a href="{% url 'profile_view' data.responsible.id %}" style="color: black; text-decoration: underline;">
                     {{data.responsible}}
                 </a>
+                {%endif%}
             </td>
             <td>
                 {% for member in data.team_gesamt.all %}
