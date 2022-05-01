@@ -8,11 +8,11 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta, date
+from datetime import date
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, StaySet
 from dal import autocomplete
 from django.db.models import Sum
-
+from .create_invoice import create_ods
 
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
@@ -361,32 +361,15 @@ def invoice_view(request):
         context = {}
        
         form = InvoiceSelectionForm(request.POST)
-        hotel: Hotel = Hotel.objects.get(number= int(form['hotel'].value()))
-        start = datetime.strptime(form['start'].value(), '%d.%m.%Y')
-        end = datetime.strptime(form['end'].value(), '%d.%m.%Y')
-        current_date = start
-        current = 0
-        data = []
-        while(current_date < end):
-            row = {}
-            row['date'] = current_date.date()
-            checkin_stays = HotelStay.objects.filter(hotel=hotel, arrival_date=current_date)
-            checkins = 0
-            for stay in checkin_stays:
-                checkins += stay.request.adults + stay.request.children
-            checkout_stays = HotelStay.objects.filter(hotel=hotel, departure_date=current_date)
-            checkouts = 0
-            for stay in checkout_stays:
-                checkouts += stay.request.adults + stay.request.children
-            current += checkins
-            current -= checkouts
-            row['checkins'] = checkins
-            row['checkouts'] = checkouts
-            row['current'] = current
-            current_date+= timedelta(days=1)
-            data.append(row)
-        context['form'] = form
-        context['hotel'] = hotel.name
-        context['data'] = data
-        return render(request, 'serd/invoice_display.html', context)
+        if form.is_valid():
+            start = form.cleaned_data['start']
+            end = form.cleaned_data['end']
+            start = date(start.year, start.month, 1)
+            end = date(end.year, end.month, 1)
+            content = create_ods(start, end)
+            content.seek(0)
+            response = HttpResponse(content=content.read(), content_type='application/vnd.oasis.opendocument.spreadsheet')
+            response['Content-Disposition'] = 'attachment; filename=abrechnung.ods'
+            return response
+        return render(request, 'serd/invoice_select.html', {'form': form} )
         

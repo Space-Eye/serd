@@ -306,7 +306,11 @@ class ProfileForm(forms.ModelForm):
 
 
 class InvoiceSelectionForm(forms.Form):
-    hotel = forms.ModelChoiceField(label='Hotel', queryset=Hotel.objects.order_by('number'))
+    
     start = forms.DateField(label='von', widget=forms.SelectDateWidget(years=range(2022, 2024)))
     end = forms.DateField(label='bis', widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    def clean(self):
+        if self.cleaned_data['end'] <= self.cleaned_data['start']:
+            self.add_error(field='start', error=ValidationError("Ungültiger Zeitraum"))
+
 
