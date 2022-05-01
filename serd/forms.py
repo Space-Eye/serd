@@ -227,7 +227,6 @@ class HotelStayForm(forms.ModelForm):
         return self.test_required('hotel')
 
     def clean(self):
-        print(self.cleaned_data.keys())
         arrival = self.cleaned_data.get('arrival_date')
         departure = self.cleaned_data.get('departure_date')
         if departure:
