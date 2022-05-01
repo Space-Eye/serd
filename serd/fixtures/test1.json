@@ -5,7 +5,7 @@
         "pk": 1,
         "fields": {
             "password": "pbkdf2_sha256$320000$ZyfjuLXMeyhjwiMePixC91$vpzEPT2Dly7yQ/LsnwsPZorNRQ+giffztyHSRI7JjWU=",
-            "last_login": "2022-04-24T22:09:25.257Z",
+            "last_login": "2022-04-24T22:09:25.257",
             "is_superuser": true,
             "username": "admin",
             "first_name": "",
@@ -13,7 +13,7 @@
             "email": "",
             "is_staff": true,
             "is_active": true,
-            "date_joined": "2022-04-24T20:48:42.838Z",
+            "date_joined": "2022-04-24T20:48:42.838",
             "groups": [],
             "user_permissions": []
         }
@@ -26,7 +26,7 @@
             "name": "Test",
             "tel": "",
             "mail": "",
-            "hotel": 1
+            "hotel": [1]
         }
     },
     {

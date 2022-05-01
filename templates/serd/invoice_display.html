@@ -2,7 +2,7 @@
 <head>
       {% load static %}
     <script src="{% static 'popup.js' %}"></script> 
-<title>Profil bearbeiten - SERD</title>
+<title>Abrechnung {{hotel}} - SERD</title>
 <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
 </head>
 <body>
@@ -23,6 +23,19 @@
     }
 
 </style>
+<table>
+    <thead>
+        <th>Datum</th>
+        <th>Anreise</th>
+        <th>Abreise</th>
+        <th>Bestand</th>
+    </thead>
+    <tbody>
+        {%for row in data %}
+        <tr><td>{{row.date}}</td><td>{{row.checkins}}</td><td>{{row.current}}</td><td>{{row.checkouts}}</td></tr>
+        {%endfor%}
+    </tbody>
+</table>
 
 <form method="POST" enctype="multipart/form-data">
 

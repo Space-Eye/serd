@@ -4,7 +4,6 @@
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
@@ -46,83 +45,78 @@
         <th>Verpflegung</th>
         <th>Kosten</th>
         <th>Belegung Aktuell</th>
-        <th>Betten Erwachsene</th>
-        <th>Betten Kinder</th>
-        <th>Betten Erwachsene Frei</th>
-        <th>Betten Kinder Frei</th>
+        <th>Betten</th>
+        <th>Betten frei</th>
         <th>Info</th>
         <th></th>
     </thead>
     <tbody>
-    {% for data in dataset %}
-        {%if data.state == "active"%}    
+    {% for hotel in dataset %}
+        {%if hotel.state == "active"%}    
             <tr style="background-color:white">
-        {%elif data.state == "open" %}
+        {%elif hotel.state == "open" %}
             <tr style="background-color:yellow">
-        {%elif data.state == "full" %}
+        {%elif hotel.state == "full" %}
             <tr style="background-color:red">
-        {%elif data.state == "passive" %}
+        {%elif hotel.state == "passive" %}
                 <tr style="background-color:darksalmon">
         {%endif%}
 
-           <td> {{data.number}}</td>
-           <td> {{data.name}}</td>
-           <td> {{data.address}}</td>
-            <td> {{data.get_state_display}}</td>
+           <td> {{hotel.number}}</td>
+           <td> {{hotel.name}}</td>
+           <td> {{hotel.address}}</td>
+            <td> {{hotel.get_state_display}}</td>
             <td>
-                {%for partner in data.ansprechpartner.all %}
+                {%for partner in hotel.ansprechpartner.all %}
                     {{partner.name}}<br>
                 {% endfor %}
             </td>
             <td>
-                {%for partner in data.ansprechpartner.all %}
+                {%for partner in hotel.ansprechpartner.all %}
                     {{partner.tel}}<br>
                 {% endfor %}
             </td>
             <td>
-                {%for partner in data.ansprechpartner.all %}
+                {%for partner in hotel.ansprechpartner.all %}
                     {{partner.mail}}<br>
                 {% endfor %}
             </td>
             <td>
-                <a href="{% url 'profile_view' data.responsible.id %}" style="color: black; text-decoration: underline;">
-                    {{data.responsible}}
+                {%if hotel.responsible %}
+                <a href="{% url 'profile_view' hotel.responsible.id %}" style="color: black; text-decoration: underline;">
+                    {{hotel.responsible}}
                 </a>
+                {%endif%}
             </td>
             <td>
-                {% for member in data.team_gesamt.all %}
+                {% for member in hotel.team_gesamt.all %}
                     <a href="{% url 'profile_view' member.id %}" style="color: black; text-decoration: underline;">
                         {{ member }}
                     </a>
                 {% endfor %}
             </td>
             <td>
-                {{ data.get_food_display }}
+                {{ hotel.get_food_display }}
             </td>
             <td>
-                {{ data.cost }}
+                {{ hotel.cost }}
             </td>
             <td>
-                {% for request in data.requests.all %}
+                {% for request in hotel.requests.all %}
                 <a href="/requests/edit/{{request.number}}" style="color:black; text-decoration:underline">
                 {{request}}
             </a>&emsp;
                 {% endfor %}
             </td>
             <td>
-                {{ data.beds_adults }}
+                {{ hotel.beds }}
+            </td>
+
+            <td>
+                {{hotel.beds_free }}
             </td>
             <td>
-                {{ data.beds_children }}
-            </td>
-            <td>
-                {{data.adults_free}}
-            </td>
-            <td>
-                {{data.children_free}}
-            </td>
-            <td>
-                {{ data.info|linebreaks }}
+                {{ hotel.info|linebreaks }}
             </td>
            </tr>
         {% endfor %}

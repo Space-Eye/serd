@@ -1,15 +1,18 @@
-from datetime import datetime
-from urllib import request
 from dal import autocomplete
 from django import forms
 from slugify import slugify
+from datetime import date
 from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
-from .models import HousingRequest, Offer, Profile
+from .models import Hotel, HousingRequest, Offer, Profile, HotelStay
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.forms import modelformset_factory, BaseModelFormSet
 from .mail import Mailer
-from django.contrib.admin.widgets import FilteredSelectMultiple
+from .utils import overlaps
+
+
 
 def isascii(s):
     """Check if the characters in string s are in ASCII, U+0-U+7F."""
@@ -117,13 +120,11 @@ class RequestForm(forms.ModelForm):
     template_name = 'form_snippet.html'
     def test_required(self, field:str):
         data = self.cleaned_data[field]
-        if data is None or data == "":
+        if not settings.DEBUG and (data is None or data == ""):
             self.add_error(field=field, error=PFLICHT)
         return data
 
-    arrival_date = forms.DateTimeField(label=_('Ankunftstag'),
-        widget=forms.SelectDateWidget(years=range(2022, 2024))
-    )
+    arrival_date = forms.DateField(label=_('Ankunftstag'), required=False, widget=forms.SelectDateWidget(years=range(2022, 2024)))
     who = forms.CharField(label=_("Bitte beschreiben Sie Ihre Gruppe kurz (Alter, Geschlecht, ...)"), required=False, widget=forms.Textarea)
 
     class Meta:
@@ -145,13 +146,8 @@ class RequestForm(forms.ModelForm):
         return self.test_required('children')
     def clean_who(self):
         return self.test_required('who')
-    def clean_arrival_location(self):
-        return self.test_required('arrival_location')
     def clean_arrival_date(self):
-        date = self.cleaned_data['arrival_date']
-        if date.date() == datetime.strptime("01.01.22","%d.%m.%y").date():
-            self.add_error(field='arrival_date', error=PFLICHT)
-        return date
+             return self.test_required('arrival_date')
     def clean_current_housing(self):
         return self.test_required('current_housing')
 
@@ -198,30 +194,74 @@ class RequestForm(forms.ModelForm):
 class RequestEditForm(RequestForm):
     private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
     number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
-    # override here with do nothing clean method to allow empty arrival location when editing
+
+    
     def __init__(self, *args, **kwargs):
         super(RequestForm, self).__init__(*args, **kwargs)
         self.fields['case_handler'].queryset = User.objects.order_by('username')
-    def clean_arrival_location(self):
-        data = self.cleaned_data['arrival_location']
-        return data
-    
+
     def save(self, commit=True):
         request = super(RequestEditForm, self).save(commit=False)
         hosts = self.cleaned_data['possible_hosts']
-        request.possible_hosts.remove(*request.possible_hosts.difference(hosts))
-        request.possible_hosts.add(*hosts)
-        if 'state' in self.changed_data:
-            if self.cleaned_data['state'] == 'arrived' or self.cleaned_data['state'] == 'stale':
-                request.hotel = None
+        if request.number:
+            request.possible_hosts.remove(*request.possible_hosts.difference(hosts))
+            request.possible_hosts.add(*hosts)
         if commit:
             request.save()
         return request
 
     class Meta:
         model = HousingRequest
-        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'hotel','room', 'priority','private_comment', 'possible_hosts')
+        fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'possible_hosts')
         widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
+
+class HotelStayForm(forms.ModelForm):
+    arrival_date = forms.DateField(required= False, label="Anreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    departure_date = forms.DateField(required= False, label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    hotel= forms.ModelChoiceField(required = False, label="Hotel", queryset=Hotel.objects.all())
+    room = forms.CharField(required=False, label="Zimmer", max_length=64)
+    def clean_arrival_date(self):
+        return self.test_required('arrival_date')
+    
+    def clean_hotel(self):
+        return self.test_required('hotel')
+
+    def clean(self):
+        arrival = self.cleaned_data.get('arrival_date')
+        departure = self.cleaned_data.get('departure_date')
+        if departure:
+            if departure <= arrival:
+                self.add_error(field='departure_date', error=ValidationError("Abreise muss nach der Ankunft sein"))
+
+        return self.cleaned_data
+    def test_required(self, field:str):
+        data = self.cleaned_data[field]
+        if data is None or data == "":
+            self.add_error(field=field, error=PFLICHT)
+        return data
+    class Meta:
+        model = HotelStay
+        fields = ('arrival_date', 'departure_date', 'room', 'hotel')
+
+class BaseStaySet(BaseModelFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+        intervals = []
+        form: HotelStayForm
+        for form in self.forms:
+            arrival = form.cleaned_data.get('arrival_date')
+            if not arrival:
+                continue
+            departure = form.cleaned_data.get('departure_date')
+            if not departure:
+                departure = date.max
+                print(date.max)
+            if any(overlaps((arrival, departure), interval) for interval in intervals):
+                form.add_error('arrival_date', ValidationError("Ankunft darf nicht vor vorhergehender Abreise liegen"))
+            intervals.append((arrival, departure))
+
+StaySet = modelformset_factory(HotelStay, HotelStayForm, formset=BaseStaySet)
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
 class RequestFilterForm(forms.Form):
@@ -263,4 +303,14 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields=('name', 'phone', 'whatsapp', 'signal','threema' ,'telegram', 'mail', 'languages', 'comment')
+
+
+class InvoiceSelectionForm(forms.Form):
+    
+    start = forms.DateField(label='von', widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    end = forms.DateField(label='bis', widget=forms.SelectDateWidget(years=range(2022, 2024)))
+    def clean(self):
+        if self.cleaned_data['end'] <= self.cleaned_data['start']:
+            self.add_error(field='start', error=ValidationError("Ungültiger Zeitraum"))
+
 

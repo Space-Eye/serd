@@ -1,17 +1,19 @@
-# import Http Response from django
 from django.urls import reverse
 
 from serd.choices import PETS
-from .models import Hotel, HousingRequest, Offer, NewsItem, Profile
+from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm
+from datetime import date
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, StaySet
 from dal import autocomplete
 from django.db.models import Sum
+from .create_invoice import create_ods
+
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
@@ -41,11 +43,28 @@ class AddRequest(CreateView):
     def get_success_url(self) -> str:
         return reverse('success_request', args=(self.object.number,))
 
-class InternalAddRequest(CreateView):
-    model = HousingRequest
-    form_class = RequestEditForm
-    def get_success_url(self) -> str:
-        return reverse('index')
+
+
+@login_required
+def internal_add_housingrequest(request):
+        if request.method =='GET':
+            requestform = RequestEditForm(prefix='request')
+            stayset = StaySet(prefix='stays', queryset=Hotel.objects.none())
+        
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'requestform': requestform} )
+        elif request.method == 'POST':
+            requestform = RequestEditForm(request.POST, prefix='request')
+            stayset = StaySet(request.POST, prefix='stays')
+            if stayset.is_valid() and requestform.is_valid():
+                req = requestform.save()
+                for stayform in stayset:
+                    stay = stayform.save(commit=False)
+                    stay.request = req
+                    stay.save()            
+                    return HttpResponseRedirect(reverse('index'))
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'requestform': requestform})
+            
+
 
 
 class AddOffer(CreateView):
@@ -64,9 +83,14 @@ class InternalAddOffer(CreateView):
 
 @login_required
 def request_list(request):
+    requests = list(HousingRequest.objects.all())
+    for hr in requests:
+            stay = HotelStay.objects.filter(request=hr, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
+            if stay:
+                hr.hotel = stay.hotel
 
     context = {}
-    context["dataset"] = HousingRequest.objects.all()
+    context["dataset"] = requests
     return render(request, "serd/request_list.html", context)
 
 @login_required
@@ -79,8 +103,22 @@ def offer_list(request):
 
 @login_required
 def hotel_list(request):
+    hotels =  list(Hotel.objects.all())
+
+    for hotel in hotels:
+        stays = HotelStay.objects.filter(hotel=hotel, arrival_date__lte=date.today())
+        stays = stays.filter(Q(departure_date__gte=date.today())| Q(departure_date__isnull=True))
+        adults = stays.aggregate(Sum('request__adults'))['request__adults__sum']
+        if not adults:
+            adults = 0 # Can't do math with none
+        children =  stays.aggregate(Sum('request__children'))['request__children__sum']
+        if not children:
+            children = 0 # Can't do math with none
+        hotel.beds_free = hotel.beds -adults - children
+        hotel.requests = HousingRequest.objects.filter(stays__in =stays)
     context = {}
-    context["dataset"] = Hotel.objects.all()
+    context["dataset"] = hotels
+    
     return render(request, "serd/hotel_list.html", context)
 
 class OfferUpdate(UpdateView):
@@ -89,12 +127,32 @@ class OfferUpdate(UpdateView):
         return Offer.objects.get(number=self.kwargs["offer_id"])
     form_class = OfferEditForm
 
-class RequestUpdate(UpdateView):
-    success_url = "/requests"
-    def get_object(self, queryset=None):
-        return HousingRequest.objects.get(number=self.kwargs["request_id"])
-    form_class = RequestEditForm
 
+@login_required
+def request_update(request, request_id):
+        if request.method =='GET':
+            housingreq = HousingRequest.objects.get(number = int(request_id))
+            stays = HotelStay.objects.filter(request = housingreq)
+            requestform = RequestEditForm(instance=housingreq, prefix="request")
+            stayset = StaySet(queryset=stays, prefix='stays')
+            return render(request, 'serd/request_form_intern.html', {'requestform': requestform, 'stayset': stayset} )
+        elif request.method == 'POST':
+            housingreq = housingreq = HousingRequest.objects.get(number = int(request_id))
+            requestform = RequestEditForm(request.POST, instance=housingreq, prefix='request')
+            stays = HotelStay.objects.filter(request = housingreq)
+            stayset = StaySet(request.POST, queryset=stays, prefix='stays')
+            if stayset.is_valid() and requestform.is_valid():
+                request = requestform.save()
+                stays =stayset.save(commit=False)
+                for stay in stays:
+                    try:
+                        stay.request
+                    except HousingRequest.DoesNotExist:
+                        stay.request = housingreq
+                    stay.save()
+                return HttpResponseRedirect(reverse('index'))
+            
+            return render(request, 'serd/request_form_intern.html', {'requestform': requestform, 'stayset': stayset} )
         
 class SuccessOffer(TemplateView):
     template_name = "serd/success_offer.html"
@@ -165,8 +223,13 @@ class RequestFilter(FormView):
         sort = form.cleaned_data['sort']
         direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
         
+        requests = queryset.order_by(direction+sort)
+        for request in requests:
+            stay = HotelStay.objects.filter(request=request, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
+            if stay:
+                request.hotel = stay.hotel
         context = {}
-        context['dataset'] = queryset.order_by(direction+sort)
+        context['dataset'] = requests
         return render(None,'serd/request_list.html', context)
 
 class OfferFilter(FormView):
@@ -248,7 +311,6 @@ def statistics(request):
     all_requests = HousingRequest.objects.all()
     requests_all =  all_requests.count()
     persons_all = all_requests.aggregate(Sum('persons'))['persons__sum']
-    hotel = HousingRequest.objects.filter(hotel__isnull=False).aggregate(Sum('persons'))['persons__sum']
     context = {}
     contact_requests = HousingRequest.objects.filter(state="housing_contact")
     requests_contact = contact_requests.count()
@@ -264,7 +326,6 @@ def statistics(request):
     context['requests_all'] = requests_all
     context['requests_quasi'] = requests_placed + requests_contact
     context['persons_quasi'] = persons_placed + persons_contact
-    context['hotel'] = hotel
     context['offers_city'] = offers_city
     context['city_quasi_placed'] = offers_city_quasi_placed
     return render(request, 'serd/statistics.html', context)
@@ -291,4 +352,24 @@ class UpdateProfile(UpdateView):
         
         
     
-   
+@login_required
+def invoice_view(request):
+    if request.method =='GET':
+        form = InvoiceSelectionForm()
+        return render(request, 'serd/invoice_select.html', {'form': form} )
+    elif request.method == 'POST':
+        context = {}
+       
+        form = InvoiceSelectionForm(request.POST)
+        if form.is_valid():
+            start = form.cleaned_data['start']
+            end = form.cleaned_data['end']
+            start = date(start.year, start.month, 1)
+            end = date(end.year, end.month, 1)
+            content = create_ods(start, end)
+            content.seek(0)
+            response = HttpResponse(content=content.read(), content_type='application/vnd.oasis.opendocument.spreadsheet')
+            response['Content-Disposition'] = 'attachment; filename=abrechnung.ods'
+            return response
+        return render(request, 'serd/invoice_select.html', {'form': form} )
+        
