@@ -1,14 +1,17 @@
-from datetime import datetime
 from dal import autocomplete
 from django import forms
 from slugify import slugify
+from datetime import date
 from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
 from .models import Hotel, HousingRequest, Offer, Profile, HotelStay
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.forms import modelformset_factory, BaseModelFormSet
 from .mail import Mailer
+from .utils import overlaps
+
 
 
 def isascii(s):
@@ -217,9 +220,49 @@ class HotelStayForm(forms.ModelForm):
     departure_date = forms.DateField(required= False, label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
     hotel= forms.ModelChoiceField(required = False, label="Hotel", queryset=Hotel.objects.all())
     room = forms.CharField(required=False, label="Zimmer", max_length=64)
+    def clean_arrival_date(self):
+        return self.test_required('arrival_date')
+    
+    def clean_hotel(self):
+        return self.test_required('hotel')
+
+    def clean(self):
+        print(self.cleaned_data.keys())
+        arrival = self.cleaned_data.get('arrival_date')
+        departure = self.cleaned_data.get('departure_date')
+        if departure:
+            if departure <= arrival:
+                self.add_error(field='departure_date', error=ValidationError("Abreise muss nach der Ankunft sein"))
+
+        return self.cleaned_data
+    def test_required(self, field:str):
+        data = self.cleaned_data[field]
+        if data is None or data == "":
+            self.add_error(field=field, error=PFLICHT)
+        return data
     class Meta:
         model = HotelStay
         fields = ('arrival_date', 'departure_date', 'room', 'hotel')
+
+class BaseStaySet(BaseModelFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+        intervals = []
+        form: HotelStayForm
+        for form in self.forms:
+            arrival = form.cleaned_data.get('arrival_date')
+            if not arrival:
+                continue
+            departure = form.cleaned_data.get('departure_date')
+            if not departure:
+                departure = date.max
+                print(date.max)
+            if any(overlaps((arrival, departure), interval) for interval in intervals):
+                form.add_error('arrival_date', ValidationError("Ankunft darf nicht vor vorhergehender Abreise liegen"))
+            intervals.append((arrival, departure))
+
+StaySet = modelformset_factory(HotelStay, HotelStayForm, formset=BaseStaySet)
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
 class RequestFilterForm(forms.Form):

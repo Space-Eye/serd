@@ -9,10 +9,10 @@ from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta, date
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, HotelStayForm
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, StaySet
 from dal import autocomplete
 from django.db.models import Sum
-from django.forms import modelformset_factory
+
 
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
@@ -43,7 +43,7 @@ class AddRequest(CreateView):
     def get_success_url(self) -> str:
         return reverse('success_request', args=(self.object.number,))
 
-StaySet = modelformset_factory(HotelStay, HotelStayForm)
+
 
 @login_required
 def internal_add_housingrequest(request):
