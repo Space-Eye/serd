@@ -83,9 +83,14 @@ class InternalAddOffer(CreateView):
 
 @login_required
 def request_list(request):
+    requests = list(HousingRequest.objects.all())
+    for hr in requests:
+            stay = HotelStay.objects.filter(request=hr, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
+            if stay:
+                hr.hotel = stay.hotel
 
     context = {}
-    context["dataset"] = HousingRequest.objects.all()
+    context["dataset"] = requests
     return render(request, "serd/request_list.html", context)
 
 @login_required
@@ -218,8 +223,13 @@ class RequestFilter(FormView):
         sort = form.cleaned_data['sort']
         direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
         
+        requests = queryset.order_by(direction+sort)
+        for request in requests:
+            stay = HotelStay.objects.filter(request=request, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
+            if stay:
+                request.hotel = stay.hotel
         context = {}
-        context['dataset'] = queryset.order_by(direction+sort)
+        context['dataset'] = requests
         return render(None,'serd/request_list.html', context)
 
 class OfferFilter(FormView):
