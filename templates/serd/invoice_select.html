@@ -29,7 +29,7 @@
   
     <!-- Security token -->
     {% csrf_token %}
-  
+    Nur ganze Monate, Tag wird ignoriert.
     <!-- Using the formset -->
     {% for field in form %}
     <div class="fieldWrapper form-group row m-1">
@@ -49,10 +49,7 @@
     <input class="btn-primary m-3" type="submit" value="{%trans 'Absenden' %}" >
 </form>
 <div class="d-flex flex-row">
-    <div class="m-3">
-        {% url 'offer_filter' as offer_filter_url %}
-        {% bootstrap_button "Filter" button_type="link" href=offer_filter_url button_class="btn-primary" %}
-    </div>
+
     <div class="m-3">
         {% url 'logout' as logout_url%}
         {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}
