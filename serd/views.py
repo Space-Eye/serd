@@ -49,7 +49,7 @@ class AddRequest(CreateView):
 def internal_add_housingrequest(request):
         if request.method =='GET':
             requestform = RequestEditForm(prefix='request')
-            stayset = StaySet(prefix='stays')
+            stayset = StaySet(prefix='stays', queryset=Hotel.objects.none())
         
             return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'requestform': requestform} )
         elif request.method == 'POST':
