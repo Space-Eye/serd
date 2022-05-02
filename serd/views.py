@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from datetime import date
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, StaySet
+from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
 from dal import autocomplete
 from django.db.models import Sum
 from .create_invoice import create_ods
@@ -42,6 +42,25 @@ class AddRequest(CreateView):
     form_class = RequestForm
     def get_success_url(self) -> str:
         return reverse('success_request', args=(self.object.number,))
+
+
+def hotel_add_housingrequest(request):
+        if request.method =='GET':
+            requestform = RequestFormForHotels(prefix='request')
+            stayset = StaySet(prefix='stays', queryset=Hotel.objects.none())
+        
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'form': requestform} )
+        elif request.method == 'POST':
+            requestform = RequestFormForHotels(request.POST, prefix='request')
+            stayset = StaySet(request.POST, prefix='stays')
+            if stayset.is_valid() and requestform.is_valid():
+                req = requestform.save()
+                for stayform in stayset:
+                    stay = stayform.save(commit=False)
+                    stay.request = req
+                    stay.save()            
+                    return HttpResponseRedirect(reverse('index'))
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'form': requestform})
 
 
 
