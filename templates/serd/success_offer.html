@@ -1,5 +1,10 @@
 {% load i18n %}
 {% load static %}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+
 <head>
     <title>Erfolg </title>
     <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
@@ -9,5 +14,5 @@
 Das Wohnungsangebot mit der ID {{ nr }} wurde erfolgreich gespeichert. <br>
 {% endblocktrans %}
 <br>
-<a href="{% url 'index' %}">Startseite</a>
+<div style="margin-left:20px;"><a href="https://space-eye.org"><button class="btn" role="button" style="background-color: #007194;">space-eye.org</button></a></div>
 </body>
