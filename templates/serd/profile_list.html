@@ -45,7 +45,7 @@
 </thead>
 <tbody>
 {% for data in dataset %}
-    <tr>
+    <tr style="background-color: {% cycle 'lightgrey' 'white'%};">
         <td>{{data.name}}</td>
         <td>{{data.phone}}</td>
         <td>{{data.whatsapp|yesno:'Ja,Nein'}}</td>

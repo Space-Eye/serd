@@ -1,5 +1,9 @@
 {% load i18n %}
 {% load static %}
+{% load bootstrap5 %}
+
+{% bootstrap_css %}
+
 <head>
     <title>Erfolg </title>
     <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
@@ -8,5 +12,5 @@
     {% blocktrans with nr=view.kwargs.request_id %}
         Das Wohnungsgesuch mit der ID {{ nr }} wurde erfolgreich gespeichert. <br>
     {% endblocktrans %}<br>
-<a href="{% url 'index' %}">Startseite</a>
+    <div style="margin-left:20px;"><a href="https://space-eye.org"><button class="btn" role="button" style="background-color: #007194;">space-eye.org</button></a></div>
 </body>

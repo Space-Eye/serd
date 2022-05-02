@@ -17,10 +17,10 @@
 {% bootstrap_messages %}
 <style>
     .errorlist
-        {
-            color: red;
-            font-size: large;
-        }
+    {
+        color: red;
+        font-size: large;
+    }
     
     </style>
     
@@ -47,15 +47,17 @@
                 <input name="language" type="hidden" value="uk" />
             </form>
             <button class="btn btn-sm btn-outline-primary" type="submit" form="form_uk" value="Submit"><img width="48", alt="ukrainian" src="{% static 'ukrainian.png' %}" /></button>
-        <td>
-            <form action="/i18n/setlang/" method="post" id="form_ru" >
-                {% csrf_token %}
-                <input name="language" type="hidden" value="ru" />
-            </form>
-            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_ru" value="Submit"><img width="48", alt="russian" src="{% static 'russian.png' %}" /></button>
-        </td>
-    </tr>
-</table>
+            <td>
+                <form action="/i18n/setlang/" method="post" id="form_ru" >
+                    {% csrf_token %}
+                    <input name="language" type="hidden" value="ru" />
+                </form>
+                <button class="btn btn-sm btn-outline-primary" type="submit" form="form_ru" value="Submit"><img width="48", alt="russian" src="{% static 'russian.png' %}" /></button>
+            </td>
+            <td><a href="https://space-eye.org"><button class="btn" role="button" style="background-color: #007194;">space-eye.org</button></a></td>
+        </tr>
+    </table>
+
 
 <form method="POST" enctype="multipart/form-data">
   

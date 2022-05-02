@@ -22,6 +22,7 @@ from .views import (AddOffer, AddRequest, OfferUpdate, offer_list, request_list,
                     SuccessRequest, RequestFilter, OfferFilter, hotel_list, OfferAutocomplete, statistics, 
                     InternalAddOffer, internal_add_housingrequest, profile_view, profile_list, UpdateProfile, invoice_view )
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 
 
@@ -45,7 +46,11 @@ urlpatterns = [
     path('profiles/<profile_id>/', profile_view, name='profile_view'),
     path('profiles/', profile_list, name='profile_list'),
     path('profiles_edit/', login_required(UpdateProfile.as_view()), name='profile_edit'),
-    path('invoices', invoice_view, name='invoice')
+    path('invoices', invoice_view, name='invoice'),
+    path('reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(success_url='/'),
+        name='password_reset_confirm',
+    )
    
 ]
 urlpatterns += i18n_patterns(
