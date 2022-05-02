@@ -230,6 +230,7 @@ class RequestFilter(FormView):
                 request.hotel = stay.hotel
         context = {}
         context['dataset'] = requests
+        context['count'] = requests.count()
         return render(None,'serd/request_list.html', context)
 
 class OfferFilter(FormView):
@@ -297,6 +298,7 @@ class OfferFilter(FormView):
 
         context = {}
         context['dataset'] = queryset.order_by(direction+sort)
+        context['count'] = queryset.count()
         return render(None,'serd/offer_list.html', context)
 
 
