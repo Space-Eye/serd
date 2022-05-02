@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from datetime import date, timedelta
-from dateutil.relativedelta import *
 from django.db.models import Sum
 from collections import OrderedDict
 from itertools import chain
