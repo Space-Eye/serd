@@ -216,6 +216,7 @@ class RequestEditForm(RequestForm):
         widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
 
 class RequestFormForHotels(RequestForm):
+    private_comment = forms.CharField(label=_("Interner Kommentar"), required=False, widget=forms.Textarea)
     class Meta:
         fields = RequestForm.Meta.fields + ('number', 'state',  'private_comment')
         model = HousingRequest
