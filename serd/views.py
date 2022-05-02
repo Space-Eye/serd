@@ -51,7 +51,7 @@ def internal_add_housingrequest(request):
             requestform = RequestEditForm(prefix='request')
             stayset = StaySet(prefix='stays', queryset=Hotel.objects.none())
         
-            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'requestform': requestform} )
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'form': requestform} )
         elif request.method == 'POST':
             requestform = RequestEditForm(request.POST, prefix='request')
             stayset = StaySet(request.POST, prefix='stays')
@@ -62,7 +62,7 @@ def internal_add_housingrequest(request):
                     stay.request = req
                     stay.save()            
                     return HttpResponseRedirect(reverse('index'))
-            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'requestform': requestform})
+            return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'form': requestform})
             
 
 
@@ -135,7 +135,7 @@ def request_update(request, request_id):
             stays = HotelStay.objects.filter(request = housingreq)
             requestform = RequestEditForm(instance=housingreq, prefix="request")
             stayset = StaySet(queryset=stays, prefix='stays')
-            return render(request, 'serd/request_form_intern.html', {'requestform': requestform, 'stayset': stayset} )
+            return render(request, 'serd/request_form_intern.html', {'form': requestform, 'stayset': stayset} )
         elif request.method == 'POST':
             housingreq = housingreq = HousingRequest.objects.get(number = int(request_id))
             requestform = RequestEditForm(request.POST, instance=housingreq, prefix='request')
@@ -152,7 +152,7 @@ def request_update(request, request_id):
                     stay.save()
                 return HttpResponseRedirect(reverse('index'))
             
-            return render(request, 'serd/request_form_intern.html', {'requestform': requestform, 'stayset': stayset} )
+            return render(request, 'serd/request_form_intern.html', {'form': requestform, 'stayset': stayset} )
         
 class SuccessOffer(TemplateView):
     template_name = "serd/success_offer.html"
