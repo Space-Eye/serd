@@ -215,6 +215,11 @@ class RequestEditForm(RequestForm):
         fields = RequestForm.Meta.fields + ('number', 'state','case_handler', 'placed_at', 'possible_hosts', 'private_comment')
         widgets= {'possible_hosts': autocomplete.ModelSelect2Multiple(url='offer-autocomplete')}
 
+class RequestFormForHotels(RequestForm):
+    class Meta:
+        fields = RequestForm.Meta.fields + ('number', 'state',  'private_comment')
+        model = HousingRequest
+
 class HotelStayForm(forms.ModelForm):
     arrival_date = forms.DateField(required= False, label="Anreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))
     departure_date = forms.DateField(required= False, label="Abreisetag", widget=forms.SelectDateWidget(years=range(2022, 2024)))

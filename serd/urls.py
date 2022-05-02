@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
 from .views import (AddOffer, AddRequest, OfferUpdate, offer_list, request_list, request_update,  index, SuccessOffer,
                     SuccessRequest, RequestFilter, OfferFilter, hotel_list, OfferAutocomplete, statistics, 
-                    InternalAddOffer, internal_add_housingrequest, profile_view, profile_list, UpdateProfile, invoice_view )
+                    InternalAddOffer, internal_add_housingrequest, profile_view, profile_list, UpdateProfile, invoice_view, hotel_add_housingrequest )
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
@@ -50,7 +50,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/',
         auth_views.PasswordResetConfirmView.as_view(success_url='/'),
         name='password_reset_confirm',
-    )
+    ),
+    path('add_request/hotel/', hotel_add_housingrequest, name='add_request_hotel')
    
 ]
 urlpatterns += i18n_patterns(
