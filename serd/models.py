@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.conf import settings
 from django.db import models
 from multiselectfield import MultiSelectField
@@ -64,7 +65,7 @@ class  HousingRequest(models.Model):
     private_comment = models.CharField(blank=True, null=True,  default="", max_length=1024)
     created_at = models.DateField(auto_now_add=True)
     possible_hosts = models.ManyToManyField(to='Offer', related_name="possible_guests", blank=True, verbose_name="Mögliche Gastgeber")
-
+    smoker = models.BooleanField(verbose_name=_("Raucht jemand aus Ihrer Gruppe?"))
     _persons = None
 
     objects = AnnotationManager(persons=models.F('adults')+models.F('children'))
@@ -83,7 +84,7 @@ class Offer(models.Model):
     street = models.CharField(max_length=256, blank=True, verbose_name=_("Straße, Hausnummer (optional)"))
     city = models.CharField(max_length=256, verbose_name=_("Ort"), blank=True)
     mail = models.CharField(max_length=256, validators=[validate_email], verbose_name=_("E-Mail-Adresse"), blank=True)
-    language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Welche Sprachen sprechen Sie?"))
+    language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Welche Sprachen sprechen Sie?"),  default=['de'])
     additional_languages = models.CharField(verbose_name=_("Weitere Sprachen"), max_length=64, blank=True)
     for_free = models.BooleanField(verbose_name=_("Ich stelle die Unterkunft mindestens vorübergehend kostenlos zur Verfügung."))
     cost = models.PositiveSmallIntegerField(null=True, validators=[validate_not_negative])

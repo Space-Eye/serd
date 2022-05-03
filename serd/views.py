@@ -125,7 +125,7 @@ def offer_list(request):
         numbers = [int(number) for number in request.COOKIES['offers'].split()]
         offers = Offer.objects.filter(number__in=numbers)
     else:
-        offers = HousingRequest.objects.all()
+        offers = Offer.objects.all()
     context = {}
     context["dataset"] = offers
     return render(request, "serd/offer_list.html", context)
