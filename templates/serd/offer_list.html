@@ -56,9 +56,7 @@
 
 <body>
   Space Eye - Notunterkunftsvermittlung - Angebote
-  {%if count %}
-  &emsp;&emsp; {{count}} Ergebnisse
-  {% endif %}
+  &nbsp;{{dataset |length}} Ergebnisse
   <div class="tableFixHead">
     <table class="table">
     <thead class="header" id="table-head">
@@ -137,8 +135,8 @@
         <td class="sticky-col first-col" style="background-color: darkgray">{{data.number}}</td>
         <td class="sticky-col second-col" style="background-color: darkgray">{{ data.given_name}} {{data.last_name}}</td>
         {%endif%}
-        
         <td>
+          <div id="{{data.number}}"></div>
           <span title="{{data.number }} {{ data.given_name}}, {{data.last_name}}"
             >{{data.plz}}</span
           >

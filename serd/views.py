@@ -119,8 +119,13 @@ def request_list(request):
 
 @login_required
 def offer_list(request):
+    if request.COOKIES.get('offers'):
+        numbers = [int(number) for number in request.COOKIES['offers'].split()]
+        offers = Offer.objects.filter(number__in=numbers)
+    else:
+        offers = HousingRequest.objects.all()
     context = {}
-    context["dataset"] = Offer.objects.all()
+    context["dataset"] = offers
     return render(request, "serd/offer_list.html", context)
    
 
@@ -146,7 +151,8 @@ def hotel_list(request):
     return render(request, "serd/hotel_list.html", context)
 
 class OfferUpdate(UpdateView):
-    success_url = "/offers"
+    def get_success_url(self) -> str:
+        return("/offers/#"+self.kwargs["offer_id"])
     def get_object(self, queryset=None):
         return Offer.objects.get(number=self.kwargs["offer_id"])
     form_class = OfferEditForm
@@ -328,8 +334,16 @@ class OfferFilter(FormView):
         direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
 
         context = {}
-        context['dataset'] = queryset.order_by(direction+sort)
-        context['count'] = queryset.count()
+        offers = queryset.order_by(direction+sort)
+        context['dataset'] = offers
+        response = render(self.request, 'serd/offer_list.html', context)
+        if offers.count() == Offer.objects.all().count():
+            response.delete_cookie('offers')
+        else:
+            numbers = ""
+            for offer in offers:
+                numbers = numbers + str(offer.number)+" "
+            response.set_cookie('offers',numbers)
         return render(None,'serd/offer_list.html', context)
 
 
