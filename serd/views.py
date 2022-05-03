@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 from datetime import date
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
 from dal import autocomplete
@@ -102,7 +103,11 @@ class InternalAddOffer(CreateView):
 
 @login_required
 def request_list(request):
-    requests = list(HousingRequest.objects.all())
+    if request.COOKIES.get('housingrequests'):
+        numbers = [int(number) for number in request.COOKIES['housingrequests'].split()]
+        requests = list(HousingRequest.objects.filter(number__in=numbers))
+    else:
+        requests = list(HousingRequest.objects.all())
     for hr in requests:
             stay = HotelStay.objects.filter(request=hr, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
             if stay:
@@ -169,7 +174,7 @@ def request_update(request, request_id):
                     except HousingRequest.DoesNotExist:
                         stay.request = housingreq
                     stay.save()
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(('/requests#'+str(request_id)))
             
             return render(request, 'serd/request_form_intern.html', {'form': requestform, 'stayset': stayset} )
         
@@ -249,8 +254,15 @@ class RequestFilter(FormView):
                 request.hotel = stay.hotel
         context = {}
         context['dataset'] = requests
-        context['count'] = requests.count()
-        return render(None,'serd/request_list.html', context)
+        response = render(self.request, 'serd/request_list.html', context)
+        if requests.count() == HousingRequest.objects.all().count():
+            response.delete_cookie('housingrequests')
+        else:
+            numbers = ""
+            for request in requests:
+                numbers = numbers + str(request.number)+" "
+            response.set_cookie('housingrequests',numbers)
+        return response
 
 class OfferFilter(FormView):
     template_name = "serd/offer_filter.html"
