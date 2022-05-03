@@ -56,10 +56,11 @@ def hotel_add_housingrequest(request):
             if stayset.is_valid() and requestform.is_valid():
                 req = requestform.save()
                 for stayform in stayset:
-                    stay = stayform.save(commit=False)
-                    stay.request = req
-                    stay.save()            
-                    return HttpResponseRedirect(reverse('index'))
+                    if stayform.cleaned_data != {}:
+                        stay = stayform.save(commit=False)
+                        stay.request = req
+                        stay.save()            
+                return HttpResponseRedirect(reverse('index'))
             return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'form': requestform})
 
 
@@ -77,10 +78,11 @@ def internal_add_housingrequest(request):
             if stayset.is_valid() and requestform.is_valid():
                 req = requestform.save()
                 for stayform in stayset:
-                    stay = stayform.save(commit=False)
-                    stay.request = req
-                    stay.save()            
-                    return HttpResponseRedirect(reverse('index'))
+                    if stayform.cleaned_data != {}:
+                        stay = stayform.save(commit=False)
+                        stay.request = req
+                        stay.save()            
+                return HttpResponseRedirect(reverse('index'))
             return render(request, 'serd/request_form_intern.html', {'stayset': stayset, 'form': requestform})
             
 
