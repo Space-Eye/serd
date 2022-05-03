@@ -83,7 +83,7 @@ class Offer(models.Model):
     street = models.CharField(max_length=256, blank=True, verbose_name=_("Straße, Hausnummer (optional)"))
     city = models.CharField(max_length=256, verbose_name=_("Ort"), blank=True)
     mail = models.CharField(max_length=256, validators=[validate_email], verbose_name=_("E-Mail-Adresse"), blank=True)
-    language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Welche Sprachen sprechen Sie?"))
+    language = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Welche Sprachen sprechen Sie?"),  default=['de'])
     additional_languages = models.CharField(verbose_name=_("Weitere Sprachen"), max_length=64, blank=True)
     for_free = models.BooleanField(verbose_name=_("Ich stelle die Unterkunft mindestens vorübergehend kostenlos zur Verfügung."))
     cost = models.PositiveSmallIntegerField(null=True, validators=[validate_not_negative])
