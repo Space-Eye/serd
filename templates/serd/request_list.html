@@ -56,9 +56,7 @@
 
 <body>
     Space Eye - Notunterkunftsvermittlung - Gesuche
-    {%if count %}
-    &emsp;&emsp; {{count}} Ergebnisse
-    {% endif %}
+    &emsp;&emsp; {{dataset|length}} Ergebnisse
 <div class="tableFixHead">
     <table class="table">
     <thead class="header" id="table-head">
@@ -93,6 +91,7 @@
     </thead>
     <tbody>
     {% for data in dataset %}
+    
         {%if data.state == "new"%}    
             <tr style="background-color:white">
            <td class="sticky-col first-col" style="background-color: white"> {{data.number}}</td>
@@ -118,6 +117,7 @@
            <td class="sticky-col first-col" style="background-color: darkgray"> {{data.number}}</td>
            <td class="sticky-col second-col" style="background-color: darkgray"> {{ data.given_name}} {{data.last_name}}
         {%endif%}
+        <div id="{{data.number}}"></div>
 
 
 
@@ -168,7 +168,7 @@
                 {% endfor %}
 
            </td>
-           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.number}} "style="color:black; text-decoration:underline" >edit </a></span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"><a href="/requests/edit/{{data.number}}"style="color:black; text-decoration:underline" >edit </a></span></td>
            </tr>
         {% endfor %}
         </tbody>
@@ -177,7 +177,6 @@
     </tbody>
     </table>
 </div>
-
 <div class="d-flex flex-row">
     <div class="m-3">
         {% url 'request_filter' as request_filter_url %}

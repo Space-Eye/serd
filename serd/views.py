@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 from datetime import date
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
 from dal import autocomplete
@@ -104,7 +105,11 @@ class InternalAddOffer(CreateView):
 
 @login_required
 def request_list(request):
-    requests = list(HousingRequest.objects.all())
+    if request.COOKIES.get('housingrequests'):
+        numbers = [int(number) for number in request.COOKIES['housingrequests'].split()]
+        requests = list(HousingRequest.objects.filter(number__in=numbers))
+    else:
+        requests = list(HousingRequest.objects.all())
     for hr in requests:
             stay = HotelStay.objects.filter(request=hr, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
             if stay:
@@ -116,8 +121,13 @@ def request_list(request):
 
 @login_required
 def offer_list(request):
+    if request.COOKIES.get('offers'):
+        numbers = [int(number) for number in request.COOKIES['offers'].split()]
+        offers = Offer.objects.filter(number__in=numbers)
+    else:
+        offers = HousingRequest.objects.all()
     context = {}
-    context["dataset"] = Offer.objects.all()
+    context["dataset"] = offers
     return render(request, "serd/offer_list.html", context)
    
 
@@ -143,7 +153,8 @@ def hotel_list(request):
     return render(request, "serd/hotel_list.html", context)
 
 class OfferUpdate(UpdateView):
-    success_url = "/offers"
+    def get_success_url(self) -> str:
+        return("/offers/#"+self.kwargs["offer_id"])
     def get_object(self, queryset=None):
         return Offer.objects.get(number=self.kwargs["offer_id"])
     form_class = OfferEditForm
@@ -171,7 +182,7 @@ def request_update(request, request_id):
                     except HousingRequest.DoesNotExist:
                         stay.request = housingreq
                     stay.save()
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(('/requests#'+str(request_id)))
             
             return render(request, 'serd/request_form_intern.html', {'form': requestform, 'stayset': stayset} )
         
@@ -251,8 +262,15 @@ class RequestFilter(FormView):
                 request.hotel = stay.hotel
         context = {}
         context['dataset'] = requests
-        context['count'] = requests.count()
-        return render(None,'serd/request_list.html', context)
+        response = render(self.request, 'serd/request_list.html', context)
+        if requests.count() == HousingRequest.objects.all().count():
+            response.delete_cookie('housingrequests')
+        else:
+            numbers = ""
+            for request in requests:
+                numbers = numbers + str(request.number)+" "
+            response.set_cookie('housingrequests',numbers)
+        return response
 
 class OfferFilter(FormView):
     template_name = "serd/offer_filter.html"
@@ -318,8 +336,16 @@ class OfferFilter(FormView):
         direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
 
         context = {}
-        context['dataset'] = queryset.order_by(direction+sort)
-        context['count'] = queryset.count()
+        offers = queryset.order_by(direction+sort)
+        context['dataset'] = offers
+        response = render(self.request, 'serd/offer_list.html', context)
+        if offers.count() == Offer.objects.all().count():
+            response.delete_cookie('offers')
+        else:
+            numbers = ""
+            for offer in offers:
+                numbers = numbers + str(offer.number)+" "
+            response.set_cookie('offers',numbers)
         return render(None,'serd/offer_list.html', context)
 
 
