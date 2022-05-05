@@ -1,6 +1,6 @@
 from urllib import request
 from django.test import TestCase
-from serd.utils.db import get_arriving_stays, get_departing_stays, get_persons, get_requests, get_stays
+from serd.utils.db import get_arriving_stays, get_departing_stays, get_hotel_from_request, get_persons, get_requests, get_stays
 from serd.models import Hotel, HotelStay, HousingRequest
 from datetime import datetime, timedelta
 def day(days):
@@ -273,3 +273,10 @@ class HotelStayTests(TestCase):
         
 
 
+    def test_get_hotel_from_request(self):
+        request = HousingRequest.objects.get(number=1)
+        hotel = Hotel.objects.get(number=1)
+        self.assertEqual(get_hotel_from_request(request), day(0), hotel)
+        self.assertEqual(get_hotel_from_request(request), day(1), hotel)
+
+        

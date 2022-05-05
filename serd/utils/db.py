@@ -1,5 +1,4 @@
 from  datetime import date
-from urllib import request
 from django.db.models import Q
 from django.db.models import Sum
 from serd.models import HotelStay, Hotel, HousingRequest
@@ -30,3 +29,14 @@ def get_departing_stays(hotel: Hotel, day: date) -> list[HotelStay]:
 
 def get_arriving_stays(hotel: Hotel, day: date) -> list[HotelStay]:
     return HotelStay.objects.filter(hotel = hotel, arrival_date = day)
+
+def get_hotel_from_request(request: HousingRequest, day: date) -> Hotel:
+    stays = request.stays
+    if not stays:
+        return None
+    stays = stays.filter(arrival_date__lte=day).filter(Q(departure_date__isnull=True)| Q(departure_date__gt=day))
+    if not stays:
+        return None
+    if len(stays) > 1:
+        raise RuntimeError("{}  is in two hotels at {}".format(request, day))
+    return stays[0].hotel
