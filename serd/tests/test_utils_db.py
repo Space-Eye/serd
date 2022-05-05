@@ -174,9 +174,41 @@ class HotelStayTests(TestCase):
         hotel = Hotel.objects.get(number = 1)
         departing = get_departing_stays(hotel, day(1))
         self.assertEqual(1, len(departing))
-        self.assertEqual(departing[0], HotelStay.objects.get(number=2))
+        self.assertEqual(departing[0], HotelStay.objects.get(number=1))
         for i in range(2,5):
             hotel = Hotel.objects.get(number = i)
-            departing = get_departing_stays(hotel, day(0))
+            departing = get_departing_stays(hotel, day(1))
             self.assertEqual(len(departing), 0)
+        
+        for i in range(1,5):
+            hotel = Hotel.objects.get(number = i)
+            departing = get_departing_stays(hotel, day(2))
+            self.assertEqual(len(departing), 0)
+        
+        hotel = Hotel.objects.get(number= 1)
+        departing = get_departing_stays(hotel, day(3)).order_by('number')
+        self.assertEqual(len(departing), 3)
+        self.assertEqual(departing[0], HotelStay.objects.get(number=2))
+        self.assertEqual(departing[1], HotelStay.objects.get(number=3))
+        self.assertEqual(departing[2], HotelStay.objects.get(number=4))
+
+        for i in range(2,5):
+            hotel = Hotel.objects.get(number = i)
+            departing = get_departing_stays(hotel, day(3))
+            self.assertEqual(len(departing), 0)
+
+        hotel = Hotel.objects.get(number=2)
+        departing = get_departing_stays(hotel, day(4)).order_by('number')
+        self.assertEqual(len(departing), 1)
+        self.assertEqual(departing[0], HotelStay.objects.get(number=5))
+
+        for i in [1,3,4]:
+            hotel = Hotel.objects.get(number = i)
+            departing = get_departing_stays(hotel, day(4))
+            self.assertEqual(len(departing), 0)
+        for j in [5,6]:
+            for i in range(1,5):
+                hotel = Hotel.objects.get(number = i)
+                departing = get_departing_stays(hotel, day(j))
+                self.assertEqual(len(departing), 0)
 
