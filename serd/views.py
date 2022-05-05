@@ -1,18 +1,18 @@
 from django.urls import reverse
 
 from serd.choices import PETS
+from serd.utils.db import get_persons, get_requests, get_stays
 from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile
 from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import Q
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from datetime import date
+from datetime import date, datetime
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
 from dal import autocomplete
-from django.db.models import Sum
+
 from .create_invoice import create_ods
 
 
@@ -137,16 +137,9 @@ def hotel_list(request):
     hotels =  list(Hotel.objects.all())
 
     for hotel in hotels:
-        stays = HotelStay.objects.filter(hotel=hotel, arrival_date__lte=date.today())
-        stays = stays.filter(Q(departure_date__gte=date.today())| Q(departure_date__isnull=True))
-        adults = stays.aggregate(Sum('request__adults'))['request__adults__sum']
-        if not adults:
-            adults = 0 # Can't do math with none
-        children =  stays.aggregate(Sum('request__children'))['request__children__sum']
-        if not children:
-            children = 0 # Can't do math with none
-        hotel.beds_free = hotel.beds -adults - children
-        hotel.requests = HousingRequest.objects.filter(stays__in =stays)
+        stays = get_stays(hotel, datetime.today())
+        hotel.beds_free = hotel.beds - get_persons(stays)
+        hotel.requests = get_requests(stays)
     context = {}
     context["dataset"] = hotels
     
