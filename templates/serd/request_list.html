@@ -66,8 +66,9 @@
         <th>Kinder</th>
         <th>Gesamt</th>
         <th class="comment-col">Wer</th>
-        <th>Aktuelle Unterbringung</th>
         <th class="comment-col">Interner Kommentar</th>
+        <th>Aktuelle Unterbringung</th>
+        <th>Hotel</th>
         <th>Haustiere</th>
         <th>Barrierfrei</th>
         <th>Tel</th>
@@ -82,7 +83,6 @@
         <th>Sprachen</th>
         <th>COVID</th>
         <th>Vermittelt</th>
-        <th>Hotel</th>
         <th>Priorität</th>
         <th>Sachbearbeiter:in</th>
         <th>Status</th>
@@ -130,8 +130,9 @@
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.children}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.persons}}</span></td>
            <td class="comment-col">  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.who}}</span></td>
-           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
            <td class="comment-col">  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.private_comment |default:""}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.get_current_housing_display}}</span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.hotel |default:""}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.pet_number}} {{data.pets}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.accessability_needs |yesno:'Ja,Nein'}}</span></td>
            
@@ -152,7 +153,6 @@
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.vaccination |yesno:'Ja,Nein'}}</span></td>
 
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> <a href="/offers/edit/{{data.placed_at.number}}" style="color:black; text-decoration:underline"> {{data.placed_at |default:""}}</a></span></td>
-           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> {{data.hotel |default:""}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.get_priority_display}}</span></td>
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">
                 {% if data.case_handler %}
