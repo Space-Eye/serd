@@ -135,6 +135,7 @@ class Hotel(models.Model):
     cost = models.CharField(max_length=128, verbose_name="Kosten")
     beds = models.PositiveSmallIntegerField(verbose_name="Betten", validators=[validate_not_negative])
     info = models.TextField(verbose_name="Info", blank=True)
+    visible = models.BooleanField(verbose_name="Sichtbar", default=True)
     def __str__(self) -> str:
         return "_".join([str(self.number), self.name])
     class Meta:

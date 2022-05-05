@@ -134,7 +134,7 @@ def offer_list(request):
 
 @login_required
 def hotel_list(request):
-    hotels =  list(Hotel.objects.all())
+    hotels =  Hotel.objects.filter(visible=True)
 
     for hotel in hotels:
         stays = HotelStay.objects.filter(hotel=hotel, arrival_date__lte=date.today())
