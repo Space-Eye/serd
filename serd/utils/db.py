@@ -27,3 +27,6 @@ def get_persons(stays) -> int:
 def get_departing_stays(hotel: Hotel, day: date) -> list[HotelStay]:
 
     return HotelStay.objects.filter(hotel = hotel, departure_date=day)
+
+def get_arriving_stays(hotel: Hotel, day: date) -> list[HotelStay]:
+    return HotelStay.objects.filter(hotel = hotel, arrival_date = day)

@@ -1,6 +1,6 @@
 from urllib import request
 from django.test import TestCase
-from serd.utils.db import get_departing_stays, get_persons, get_requests, get_stays
+from serd.utils.db import get_arriving_stays, get_departing_stays, get_persons, get_requests, get_stays
 from serd.models import Hotel, HotelStay, HousingRequest
 from datetime import datetime, timedelta
 def day(days):
@@ -211,4 +211,65 @@ class HotelStayTests(TestCase):
                 hotel = Hotel.objects.get(number = i)
                 departing = get_departing_stays(hotel, day(j))
                 self.assertEqual(len(departing), 0)
+
+    
+
+    def test_arriving(self):
+        hotel = Hotel.objects.get(number=1)
+        stay = HotelStay.objects.get(number=1)
+        stays = get_arriving_stays(hotel, day(0))
+        self.assertEqual(len(stays), 1)
+        self.assertEqual(stays.first(), stay)
+        for i in range(2,5):
+            hotel = Hotel.objects.get(number=i)
+            stays = get_arriving_stays(hotel, day(0))
+            self.assertEqual(len(stays), 0)
+        
+        hotel = Hotel.objects.get(number=1)
+        correct = HotelStay.objects.filter(number__in=[2,3,4]).order_by('number')
+        stays = get_arriving_stays(hotel, day(1)).order_by('number')
+        self.assertEqual(len(stays), 3)
+        self.assertListEqual(list(correct), list(stays))
+
+        for i in range(2,5):
+            hotel = Hotel.objects.get(number=i)
+            stays = get_arriving_stays(hotel, day(1))
+            self.assertEqual(len(stays), 0)
+        
+        for i in range(1,5):
+            hotel = Hotel.objects.get(number=i)
+            stays = get_arriving_stays(hotel, day(2))
+            self.assertEqual(len(stays), 0)
+
+        for i in [1,3,4]:
+            hotel = Hotel.objects.get(number=i)
+            stays = get_arriving_stays(hotel, day(3))
+            self.assertEqual(len(stays), 0)
+        hotel = Hotel.objects.get(number=2)
+        stays = get_arriving_stays(hotel, day(3))
+        self.assertEqual(len(stays), 1)
+        self.assertAlmostEqual(stays.first(), HotelStay.objects.get(number=5))
+
+        for i in range(1,5):
+            hotel = Hotel.objects.get(number=i)
+            stays = get_arriving_stays(hotel, day(4))
+            self.assertEqual(len(stays), 0)
+
+
+        for i in range(1,4):
+            hotel = Hotel.objects.get(number=i)
+            stays = get_arriving_stays(hotel, day(9))
+            self.assertEqual(len(stays), 0)
+        hotel = Hotel.objects.get(number=4)
+        stays = get_arriving_stays(hotel, day(9))
+        self.assertEqual(len(stays), 1)
+        self.assertAlmostEqual(stays.first(), HotelStay.objects.get(number=7))
+
+        for j in [30,31,364,365,366,1000,9999]:
+            for i in range(1,5):
+                hotel = Hotel.objects.get(number=i)
+                stays = get_arriving_stays(hotel, day(j))
+                self.assertEqual(len(stays), 0)
+        
+
 
