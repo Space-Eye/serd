@@ -1,14 +1,13 @@
 from django.urls import reverse
-
 from serd.choices import PETS
-from serd.utils.db import get_persons, get_requests, get_stays
+from serd.utils.db import count_persons, get_hotel_from_request, get_persons, get_requests, get_stays
+from django.db.models import Q
 from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
 from datetime import date, datetime
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
 from dal import autocomplete
@@ -107,13 +106,11 @@ class InternalAddOffer(CreateView):
 def request_list(request):
     if request.COOKIES.get('housingrequests'):
         numbers = [int(number) for number in request.COOKIES['housingrequests'].split()]
-        requests = list(HousingRequest.objects.filter(number__in=numbers))
+        requests = HousingRequest.objects.filter(number__in=numbers)
     else:
-        requests = list(HousingRequest.objects.all())
+        requests = HousingRequest.objects.all()
     for hr in requests:
-            stay = HotelStay.objects.filter(request=hr, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
-            if stay:
-                hr.hotel = stay.hotel
+                hr.hotel = get_hotel_from_request(hr, datetime.today())
 
     context = {}
     context["dataset"] = requests
@@ -346,20 +343,20 @@ class OfferFilter(FormView):
 def statistics(request):
     placed_requests = HousingRequest.objects.filter(state='arrived')
     stale_requests = HousingRequest.objects.filter(state='stale')
-    persons_placed = placed_requests.aggregate(Sum('persons'))['persons__sum']
+    persons_placed = count_persons(placed_requests)
     requests_placed = placed_requests.count()
     requests_stale = stale_requests.count()
-    persons_stale = stale_requests.aggregate(Sum('persons'))['persons__sum']
+    persons_stale = count_persons(persons_stale)
     all_requests = HousingRequest.objects.all()
     requests_all =  all_requests.count()
-    persons_all = all_requests.aggregate(Sum('persons'))['persons__sum']
-    context = {}
+    persons_all = count_persons(all_requests)
     contact_requests = HousingRequest.objects.filter(state="housing_contact")
     requests_contact = contact_requests.count()
-    persons_contact = contact_requests.aggregate(Sum('persons'))['persons__sum']
+    persons_contact = count_persons(contact_requests)
     city_offers = Offer.objects.filter(by_municipality=True)
     offers_city = city_offers.count()
     offers_city_quasi_placed = city_offers.filter(Q(state='arrived')|Q(state='request_contact')).count()
+    context = {}
     context['persons_placed'] = persons_placed
     context['requests_placed'] = requests_placed
     context['persons_stale'] = persons_stale

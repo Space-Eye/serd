@@ -1,6 +1,7 @@
 from  datetime import date
 from django.db.models import Q
-from django.db.models import Sum
+from django.db.models import Sum, QuerySet
+from serd.choices import REQUEST_STATE
 from serd.models import HotelStay, Hotel, HousingRequest
 
 
@@ -40,3 +41,12 @@ def get_hotel_from_request(request: HousingRequest, day: date) -> Hotel:
     if len(stays) > 1:
         raise RuntimeError("{}  is in two hotels at {}".format(request, day))
     return stays[0].hotel
+
+def count_persons_state(state:str) -> int:
+    choices =  [state[0] for state in REQUEST_STATE]
+    assert (state in choices)
+    requests = HousingRequest.objects.filter(state=state)
+    return count_persons(state)
+
+def count_persons(requests: QuerySet[HousingRequest]) -> int:
+    return requests.aggregate(Sum('persons'))['persons__sum']
