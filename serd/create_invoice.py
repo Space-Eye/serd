@@ -5,6 +5,7 @@ from collections import OrderedDict
 from itertools import chain
 from pyexcel_ods3 import save_data
 from io import BytesIO
+from .utils.db import get_persons, get_departing_stays, get_arriving_stays
 
 from serd.models import HotelStay, Hotel
 
@@ -30,22 +31,13 @@ def create_ods( begin:date, end:date ):
                 month_str = "-".join([str(current_date.month), str(current_date.year)])
                 hotel_data[month_str] = {}
                 hotel_data[month_str][0] = ["Ankunft", "Bestand", "Abreise"]
-            arriving = HotelStay.objects.filter(hotel=hotel, arrival_date=current_date)
-            adults = arriving.aggregate(Sum('request__adults'))['request__adults__sum']
-            if not adults:
-                adults = 0 # Can't do math with none
-            children =  arriving.aggregate(Sum('request__children'))['request__children__sum']
-            if not children:
-                children = 0
-            arrivals = adults + children
-            departing = HotelStay.objects.filter(hotel=hotel, departure_date=current_date)
-            adults = departing.aggregate(Sum('request__adults'))['request__adults__sum']
-            if not adults:
-                adults = 0 # Can't do math with none
-            children =  departing.aggregate(Sum('request__children'))['request__children__sum']
-            if not children:
-                children = 0
-            departures = adults + children
+
+            arriving = get_arriving_stays(hotel, current_date)
+            arrivals = get_persons(arriving)
+
+            departing = get_departing_stays(hotel, current_date)
+            departures = get_persons(departing)
+
             current_guests += arrivals - departures
             hotel_data[month_str][current_date.day ] = [arrivals, current_guests, departures]
             current_date += timedelta(days=1)

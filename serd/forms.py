@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.forms import modelformset_factory, BaseModelFormSet
 from .mail import Mailer
-from .utils import overlaps
+from .utils.date import overlaps
 
 
 

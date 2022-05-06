@@ -1,0 +1,80 @@
+[
+    {
+        "model": "serd.hotelstay",
+        "pk": 1,
+        "fields": {
+            "arrival_date": "2022-04-15",
+            "departure_date": "2022-04-16",
+            "room": "",
+            "hotel": 1,
+            "request": 1
+        }
+    },
+    {
+        "model": "serd.hotelstay",
+        "pk": 2,
+        "fields": {
+            "arrival_date": "2022-04-16",
+            "departure_date": "2022-04-18",
+            "room": "",
+            "hotel": 1,
+            "request": 1
+        }
+    },
+    {
+        "model": "serd.hotelstay",
+        "pk": 3,
+        "fields": {
+            "arrival_date": "2022-04-16",
+            "departure_date": "2022-04-18",
+            "room": "",
+            "hotel": 1,
+            "request": 2
+        }
+    },
+    {
+        "model": "serd.hotelstay",
+        "pk": 4,
+        "fields": {
+            "arrival_date": "2022-04-16",
+            "departure_date": "2022-04-18",
+            "room": "",
+            "hotel": 1,
+            "request": 3
+        }
+    },
+ 
+    {
+        "model": "serd.hotelstay",
+        "pk": 5,
+        "fields": {
+            "arrival_date": "2022-04-18",
+            "departure_date": "2022-04-19",
+            "room": "",
+            "hotel": 2,
+            "request": 1
+        }
+    },
+    {
+        "model": "serd.hotelstay",
+        "pk": 6,
+        "fields": {
+            "arrival_date": "2022-04-20",
+            "departure_date": "2022-04-22",
+            "room": "",
+            "hotel": 3,
+            "request": 1
+        }
+    },
+    {
+        "model": "serd.hotelstay",
+        "pk": 7,
+        "fields": {
+            "arrival_date": "2022-04-24",
+            "departure_date": null,
+            "room": "",
+            "hotel": 4,
+            "request": 1
+        }
+    }
+]
