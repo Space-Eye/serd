@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 23:55+0200\n"
+"POT-Creation-Date: 2022-05-09 15:21+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -94,18 +94,22 @@ msgid "falls verlangt, Monatsmiete warm"
 msgstr "Ежемесячная арендная плата включая услуги, если запросят"
 
 #: serd/forms.py:37
-msgid "Weiterer Kommentar (max. 250 Zeichen)"
-msgstr "Комментарии (максимально 250 знаков)"
+msgid "Weiterer Kommentar (max. 500 Zeichen)"
+msgstr "Комментарии (максимально 500 знаков)"
 
-#: serd/forms.py:68
+#: serd/forms.py:65
+msgid "Maximal 500 Zeichen (aktuell: {})"
+msgstr "Максимум 500 символов (в настоящее время: {} )"
+
+#: serd/forms.py:79
 msgid "Mindestens eine erwachsene Person"
 msgstr "Минимум один взрослый"
 
-#: serd/forms.py:76
+#: serd/forms.py:87
 msgid "Ende der Verfügbarkeit muss später als der Beginn sein"
 msgstr "Дата окончания периода должна быть позже, чем дата начала"
 
-#: serd/forms.py:81
+#: serd/forms.py:92
 msgid ""
 "Eigene Wohnsituation muss angegeben werden, wenn die Unterbringung nicht in "
 "einer getrennten Wohnung erfolgt"
@@ -113,7 +117,7 @@ msgstr ""
 "При размещении не в отдельной квартире нужно указать собственную жилую "
 "ситуацию"
 
-#: serd/forms.py:86
+#: serd/forms.py:97
 msgid ""
 "Bitte bestätigen Sie, dass die Unterkunft kostenfrei überlassen wird, oder "
 "geben Sie die Miethöhe an"
@@ -121,59 +125,59 @@ msgstr ""
 "Пожалуйста подтвердите бесплатное предоставление жилья или укажите стоимость "
 "аренды"
 
-#: serd/forms.py:91
+#: serd/forms.py:102
 msgid "Bei kostenfreier Unterkunft ist keine Mietangabe möglich"
 msgstr ""
 "При бесплатном предоставлении жилья указание стоимости аренды невозможно"
 
-#: serd/forms.py:113 serd/forms.py:195 serd/forms.py:219
+#: serd/forms.py:124 serd/forms.py:210 serd/forms.py:234
 msgid "Interner Kommentar"
 msgstr ""
 
-#: serd/forms.py:127
+#: serd/forms.py:142
 msgid "Ankunftstag"
 msgstr "Дата прибытия"
 
-#: serd/forms.py:128
+#: serd/forms.py:143
 msgid "Bitte beschreiben Sie Ihre Gruppe kurz (Alter, Geschlecht, ...)"
 msgstr "Пожалуйста опишите вкратце вашу группу (возраст, пол, ...)"
 
-#: serd/forms.py:158
+#: serd/forms.py:173
 msgid "Ungültige Auswahl: 'Keine' schließt die anderen Wahlmöglichkeiten aus."
 msgstr "Неправильный выбор: 'никаких' исключает другие варианты"
 
-#: serd/forms.py:163
+#: serd/forms.py:178
 msgid "Auswahl 'Keine' bei Haustier widerspricht Anzahl ungleich 0"
 msgstr ""
 "Выбор 'никаких' о домашних животных противоречит количеству неравному нулю"
 
-#: serd/forms.py:169
+#: serd/forms.py:184
 msgid "Wenn keine Haustiere vorhanden sind, muss 'Keine' ausgewählt werden."
 msgstr "Если нет домашних животных нужно выбрать 'никаких'."
 
-#: serd/forms.py:174
+#: serd/forms.py:189
 msgid "Mehr Tierarten ausgewählt als Tiere vorhanden"
 msgstr "Выбрано больше видов животных, чем животных в наличии"
 
-#: serd/mail.py:10
+#: serd/mail.py:12
 msgid "Ja"
 msgstr "Да"
 
-#: serd/mail.py:12
+#: serd/mail.py:14
 msgid "Nein"
 msgstr "Нет"
 
-#: serd/mail.py:14
+#: serd/mail.py:16
 #, python-brace-format
 msgid "Wohnungsgesuch mit der Nummer {id} erfolgreich eingetragen"
 msgstr "Заявка на поиск квартиры успешно зарегистрирована с номером {id}"
 
-#: serd/mail.py:15
+#: serd/mail.py:17
 #, python-brace-format
 msgid "Wohnungsangebot mit der Nummer {id} erfolgreich eingetragen"
 msgstr "Предложение квартиры успешно зарегистрировано с номером {id}"
 
-#: serd/mail.py:16
+#: serd/mail.py:18
 #, python-brace-format
 msgid ""
 "Guten Tag,\n"
@@ -191,7 +195,7 @@ msgstr ""
 "О возможных изменениях пожалуйста сообщите нам по электронному адресу "
 "kontakt@space-eye.org {id} \n"
 
-#: serd/mail.py:22
+#: serd/mail.py:24
 #, python-brace-format
 msgid ""
 "Guten Tag,\n"
@@ -209,7 +213,7 @@ msgstr ""
 "Если возникнут какие-либо изменения, пожалуйста сообщите нам по электронному "
 "адресу kontakt@space-eye.org {id}\n"
 
-#: serd/mail.py:30
+#: serd/mail.py:32
 #, python-brace-format
 msgid ""
 "Vorname:\t{given_name}\n"
@@ -222,12 +226,12 @@ msgstr ""
 "Почтовый индекс:\t{plz}\n"
 "Город:\t{city}\n"
 
-#: serd/mail.py:36
+#: serd/mail.py:38
 #, python-brace-format
 msgid "Straße:\t{street}"
 msgstr "Улица:\t{street}"
 
-#: serd/mail.py:37
+#: serd/mail.py:39
 #, python-brace-format
 msgid ""
 "Telefon:\t{phone}\n"
@@ -244,12 +248,12 @@ msgstr ""
 "из них дети:\t{children_number}\n"
 "бесплатное жилье:\t{for_free}\n"
 
-#: serd/mail.py:47
+#: serd/mail.py:49
 #, python-brace-format
 msgid "Miete:\t{cost}\n"
 msgstr "Аренда:\t{cost}\n"
 
-#: serd/mail.py:48
+#: serd/mail.py:50
 #, python-brace-format
 msgid ""
 "Spontan Verfügbar:\t{spontan}\n"
@@ -260,12 +264,12 @@ msgstr ""
 "Доступно с:\t{available_from}\n"
 "Доступно только временно:\t{limited_availability}\n"
 
-#: serd/mail.py:54
+#: serd/mail.py:56
 #, python-brace-format
 msgid "Verfügbar bis:\t{available_until}\n"
 msgstr "Доступно до:\t{available_until}\n"
 
-#: serd/mail.py:55
+#: serd/mail.py:57
 #, python-brace-format
 msgid ""
 "Mit ÖPNV erreichbar:\t{public_transport}\n"
@@ -276,12 +280,12 @@ msgstr ""
 "Количество комнат:\t{rooms}\n"
 "Отдельная квартира:\t{seperate_appartment}\n"
 
-#: serd/mail.py:60
+#: serd/mail.py:62
 #, python-brace-format
 msgid "Meine Wohnsituation:\t{living_with}\n"
 msgstr "Моя ситуация с жильём: \t{living_with}\n"
 
-#: serd/mail.py:61
+#: serd/mail.py:63
 #, python-brace-format
 msgid ""
 "Erlaubte Haustiere:\t{pets}\n"
@@ -290,7 +294,7 @@ msgstr ""
 "Разрешенные животные:\t{pets}\n"
 "Комментарий:\t{comment}"
 
-#: serd/mail.py:66
+#: serd/mail.py:68
 #, python-brace-format
 msgid ""
 "Vorname:\t{given_name}\n"
@@ -311,7 +315,7 @@ msgstr ""
 "Группу можно разделить: {split}\n"
 "Текущее размещение: {current_housing}\n"
 
-#: serd/mail.py:78
+#: serd/mail.py:80
 #, python-brace-format
 msgid ""
 "Stellvertreter:in :\t{representative}\n"
@@ -322,7 +326,7 @@ msgstr ""
 "Представитель тедефонный номер: {repr_phone}\n"
 "Представитель электронный адрес: {repr_mail}\n"
 
-#: serd/mail.py:83
+#: serd/mail.py:85
 #, python-brace-format
 msgid ""
 "Ankunftsdatum:\t{arrival_date}\n"

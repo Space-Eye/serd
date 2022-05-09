@@ -1,6 +1,6 @@
 from django.urls import reverse
 from serd.choices import PETS
-from serd.utils.db import count_persons, get_hotel_from_request, get_persons, get_requests, get_stays
+from serd.utils.db import count_persons, get_departing_stays, get_hotel_from_request, get_persons, get_requests, get_stays
 from django.db.models import Q
 from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile
 from django.http import HttpResponse, HttpResponseRedirect
@@ -137,6 +137,8 @@ def hotel_list(request):
         stays = get_stays(hotel, datetime.today())
         hotel.beds_free = hotel.beds - get_persons(stays)
         hotel.requests = get_requests(stays)
+        departing = get_departing_stays(hotel, date.today())
+        hotel.departing = get_requests(departing)
     context = {}
     context["dataset"] = hotels
     

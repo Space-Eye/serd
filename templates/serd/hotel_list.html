@@ -107,6 +107,12 @@
                 {{request}}
             </a>&emsp;
                 {% endfor %}
+                {%if hotel.departing%}<h5>Abreisend:</h5> {%endif%}
+                {% for request in hotel.departing.all %}
+                <a href="/requests/edit/{{request.number}}" style="color:black; text-decoration:underline">
+                    {{request}}
+                </a>&emsp;
+                    {% endfor %}
             </td>
             <td>
                 {{ hotel.beds }}
