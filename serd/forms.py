@@ -22,7 +22,7 @@ PFLICHT = ValidationError(_("Pflichtfeld"))
 class OfferForm(forms.ModelForm):
     def test_required(self, field:str):
         data = self.cleaned_data[field]
-        if data is None or data == "":
+        if data is None or data == "" or data == []:
             self.add_error(field=field, error=PFLICHT)
         return data
 
@@ -34,7 +34,7 @@ class OfferForm(forms.ModelForm):
         label=_('Verfügbar bis'), required=False,
         widget=forms.SelectDateWidget(years=range(2022, 2024))) 
     cost = forms.IntegerField(label=_("falls verlangt, Monatsmiete warm"), required=False)
-    comment = forms.CharField(required=False, label=_("Weiterer Kommentar (max. 250 Zeichen)"), widget=forms.Textarea)
+    comment = forms.CharField(required=False, label=_("Weiterer Kommentar (max. 500 Zeichen)"), widget=forms.Textarea)
 
     def clean_last_name(self):
         return self.test_required('last_name')
@@ -58,6 +58,17 @@ class OfferForm(forms.ModelForm):
     
     def clean_rooms(self):
         return self.test_required('rooms')
+    
+    def clean_comment(self):
+        comment = self.cleaned_data['comment']
+        if len(comment) > 500:
+            self.add_error(field='comment', error=ValidationError(_("Maximal 500 Zeichen (aktuell: {})").format(len(comment))))
+        return comment
+    
+    def clean_language(self):
+        
+        return self.test_required('language')
+
 
     def clean(self):
         if self.errors:
@@ -112,6 +123,10 @@ class OfferForm(forms.ModelForm):
 class OfferEditForm(OfferForm):
     private_comment = forms.CharField(required=False, label=_("Interner Kommentar"), widget=forms.Textarea)
     number = forms.IntegerField(label="Laufende Nr.", disabled=True, required=False)
+    def clean_language(self):
+        return self.cleaned_data['language']
+    def clean_comment(self):
+        return self.cleaned_data['comment']
     class Meta:
         model = Offer
         fields = OfferForm.Meta.fields + ('number', 'by_municipality', 'private_comment', 'state')
