@@ -1,16 +1,17 @@
 from  datetime import date
+from urllib import request
 from django.db.models import Q
 from django.db.models import Sum, QuerySet
 from serd.choices import REQUEST_STATE
 from serd.models import HotelStay, Hotel, HousingRequest
 
 
-def get_stays(hotel: Hotel, day: date) ->list[HotelStay]:
+def get_stays(hotel: Hotel, day: date) ->QuerySet[HotelStay]:
     stays = HotelStay.objects.filter(hotel=hotel, arrival_date__lte=day)
     stays = stays.filter(Q(departure_date__gt=day)| Q(departure_date__isnull=True))
     return stays
 
-def get_requests(stays) -> list[HousingRequest]:
+def get_requests(stays) -> QuerySet[HousingRequest]:
     requests = HousingRequest.objects.filter(stays__in=stays)
     return requests
 
@@ -24,11 +25,11 @@ def get_persons(stays) -> int:
             children = 0 # Can't do math with none
     return adults + children
 
-def get_departing_stays(hotel: Hotel, day: date) -> list[HotelStay]:
+def get_departing_stays(hotel: Hotel, day: date) -> QuerySet[HotelStay]:
 
     return HotelStay.objects.filter(hotel = hotel, departure_date=day)
 
-def get_arriving_stays(hotel: Hotel, day: date) -> list[HotelStay]:
+def get_arriving_stays(hotel: Hotel, day: date) -> QuerySet[HotelStay]:
     return HotelStay.objects.filter(hotel = hotel, arrival_date = day)
 
 def get_hotel_from_request(request: HousingRequest, day: date) -> Hotel:
@@ -50,3 +51,12 @@ def count_persons_state(state:str) -> int:
 
 def count_persons(requests: QuerySet[HousingRequest]) -> int:
     return requests.aggregate(Sum('persons'))['persons__sum']
+
+def get_departure_dates(hotel: Hotel, arrived_latest=date.today()):
+    stays = get_stays(hotel=hotel, day=arrived_latest).filter(departure_date__isnull=False)
+
+    days = [stay.departure_date for stay in stays]
+    days = list((set(days)))
+    days.sort()
+    return days
+
