@@ -1,7 +1,9 @@
-from cmath import log
+from datetime import date, datetime
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core import mail
+from .models import Hotel
+from .utils.db import get_departing_stays, get_persons, get_requests, get_stays
 import logging
 logger = logging.getLogger('default')
 
@@ -122,3 +124,31 @@ class Mailer:
                     logger.error("Sending mail failed with %s", str(e))
         except Exception as e:
             logger.error("Connecting to mail server failed with %s", str(e))
+
+    def send_departure_mail(self, data, today, total, address):
+        logger.debug("Creating departure mail text departure mail to %s ", address)
+        text = """Hallo,
+Space-Eye hat laut Datenbank gerade {persons} Personen im Dream Inn untergebracht.
+""".format(persons=total)
+
+        
+        
+        text += "Davon reisen heute ({day}) {persons} Personen aus den Zimmern {rooms} ab.\n".format(
+                day = date.today(), persons=today[0], rooms =" ".join(today[1]))
+        if data:            
+            for day in data.keys():
+                text+="am {day} reisen nach derzeitigem Stand {persons} Personen aus den Zimmern {rooms} ab.\n".format(day = day, persons=data[day][0], rooms =" ".join(data[day][1]))
+        text += "Herzliche Grüße,\nTeam Space-Eye"
+        logger.debug("connecting to mail server")
+        try:
+            with mail.get_connection() as connection:
+                logger.debug("Sending departure mail")
+                try:
+                    mail.EmailMessage("Vorraussichtliche Abreisen", text, settings.EMAIL_HOST_USER, [address]).send()
+                    logger.debug("Success")
+                except Exception as e:
+                    logger.error("Sending failed with %s", str(e))
+        except Exception as e:
+            logger.error("Connecting to mail server failed with %s", str(e))
+        
+

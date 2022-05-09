@@ -276,7 +276,21 @@ class HotelStayTests(TestCase):
     def test_get_hotel_from_request(self):
         request = HousingRequest.objects.get(number=1)
         hotel = Hotel.objects.get(number=1)
-        self.assertEqual(get_hotel_from_request(request), day(0), hotel)
-        self.assertEqual(get_hotel_from_request(request), day(1), hotel)
+        self.assertEqual(get_hotel_from_request(request, day(0)), hotel)
+        for i in range(2,11):
+            request = HousingRequest.objects.get(number=i)
+            self.assertIsNone(get_hotel_from_request(request, day(0)))
+        
+        for j in range(2,3):
+            for i in range(1,4):
+                request = HousingRequest.objects.get(number=i)
+                self.assertEqual(get_hotel_from_request(request, day(j)), hotel)
+        
+        hotel = Hotel.objects.get(number=2)
+        request = HousingRequest.objects.get(number=1)
+        self.assertEqual(get_hotel_from_request(request, day(3)), hotel)
+        
+
+        
 
         

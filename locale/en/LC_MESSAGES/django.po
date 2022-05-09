@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 23:55+0200\n"
-"PO-Revision-Date: 2022-05-03 23:57+0200\n"
+"POT-Creation-Date: 2022-05-09 15:21+0200\n"
+"PO-Revision-Date: 2022-05-09 15:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -95,18 +95,22 @@ msgid "falls verlangt, Monatsmiete warm"
 msgstr "if requested, monthly gross rent"
 
 #: serd/forms.py:37
-msgid "Weiterer Kommentar (max. 250 Zeichen)"
-msgstr "Additional comment (max 250 characters)"
+msgid "Weiterer Kommentar (max. 500 Zeichen)"
+msgstr "Additional comment (max 500 characters)"
 
-#: serd/forms.py:68
+#: serd/forms.py:65
+msgid "Maximal 500 Zeichen (aktuell: {})"
+msgstr "At most 500 characters (currently: {})"
+
+#: serd/forms.py:79
 msgid "Mindestens eine erwachsene Person"
 msgstr "At least one adult person"
 
-#: serd/forms.py:76
+#: serd/forms.py:87
 msgid "Ende der Verfügbarkeit muss später als der Beginn sein"
 msgstr "The end of the availability, has to be later than the beginning of it"
 
-#: serd/forms.py:81
+#: serd/forms.py:92
 msgid ""
 "Eigene Wohnsituation muss angegeben werden, wenn die Unterbringung nicht in "
 "einer getrennten Wohnung erfolgt"
@@ -114,7 +118,7 @@ msgstr ""
 "The own living situation must be declared, if the accommodation doesn´t take "
 "place in a seperated flat"
 
-#: serd/forms.py:86
+#: serd/forms.py:97
 msgid ""
 "Bitte bestätigen Sie, dass die Unterkunft kostenfrei überlassen wird, oder "
 "geben Sie die Miethöhe an"
@@ -122,59 +126,59 @@ msgstr ""
 "Please confirm that the accommodation is without charges, or state the "
 "amount of rent for it"
 
-#: serd/forms.py:91
+#: serd/forms.py:102
 msgid "Bei kostenfreier Unterkunft ist keine Mietangabe möglich"
 msgstr ""
 "If the Accommodation is free of charge, there is no declaration of the "
 "amount of rent possible"
 
-#: serd/forms.py:113 serd/forms.py:195 serd/forms.py:219
+#: serd/forms.py:124 serd/forms.py:210 serd/forms.py:234
 msgid "Interner Kommentar"
 msgstr "Internal comment"
 
-#: serd/forms.py:127
+#: serd/forms.py:142
 msgid "Ankunftstag"
 msgstr "Day of arrival"
 
-#: serd/forms.py:128
+#: serd/forms.py:143
 msgid "Bitte beschreiben Sie Ihre Gruppe kurz (Alter, Geschlecht, ...)"
 msgstr "Please describe your group briefly (age, gender,…)"
 
-#: serd/forms.py:158
+#: serd/forms.py:173
 msgid "Ungültige Auswahl: 'Keine' schließt die anderen Wahlmöglichkeiten aus."
 msgstr "Invalid choice: 'None' excludes other choice possibilities ."
 
-#: serd/forms.py:163
+#: serd/forms.py:178
 msgid "Auswahl 'Keine' bei Haustier widerspricht Anzahl ungleich 0"
 msgstr "Selection 'None' on pet contradicts a quantity unequal to zero"
 
-#: serd/forms.py:169
+#: serd/forms.py:184
 msgid "Wenn keine Haustiere vorhanden sind, muss 'Keine' ausgewählt werden."
 msgstr "If there are no pets, 'none' must be selected."
 
-#: serd/forms.py:174
+#: serd/forms.py:189
 msgid "Mehr Tierarten ausgewählt als Tiere vorhanden"
 msgstr "More animal species selected than available"
 
-#: serd/mail.py:10
+#: serd/mail.py:12
 msgid "Ja"
 msgstr "Yes"
 
-#: serd/mail.py:12
+#: serd/mail.py:14
 msgid "Nein"
 msgstr "No"
 
-#: serd/mail.py:14
+#: serd/mail.py:16
 #, python-brace-format
 msgid "Wohnungsgesuch mit der Nummer {id} erfolgreich eingetragen"
 msgstr "Accommodation request with the number {id} successfully entered"
 
-#: serd/mail.py:15
+#: serd/mail.py:17
 #, python-brace-format
 msgid "Wohnungsangebot mit der Nummer {id} erfolgreich eingetragen"
 msgstr "Accommodation offering with the number {id} successfully entered"
 
-#: serd/mail.py:16
+#: serd/mail.py:18
 #, python-brace-format
 msgid ""
 "Guten Tag,\n"
@@ -192,7 +196,7 @@ msgstr ""
 "If there are any changes, please let us know under 'kontakt@space-eye.org'\n"
 "and specify the number {id}.\n"
 
-#: serd/mail.py:22
+#: serd/mail.py:24
 #, python-brace-format
 msgid ""
 "Guten Tag,\n"
@@ -210,7 +214,7 @@ msgstr ""
 "If there are any changes, please let us know under 'kontakt@space-eye.org'\n"
 "and specify the number {id}.\n"
 
-#: serd/mail.py:30
+#: serd/mail.py:32
 #, python-brace-format
 msgid ""
 "Vorname:\t{given_name}\n"
@@ -223,12 +227,12 @@ msgstr ""
 "Postal Code: {plz}\n"
 "City: {city}\n"
 
-#: serd/mail.py:36
+#: serd/mail.py:38
 #, python-brace-format
 msgid "Straße:\t{street}"
 msgstr "Street: \t{street}"
 
-#: serd/mail.py:37
+#: serd/mail.py:39
 #, python-brace-format
 msgid ""
 "Telefon:\t{phone}\n"
@@ -245,12 +249,12 @@ msgstr ""
 "Thereof children: {children_number}\n"
 "Free accommodation: {for_free}\n"
 
-#: serd/mail.py:47
+#: serd/mail.py:49
 #, python-brace-format
 msgid "Miete:\t{cost}\n"
 msgstr "Rent: {cost}\n"
 
-#: serd/mail.py:48
+#: serd/mail.py:50
 #, python-brace-format
 msgid ""
 "Spontan Verfügbar:\t{spontan}\n"
@@ -261,12 +265,12 @@ msgstr ""
 "Available from: {available_from}\n"
 "Temporarily available only: {limited_availability}\n"
 
-#: serd/mail.py:54
+#: serd/mail.py:56
 #, python-brace-format
 msgid "Verfügbar bis:\t{available_until}\n"
 msgstr "Available until: {available_until}\n"
 
-#: serd/mail.py:55
+#: serd/mail.py:57
 #, python-brace-format
 msgid ""
 "Mit ÖPNV erreichbar:\t{public_transport}\n"
@@ -277,12 +281,12 @@ msgstr ""
 "Number of rooms:\t {rooms}\n"
 "Independent apartment:\t {seperate_appartment}\n"
 
-#: serd/mail.py:60
+#: serd/mail.py:62
 #, python-brace-format
 msgid "Meine Wohnsituation:\t{living_with}\n"
 msgstr "Living situation:\t {living_with}\n"
 
-#: serd/mail.py:61
+#: serd/mail.py:63
 #, python-brace-format
 msgid ""
 "Erlaubte Haustiere:\t{pets}\n"
@@ -291,7 +295,7 @@ msgstr ""
 "allowed pets:\t{pets}\n"
 "comment:\t{comment}"
 
-#: serd/mail.py:66
+#: serd/mail.py:68
 #, python-brace-format
 msgid ""
 "Vorname:\t{given_name}\n"
@@ -312,7 +316,7 @@ msgstr ""
 "Group divisible:\t {split}\n"
 "Current accommodation:\t {current_housing}\n"
 
-#: serd/mail.py:78
+#: serd/mail.py:80
 #, python-brace-format
 msgid ""
 "Stellvertreter:in :\t{representative}\n"
@@ -323,7 +327,7 @@ msgstr ""
 "Representative  phone:\t{repr_phone}\n"
 "Stellvertreter:in E-Mail:\t{repr_mail}\n"
 
-#: serd/mail.py:83
+#: serd/mail.py:85
 #, python-brace-format
 msgid ""
 "Ankunftsdatum:\t{arrival_date}\n"
