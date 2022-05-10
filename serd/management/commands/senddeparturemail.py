@@ -26,7 +26,6 @@ class Command(BaseCommand):
         rooms = [stay.room for stay in departing_today]
         persons = get_persons(departing_today)
         data_today = (persons, rooms)
-        print(data_today)
         persons = get_persons(stays) + get_persons(departing_today)
         days = get_departure_dates(hotel)
         if days:

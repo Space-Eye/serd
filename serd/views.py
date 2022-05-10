@@ -17,7 +17,6 @@ from .create_invoice import create_ods
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        print("callled")
         if not self.request.user.is_authenticated:
             return Offer.objects.none()
         qs = Offer.objects.all()
@@ -348,7 +347,7 @@ def statistics(request):
     persons_placed = count_persons(placed_requests)
     requests_placed = placed_requests.count()
     requests_stale = stale_requests.count()
-    persons_stale = count_persons(persons_stale)
+    persons_stale = count_persons(stale_requests)
     all_requests = HousingRequest.objects.all()
     requests_all =  all_requests.count()
     persons_all = count_persons(all_requests)
