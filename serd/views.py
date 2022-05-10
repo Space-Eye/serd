@@ -357,6 +357,7 @@ def statistics(request):
     city_offers = Offer.objects.filter(by_municipality=True)
     offers_city = city_offers.count()
     offers_city_quasi_placed = city_offers.filter(Q(state='arrived')|Q(state='request_contact')).count()
+    offers_available = Offer.objects.filter(Q(state='new')| Q(state='contacted')).count()
     context = {}
     context['persons_placed'] = persons_placed
     context['requests_placed'] = requests_placed
@@ -368,6 +369,7 @@ def statistics(request):
     context['persons_quasi'] = persons_placed + persons_contact
     context['offers_city'] = offers_city
     context['city_quasi_placed'] = offers_city_quasi_placed
+    context['offers_available'] = offers_available
     return render(request, 'serd/statistics.html', context)
 
 @login_required
