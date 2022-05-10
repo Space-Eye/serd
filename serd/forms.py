@@ -277,7 +277,6 @@ class BaseStaySet(BaseModelFormSet):
             departure = form.cleaned_data.get('departure_date')
             if not departure:
                 departure = date.max
-                print(date.max)
             if any(overlaps((arrival, departure), interval) for interval in intervals):
                 form.add_error('arrival_date', ValidationError("Ankunft darf nicht vor vorhergehender Abreise liegen"))
             intervals.append((arrival, departure))

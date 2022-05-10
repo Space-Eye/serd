@@ -17,7 +17,6 @@ from .create_invoice import create_ods
 
 class OfferAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        print("callled")
         if not self.request.user.is_authenticated:
             return Offer.objects.none()
         qs = Offer.objects.all()
