@@ -134,10 +134,7 @@
 </div>
 
 <div class="d-flex flex-row">
-    <div class="m-3">
-        {% url 'request_filter' as request_filter_url %}
-        {% bootstrap_button "Filter" button_type="link" href=request_filter_url button_class="btn-primary" %}
-    </div>
+
     <div class="m-3">
         {% url 'logout' as logout_url%}
         {% bootstrap_button "Log out" button_type="link" href=logout_url button_class="btn-danger" %}

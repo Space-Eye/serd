@@ -1,3 +1,4 @@
+from django.db.models import Max
 from django.urls import reverse
 from serd.choices import PETS
 from serd.utils.db import count_persons, get_departing_stays, get_hotel_from_request, get_persons, get_requests, get_stays
@@ -358,6 +359,15 @@ def statistics(request):
     offers_city = city_offers.count()
     offers_city_quasi_placed = city_offers.filter(Q(state='arrived')|Q(state='request_contact')).count()
     offers_available = Offer.objects.filter(Q(state='new')| Q(state='contacted')).count()
+    offers_all = Offer.objects.all().aggregate((Max('number')))['number__max']
+    hotels = Hotel.objects.all()
+    persons_hotel = 0
+    for hotel in hotels:
+        stays = get_stays(hotel, datetime.today())
+        persons_hotel += get_persons(stays)
+
+        
+
     context = {}
     context['persons_placed'] = persons_placed
     context['requests_placed'] = requests_placed
@@ -370,6 +380,8 @@ def statistics(request):
     context['offers_city'] = offers_city
     context['city_quasi_placed'] = offers_city_quasi_placed
     context['offers_available'] = offers_available
+    context['offers_all'] = offers_all
+    context['persons_hotel'] = persons_hotel
     return render(request, 'serd/statistics.html', context)
 
 @login_required
