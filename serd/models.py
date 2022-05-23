@@ -1,12 +1,51 @@
-from pyexpat import model
 from django.conf import settings
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
-from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_STATE
+from django.contrib.auth import get_user_model
+
+from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, OFFER_SORT, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
 from .validators import validate_not_empty, validate_plz, validate_phone, validate_not_negative
 
+
+
+User = get_user_model()
+
+
+class RequestFilter(models.Model):
+    num_min = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Personen von")
+    num_max = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Personen bis")
+    split = models.BooleanField(null=True, verbose_name="Teilbar")
+    current_housing = models.BooleanField(null=True, verbose_name="Aktuelle Unterbringung")
+    pets = MultiSelectField(choices=PETS, null=True, blank=True,  verbose_name="Haustiere")
+    languages = MultiSelectField(choices=LANGUAGE_CHOICE, null=True, blank=True, verbose_name="Sprachen")
+    accessability_needs = models.BooleanField(null=True,  verbose_name="Barrierefrei")
+    priority = MultiSelectField(choices=PRIORITY_CHOICE, null=True, blank=True, verbose_name="Priorität")
+    state = MultiSelectField(choices=REQUEST_STATE, null=True, blank=True, verbose_name="Status")
+    no_handler = models.BooleanField(null=True, verbose_name="Kein Sachbearbeiter")
+    case_handler = models.ForeignKey(to=User, on_delete=models.SET_NULL,  null=True, blank=True)
+    sort = models.CharField(choices=REQUEST_SORT, default='number', verbose_name='Sortierung', max_length=64)
+    sort_direction = models.CharField(choices=SORT_DIRECTION, default='asc', verbose_name='Auf/Absteigend', max_length=64)
+
+
+class OfferFilter(models.Model):
+    num_min = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Personen von")
+    num_max = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Personen bis")
+    PLZ = models.CharField(max_length=5, blank=True, verbose_name='PLZ')
+    city = models.CharField(max_length=128, blank=True, verbose_name='Ort')
+    cost_min = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='Kosten von')
+    cost_max = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='Kosten bis')
+    language = MultiSelectField(choices=LANGUAGE_CHOICE, blank=True, verbose_name="Sprachen")
+    spontan = models.BooleanField(null=True,  verbose_name='Spontan')
+    limited = models.BooleanField(null=True, verbose_name='Begrenzt verfügbar')
+    appartment = models.BooleanField(null=True, verbose_name='Eigene Wohnung')
+    pets = MultiSelectField(choices=PETS, null=True, blank=True, verbose_name='Haustiere')
+    accessability = models.BooleanField(null=True, verbose_name="Barrierefrei")
+    state = MultiSelectField(choices=OFFER_STATE, verbose_name='Status', null=True, blank=True)
+    for_free = models.BooleanField(null=True, verbose_name='Gratis')
+    sort = models.CharField(choices=OFFER_SORT, default='number', verbose_name='Sortierung', max_length=64)
+    sort_direction = models.CharField(choices=SORT_DIRECTION, default='asc', verbose_name='Auf/Absteigend', max_length=64)
 
 class Profile(models.Model):
     number = models.AutoField(primary_key=True)
@@ -20,6 +59,8 @@ class Profile(models.Model):
     signal = models.BooleanField(verbose_name="Signal")
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name="Sprachkenntnisse", null=True, blank=True)
     comment = models.CharField(max_length=128, verbose_name="Kommentar", blank=True)
+    request_filter = models.OneToOneField(to=RequestFilter, null=True, on_delete=models.SET_NULL)
+    offer_filter = models.OneToOneField(to=OfferFilter, null=True, on_delete=models.SET_NULL)
     def __str__(self) -> str:
         return self.account.username
 

@@ -1,10 +1,10 @@
-from dal import autocomplete
+from dal import autocomplete    
 from django import forms
 from slugify import slugify
 from datetime import date
 from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
-from .models import Hotel, HousingRequest, Offer, Profile, HotelStay
+from .models import Hotel, HousingRequest, Offer, OfferFilter, Profile, HotelStay, RequestFilter
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -284,38 +284,17 @@ class BaseStaySet(BaseModelFormSet):
 StaySet = modelformset_factory(HotelStay, HotelStayForm, formset=BaseStaySet)
 
 BOOL_CHOICES = (('null', 'Egal'), ('True','Ja'),('False', 'Nein'))
-class RequestFilterForm(forms.Form):
-    num_min = forms.IntegerField(min_value=0,required=False, label="Personen von")
-    num_max = forms.IntegerField(min_value=0, required=False, label="Personen bis")
-    split = forms.ChoiceField(choices=BOOL_CHOICES, label="Teilbar")
-    current_housing = forms.MultipleChoiceField(choices=CURRENT_ACCOMODATION, label="Aktuelle Unterbringung", required=False, widget=forms.CheckboxSelectMultiple)
-    pets = forms.MultipleChoiceField(choices=PETS, required=False, widget=forms.CheckboxSelectMultiple, label="Haustiere")
-    languages = forms.MultipleChoiceField(choices=LANGUAGE_CHOICE, required=False, widget=forms.CheckboxSelectMultiple, label="Sprachen")
-    accessability_needs = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
-    priority = forms.MultipleChoiceField(choices=PRIORITY_CHOICE, required=False, label="Priorität", widget=forms.CheckboxSelectMultiple)
-    state = forms.MultipleChoiceField(choices=REQUEST_STATE, required=False, label="Status", widget=forms.CheckboxSelectMultiple)
-    no_handler = forms.BooleanField(label="Kein Sachbearbeiter", required=False)
-    case_handler = forms.ModelChoiceField(queryset=User.objects.order_by('username'), required=False)
-    sort = forms.ChoiceField(choices=REQUEST_SORT, initial='number', label='Sortierung')
-    sort_direction = forms.ChoiceField(choices=SORT_DIRECTION, initial='asc', label='Auf/Absteigend')
 
-class OfferFilterForm(forms.Form):
-    num_min = forms.IntegerField(min_value=0,required=False, label="Personen von")
-    num_max = forms.IntegerField(min_value=0, required=False, label="Personen bis")
-    PLZ = forms.CharField(max_length=5, required=False, label='PLZ')
-    city = forms.CharField(max_length=128, required=False, label='Ort')
-    cost_min = forms.IntegerField(min_value=0, required=False, label='Kosten von')
-    cost_max = forms.IntegerField(min_value=0, required=False, label='Kosten bis')
-    language = forms.MultipleChoiceField(choices=LANGUAGE_CHOICE, required=False, label="Sprachen", widget=forms.CheckboxSelectMultiple)
-    spontan = forms.ChoiceField(choices=BOOL_CHOICES, label='Spontan')
-    limited = forms.ChoiceField(choices=BOOL_CHOICES, label='Begrenzt verfügbar')
-    appartment = forms.ChoiceField(choices=BOOL_CHOICES, label='Eigene Wohnung')
-    pets = forms.MultipleChoiceField(choices=PETS, required=False, label='Haustiere', widget=forms.CheckboxSelectMultiple)
-    accessability = forms.ChoiceField(choices=BOOL_CHOICES, label="Barrierefrei")
-    state = forms.MultipleChoiceField(choices=OFFER_STATE, label='Status', widget=forms.CheckboxSelectMultiple, required=False)
-    for_free = forms.ChoiceField(choices=BOOL_CHOICES, label='Gratis')
-    sort = forms.ChoiceField(choices=OFFER_SORT, initial='number', label='Sortierung')
-    sort_direction = forms.ChoiceField(choices=SORT_DIRECTION, initial='asc', label='Auf/Absteigend')
+
+class OfferFilterForm(forms.ModelForm):
+    class Meta:
+        exclude = []
+        model = OfferFilter
+    
+class RequestFilterForm(forms.ModelForm):
+    class Meta:
+        exclude = []
+        model = RequestFilter
 
 class ProfileForm(forms.ModelForm):
     

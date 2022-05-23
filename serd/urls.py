@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
 from .views import (AddOffer, AddRequest, OfferUpdate, offer_list, request_list, request_update,  index, SuccessOffer,
-                    SuccessRequest, RequestFilter, OfferFilter, hotel_list, OfferAutocomplete, statistics, 
+                    SuccessRequest, UpdateRequestFilter, UpdateOfferFilter, hotel_list, OfferAutocomplete, statistics, 
                     InternalAddOffer, internal_add_housingrequest, profile_view, profile_list, UpdateProfile, invoice_view, hotel_add_housingrequest )
 from django.conf import settings
 from django.contrib.auth import views as auth_views
@@ -34,8 +34,8 @@ urlpatterns = [
     path('offers/', offer_list, name='offers'),
     path('offers/edit/<offer_id>', login_required(OfferUpdate.as_view())),
     path('requests/edit/<request_id>', request_update),
-    path('request_filter', login_required(RequestFilter.as_view()), name="request_filter"),
-    path('offer_filter', login_required(OfferFilter.as_view()), name="offer_filter"),
+    path('request_filter', login_required(UpdateRequestFilter.as_view()), name="request_filter"),
+    path('offer_filter', login_required(UpdateOfferFilter.as_view()), name="offer_filter"),
     path('',index, name='index'),
     path('hotels/', hotel_list, name='hotels'),
     path('i18n/', include('django.conf.urls.i18n')),

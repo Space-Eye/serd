@@ -3,7 +3,7 @@ from django.urls import reverse
 from serd.choices import PETS
 from serd.utils.db import count_persons, get_departing_stays, get_hotel_from_request, get_persons, get_requests, get_stays
 from django.db.models import Q
-from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile
+from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile, RequestFilter, OfferFilter
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
@@ -12,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 from datetime import date, datetime
 from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
 from dal import autocomplete
-
 from .create_invoice import create_ods
 
 
@@ -104,25 +103,150 @@ class InternalAddOffer(CreateView):
 
 @login_required
 def request_list(request):
-    if request.COOKIES.get('housingrequests'):
-        numbers = [int(number) for number in request.COOKIES['housingrequests'].split()]
-        requests = HousingRequest.objects.filter(number__in=numbers)
-    else:
-        requests = HousingRequest.objects.all()
-    for hr in requests:
-                hr.hotel = get_hotel_from_request(hr, datetime.today())
+    queryset = HousingRequest.objects.all()
+    profile  =  Profile.objects.get(account__id=request.user.id)
+    if not profile.request_filter:
+        profile.request_filter = RequestFilter()
+        profile.request_filter.save()
+        profile.save()
+    request_filter: RequestFilter = profile.request_filter
 
+
+    num_min = request_filter.num_min
+    if num_min:
+        queryset = queryset.filter(persons__gte=num_min)
+    num_max = request_filter.num_max
+    if num_max:
+        queryset = queryset.filter(persons__lte=num_max)
+    split = request_filter.split
+    if split is not None:
+        queryset = queryset.filter(split__exact=split)
+    housing = request_filter.current_housing
+    if housing:
+        q = Q()
+        for acc in housing:
+            q = q |Q(current_housing__exact=acc)
+        queryset = queryset.filter(q)
+    pets = request_filter.pets
+    if pets:
+        q = Q()
+        for choice in PETS:
+            if choice[0] in pets:
+                q = q & Q(pets__contains=choice[0])
+            else:
+                q = q & ~Q(pets__contains=choice[0])
+        queryset = queryset.filter(q)
+    languages = request_filter.languages
+    if languages:
+        q = Q()
+        for lang in languages:
+            q = q | Q(languages__contains=lang)
+        queryset = queryset.filter(q)
+    accessability = request_filter.accessability_needs
+    if accessability is not None:
+        queryset = queryset.filter(accessability_needs__exact=accessability)
+    priority = request_filter.priority
+    if priority:
+        q = Q()
+        for prio in priority:
+            q = q | Q(priority__contains=prio)
+        queryset = queryset.filter(q)
+    
+    state = request_filter.state
+    if state:
+        q = Q()
+        for stat in state:
+            q = q | Q(state=stat)
+        queryset = queryset.filter(q)
+    no_handler = request_filter.no_handler
+    if no_handler:
+        queryset = queryset.filter(case_handler__isnull=True)
+    handler = request_filter.case_handler
+    if handler:
+        queryset = queryset.filter(case_handler=handler)
+    sort = request_filter.sort
+    direction = '' if  request_filter.sort_direction == 'asc' else '-'
+    
+    requests = queryset.order_by(direction+sort)
+    for hr in requests:
+        stay = HotelStay.objects.filter(request=hr, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
+        if stay:
+            hr.hotel = stay.hotel
     context = {}
-    context["dataset"] = requests
+    context['dataset'] = requests
+
+
     return render(request, "serd/request_list.html", context)
 
 @login_required
 def offer_list(request):
-    if request.COOKIES.get('offers'):
-        numbers = [int(number) for number in request.COOKIES['offers'].split()]
-        offers = Offer.objects.filter(number__in=numbers)
-    else:
-        offers = Offer.objects.all()
+
+    offers = Offer.objects.all()
+    profile = Profile.objects.get(account__id=request.user.id)
+    if not profile.offer_filter:
+        profile.offer_filter = OfferFilter()
+        profile.offer_filter.save()
+        profile.save()
+    offer_filter: OfferFilter = profile.offer_filter
+
+    queryset = Offer.objects.all()
+    num_min = offer_filter.num_min
+    if num_min:
+        queryset = queryset.filter(total_number__gte=num_min)
+    num_max = offer_filter.num_max
+    if num_max:
+        queryset = queryset.filter(total_number__lte=num_max)
+
+    plz = offer_filter.PLZ
+    if plz:
+        queryset = queryset.filter(plz__startswith=plz)
+    city = offer_filter.city
+    if city:
+        queryset = queryset.filter(city__icontains=city)
+    cost_min = offer_filter.cost_min
+    if cost_min:
+        queryset = queryset.filter(cost__gte=cost_min)
+    cost_max = offer_filter.cost_max
+    if cost_max is not None:
+        queryset = queryset.filter(cost__lte=cost_max)
+    language = offer_filter.language
+    if language:
+        q = Q()
+        for lang in language:
+            q = q | Q(language__contains=lang)
+        queryset = queryset.filter(q)
+    spontan = offer_filter.spontan
+    if spontan is not None:
+        queryset = queryset.filter(spontan__exact=spontan)
+    limited = offer_filter.limited
+    if limited is not None:
+        queryset = queryset.filter(limited_availability__exact=limited)
+    appartment = offer_filter.appartment
+    if appartment is not None:
+        queryset = queryset.filter(seperate_appartment__exact=appartment)
+    pets = offer_filter.pets
+    if pets:
+        q = Q()
+        for pet in pets:
+            q = q & Q(pets__contains=pet)
+        queryset = queryset.filter(q)
+    accessability = offer_filter.accessability
+    if accessability is not None:
+        queryset = queryset.filter(accessability__exact=accessability)
+    state = offer_filter.state
+    if state:
+        q = Q()
+        for stat in state:
+            q = q | Q(state=stat)
+        queryset = queryset.filter(q)
+    for_free = offer_filter.for_free
+    if for_free  is not None:
+        queryset = queryset.filter(for_free__exact=for_free)
+    
+    sort = offer_filter.sort
+    direction = '' if  offer_filter.sort_direction == 'asc' else '-'
+
+    offers = queryset.order_by(direction+sort)
     context = {}
     context["dataset"] = offers
     return render(request, "serd/offer_list.html", context)
@@ -185,161 +309,36 @@ class SuccessOffer(TemplateView):
 class SuccessRequest(TemplateView):
     template_name = "serd/success_request.html"
   
-class RequestFilter(FormView):
+class UpdateRequestFilter(UpdateView):
     template_name = "serd/request_filter.html"
     form_class = RequestFilterForm
+    model = RequestFilter
+    success_url = "requests/"
+    def get_object(self, queryst=None):
+        profile  =  Profile.objects.get(account__id=self.request.user.id)
+        if not  profile.request_filter:
+            profile.request_filter = RequestFilter()
+            profile.request_filter.save()
+            profile.save()
+        return profile.request_filter
 
-    def form_valid(self, form) -> HttpResponse:
-        queryset = HousingRequest.objects.all()
-        num_min = form.cleaned_data['num_min']
-        if num_min:
-            queryset = queryset.filter(persons__gte=num_min)
-        num_max = form.cleaned_data['num_max']
-        if num_max:
-            queryset = queryset.filter(persons__lte=num_max)
-        split = form.cleaned_data['split']
-        if split != 'null':
-            queryset = queryset.filter(split__exact=split)
-        housing = form.cleaned_data['current_housing']
-        if housing:
-            q = Q()
-            for acc in housing:
-                q = q |Q(current_housing__exact=acc)
-            queryset = queryset.filter(q)
-        pets = form.cleaned_data['pets']
-        if pets:
-            q = Q()
-            for choice in PETS:
-                if choice[0] in pets:
-                    q = q & Q(pets__contains=choice[0])
-                else:
-                    q = q & ~Q(pets__contains=choice[0])
-            queryset = queryset.filter(q)
-        languages = form.cleaned_data['languages']
-        if languages:
-            q = Q()
-            for lang in languages:
-                q = q | Q(languages__contains=lang)
-            queryset = queryset.filter(q)
-        accessability = form.cleaned_data['accessability_needs']
-        if accessability != 'null':
-            queryset = queryset.filter(accessability_needs__exact=accessability)
-        priority = form.cleaned_data['priority']
-        if priority:
-            q = Q()
-            for prio in priority:
-                q = q | Q(priority__contains=prio)
-            queryset = queryset.filter(q)
+
         
-        state = form.cleaned_data['state']
-        if state:
-            q = Q()
-            for stat in state:
-                q = q | Q(state=stat)
-            queryset = queryset.filter(q)
-        no_handler = form.cleaned_data['no_handler']
-        if no_handler:
-            queryset = queryset.filter(case_handler__isnull=True)
-        handler = form.cleaned_data['case_handler']
-        if handler:
-            queryset = queryset.filter(case_handler=handler)
-
-        sort = form.cleaned_data['sort']
-        direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
-        
-        requests = queryset.order_by(direction+sort)
-        for request in requests:
-            stay = HotelStay.objects.filter(request=request, arrival_date__lte=date.today()).filter(Q(departure_date__isnull=True)| Q(departure_date__gte=date.today())).first()
-            if stay:
-                request.hotel = stay.hotel
-        context = {}
-        context['dataset'] = requests
-        response = render(self.request, 'serd/request_list.html', context)
-        if requests.count() == HousingRequest.objects.all().count():
-            response.delete_cookie('housingrequests')
-        else:
-            numbers = ""
-            for request in requests:
-                numbers = numbers + str(request.number)+" "
-            response.set_cookie('housingrequests',numbers)
-        return response
-
-class OfferFilter(FormView):
+class UpdateOfferFilter(UpdateView):
     template_name = "serd/offer_filter.html"
     form_class = OfferFilterForm
-    
-    def form_valid(self, form) -> HttpResponse:
-        queryset = Offer.objects.all()
-        data = form.cleaned_data
-        num_min = data['num_min']
-        if num_min:
-            queryset = queryset.filter(total_number__gte=num_min)
-        num_max = data['num_max']
-        if num_max:
-            queryset = queryset.filter(total_number__lte=num_max)
-
-        plz = data['PLZ']
-        if plz:
-            queryset = queryset.filter(plz__startswith=plz)
-        city = data['city']
-        if city:
-            queryset = queryset.filter(city__icontains=city)
-        cost_min = data['cost_min']
-        if cost_min:
-            queryset = queryset.filter(cost__gte=cost_min)
-        cost_max = data['cost_max']
-        if cost_max is not None:
-            queryset = queryset.filter(cost__lte=cost_max)
-        language = data['language']
-        if language:
-            q = Q()
-            for lang in language:
-                q = q | Q(language__contains=lang)
-            queryset = queryset.filter(q)
-        spontan = data['spontan']
-        if spontan != 'null':
-            queryset = queryset.filter(spontan__exact=spontan)
-        limited = data['limited']
-        if limited != 'null':
-            queryset = queryset.filter(limited_availability__exact=limited)
-        appartment = data['appartment']
-        if appartment != 'null':
-            queryset = queryset.filter(seperate_appartment__exact=appartment)
-        pets = data['pets']
-        if pets:
-            q = Q()
-            for pet in pets:
-                q = q & Q(pets__contains=pet)
-            queryset = queryset.filter(q)
-        accessability = data['accessability']
-        if accessability != 'null':
-            queryset = queryset.filter(accessability__exact=accessability)
-        state = data['state']
-        if state:
-            q = Q()
-            for stat in state:
-                q = q | Q(state=stat)
-            queryset = queryset.filter(q)
-        for_free = data['for_free']
-        if for_free != 'null':
-            queryset = queryset.filter(for_free__exact=for_free)
-        
-        sort = form.cleaned_data['sort']
-        direction = '' if  form.cleaned_data['sort_direction'] == 'asc' else '-'
-
-        context = {}
-        offers = queryset.order_by(direction+sort)
-        context['dataset'] = offers
-        response = render(self.request, 'serd/offer_list.html', context)
-        if offers.count() == Offer.objects.all().count():
-            response.delete_cookie('offers')
-        else:
-            numbers = ""
-            for offer in offers:
-                numbers = numbers + str(offer.number)+" "
-            response.set_cookie('offers',numbers)
-        return render(None,'serd/offer_list.html', context)
-
+    model = OfferFilter
+    success_url = "offers/"
+    def get_object(self, queryst=None):
+        print("called")
+        profile  =  Profile.objects.get(account__id=self.request.user.id)
+        print(profile.offer_filter)
+        if not  profile.offer_filter:
+            profile.offer_filter = OfferFilter()
+            profile.offer_filter.save()
+            profile.save()
+            print("returning")
+        return profile.offer_filter
 
 @login_required
 def statistics(request):
