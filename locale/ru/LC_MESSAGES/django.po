@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-09 15:21+0200\n"
+"POT-Creation-Date: 2022-05-29 22:41+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: serd/choices.py:12
 msgid "Deutsch"
@@ -346,194 +346,198 @@ msgstr ""
 "Необходимость жилья для людей на инвалидной коляске: "
 "\t{accessability_needs}\n"
 
-#: serd/models.py:39 serd/models.py:79
+#: serd/models.py:80 serd/models.py:121
 msgid "Nachname"
 msgstr "Фамилия"
 
-#: serd/models.py:40 serd/models.py:80
+#: serd/models.py:81 serd/models.py:122
 msgid "Vorname"
 msgstr "Имя"
 
-#: serd/models.py:42 serd/models.py:102
+#: serd/models.py:83 serd/models.py:144
 msgid "Telefonnummer"
 msgstr "Телефонный номер"
 
-#: serd/models.py:43 serd/models.py:86
+#: serd/models.py:84 serd/models.py:128
 msgid "E-Mail-Adresse"
 msgstr "Электронный адрес"
 
-#: serd/models.py:44
+#: serd/models.py:85
 msgid "Name einer stellvertretenden Person"
 msgstr "Имя представителя"
 
-#: serd/models.py:44
+#: serd/models.py:85
 msgid "falls zutreffend"
 msgstr "Если такой имеется"
 
-#: serd/models.py:45
+#: serd/models.py:86
 msgid "Telefonnummer der stellvertretenden Person"
 msgstr "Телефонный номер представителя"
 
-#: serd/models.py:46
+#: serd/models.py:87
 msgid "E-Mail-Adresse der stellvertretenden Person"
 msgstr "Электронный адрес представителя"
 
-#: serd/models.py:47
+#: serd/models.py:88
 msgid "Anzahl der Erwachsenen und Kindern ab 12 Jahren"
 msgstr "Количество взрослых и детей старше 12 лет"
 
-#: serd/models.py:48
+#: serd/models.py:89
 msgid "Anzahl der Kinder unter 12"
 msgstr "Количество детей до 12 лет"
 
-#: serd/models.py:50
+#: serd/models.py:91
 msgid "Ab fünf Personen: Gruppe darf geteilt werden"
 msgstr "От пяти человек: группу можно разделить"
 
-#: serd/models.py:50
+#: serd/models.py:91
 msgid "notfalls kann eine Unterbringung in zwei Unterkünften erfolgen"
 msgstr "При необходимости возможно размещение в двух раздельных помещениях"
 
-#: serd/models.py:51
+#: serd/models.py:92
 msgid "Wo sind Sie aktuell untergebracht?"
 msgstr "Где вы сейчас размещены?"
 
-#: serd/models.py:52
+#: serd/models.py:93
 msgid "Wann kommen Sie in Regensburg an oder seit wann sind Sie da?"
 msgstr "Когда вы прибываете в Регенсбург или как долго вы там уже находитесь?"
 
-#: serd/models.py:53
+#: serd/models.py:94
 msgid "Welche Haustiere haben Sie?"
 msgstr "Какие домашние животные у вас с собой?"
 
-#: serd/models.py:54
+#: serd/models.py:95
 msgid "Wie viele Haustiere haben Sie?"
 msgstr "Сколько домашних животных у вас с собой?"
 
-#: serd/models.py:55
+#: serd/models.py:96
 msgid "Haben Sie ein Auto?"
 msgstr "Есть ли у вас автомобиль?"
 
-#: serd/models.py:56
+#: serd/models.py:97
 msgid "Sprachkenntnisse"
 msgstr "Знание языков"
 
-#: serd/models.py:57 serd/models.py:88
+#: serd/models.py:98 serd/models.py:130
 msgid "Weitere Sprachen"
 msgstr "больше языков"
 
-#: serd/models.py:58
+#: serd/models.py:99
 msgid "Sind alle Personen in Ihrer Gruppe vollständig gegen COVID-19 geimpft?"
 msgstr "Все ли члены вашей группы полностью привиты против COVID-19?"
 
-#: serd/models.py:59
+#: serd/models.py:100
 msgid "Wird eine barrierefreie Wohnung benötigt?"
 msgstr "Есть ли необходимость в жилье для людей на инвалидной коляске?"
 
-#: serd/models.py:60
+#: serd/models.py:101
 msgid "Können Sie für Ihre Unterkunft zahlen?"
 msgstr "Вы можете оплачивать жилье самостоятельно?"
 
-#: serd/models.py:60
+#: serd/models.py:101
 msgid "Keine Voraussetzung für die Vermittlung einer privaten Notunterkunft"
 msgstr "Требования для поиска частного приюта не удовлетворены"
 
-#: serd/models.py:61
+#: serd/models.py:102
 msgid "Sachbearbeiter:in"
 msgstr "клерк по вашему делу"
 
-#: serd/models.py:62
+#: serd/models.py:103
 msgid "Priorität"
 msgstr "Приоритет"
 
-#: serd/models.py:63
+#: serd/models.py:104
 msgid "Vermitttelt an"
 msgstr "Квартира сдана в аренду"
 
-#: serd/models.py:64 serd/models.py:101
+#: serd/models.py:105 serd/models.py:143
 msgid "Status"
 msgstr "Статус"
 
-#: serd/models.py:68
+#: serd/models.py:109
 msgid "Raucht jemand aus Ihrer Gruppe?"
 msgstr "Кто-нибудь в вашей группе курит?"
 
-#: serd/models.py:81
+#: serd/models.py:110
+msgid "Welchen Beruf üben Sie aus?"
+msgstr "Ты кем работаешь?"
+
+#: serd/models.py:123
 msgid "Postleitzahl"
 msgstr "Почтовый ндекс"
 
-#: serd/models.py:82
+#: serd/models.py:124
 msgid ""
 "Anzahl der Personen, die in dieser Wohnung eine Unterkunft finden können."
 msgstr "Количество человек, которые могут разместиться в этой квартире."
 
-#: serd/models.py:83
+#: serd/models.py:125
 msgid ""
 "Anzahl der zuvor genannten Plätze, die nur für Kinder unter 12 geeignet sind."
 msgstr "Из них дети до 12 лет."
 
-#: serd/models.py:84
+#: serd/models.py:126
 msgid "Straße, Hausnummer (optional)"
 msgstr "Улица, номер дома (по желанию)"
 
-#: serd/models.py:85
+#: serd/models.py:127
 msgid "Ort"
 msgstr "Город"
 
-#: serd/models.py:87
+#: serd/models.py:129
 msgid "Welche Sprachen sprechen Sie?"
 msgstr "На каких языках вы говорите?"
 
-#: serd/models.py:89
+#: serd/models.py:131
 msgid ""
 "Ich stelle die Unterkunft mindestens vorübergehend kostenlos zur Verfügung."
 msgstr "Я предоставляю жилье бесплатно, как минимум временно."
 
-#: serd/models.py:91
+#: serd/models.py:133
 msgid "spontanes zur Verfügung stellen ist möglich"
 msgstr "Жилье может быть предоставлено спонтанно"
 
-#: serd/models.py:91
+#: serd/models.py:133
 msgid "innerhalb eines Tages"
 msgstr "в течение одного дня"
 
-#: serd/models.py:92
+#: serd/models.py:134
 msgid "Ab wann steht die Unterkunft zur Verfügung?"
 msgstr "Когда будет доступно жилье?"
 
-#: serd/models.py:93
+#: serd/models.py:135
 msgid "Die Unterkunft wird nur zeitlich begrenzt zur Verfügung gestellt."
 msgstr "Проживание будет доступно только в течение ограниченного времени."
 
-#: serd/models.py:95
+#: serd/models.py:137
 msgid "Ist die Unterkunft barrierefrei?"
 msgstr "Подходит ли жилье для людей на инвалидной коляске?"
 
-#: serd/models.py:96
+#: serd/models.py:138
 msgid "Ist die Unterkunft mit öffentlichen Verkehrsmitteln erreichbar? "
 msgstr "Доступен ли объект на общественном транспорте?"
 
-#: serd/models.py:97
+#: serd/models.py:139
 msgid "Anzahl der zur Verfügung gestellten Zimmer"
 msgstr "Количество предоставляемых комнат"
 
-#: serd/models.py:98
+#: serd/models.py:140
 msgid "Unterkunft erfolgt in einer separaten Wohnung."
 msgstr "Размещение происходит в отдельной квартире."
 
-#: serd/models.py:99
+#: serd/models.py:141
 msgid "Bei Unterbringung in der eigenen Wohnung: Ich wohne"
 msgstr "При размещении в собственной квартире: я живу"
 
-#: serd/models.py:100
+#: serd/models.py:142
 msgid "Folgende Haustiere sind erlaubt."
 msgstr "Разрешаются следующие домашние животные"
 
-#: serd/models.py:103
+#: serd/models.py:145
 msgid "E-mail"
 msgstr "Электронная почта"
 
-#: serd/models.py:107
+#: serd/models.py:149
 msgid "Eine COVID-19-Impfung ist zwingend notwendig."
 msgstr "Обязательное требование вакцинация против COVID-19."
 
