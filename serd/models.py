@@ -107,6 +107,7 @@ class  HousingRequest(models.Model):
     created_at = models.DateField(auto_now_add=True)
     possible_hosts = models.ManyToManyField(to='Offer', related_name="possible_guests", blank=True, verbose_name="Mögliche Gastgeber")
     smoker = models.BooleanField(verbose_name=_("Raucht jemand aus Ihrer Gruppe?"))
+    profession = models.CharField(verbose_name=_("Welchen Beruf üben Sie aus?"), max_length=64, null=True, blank=True)
     _persons = None
 
     objects = AnnotationManager(persons=models.F('adults')+models.F('children'))

@@ -33,7 +33,7 @@
     {% for hidden in form.hidden_fields %}
         {{ hidden }}
     {% endfor %}
-    {% for field in form.visible_fields|slice:":22" %}
+    {% for field in form.visible_fields|slice:":23" %}
     <div class="fieldWrapper form-group row m-1">
         {{ field.errors }}
         <label for="{{ field.id_for_label }}"  class="col-lg-4 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ field.help_text|safe }}">
@@ -67,7 +67,7 @@
         {% endfor %}
     </div>
     {%endfor%}
-    {% for field in form.visible_fields|slice:"22:" %}
+    {% for field in form.visible_fields|slice:"23:" %}
     <div class="fieldWrapper form-group row m-1">
         {{ field.errors }}
         <label for="{{ field.id_for_label }}"  class="col-lg-4 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ field.help_text|safe }}">

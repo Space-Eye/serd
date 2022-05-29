@@ -146,7 +146,7 @@ class RequestForm(forms.ModelForm):
         model = HousingRequest
         fields =('given_name', 'last_name', 'phone', 'mail', 'adults', 'children', 'who',
         'split', 'current_housing', 'can_pay', 'representative', 'repr_mail', 'repr_phone', 'arrival_date', 
-        'pets', 'pet_number', 'car', 'languages', 'additional_languages', 'vaccination', 'smoker', 'accessability_needs')
+        'pets', 'pet_number', 'car', 'languages', 'additional_languages', 'vaccination', 'smoker', 'accessability_needs', 'profession')
     def clean_given_name(self):
         return self.test_required('given_name')
     def clean_last_name(self):
