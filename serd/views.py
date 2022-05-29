@@ -411,7 +411,6 @@ def invoice_view(request):
         form = InvoiceSelectionForm()
         return render(request, 'serd/invoice_select.html', {'form': form} )
     elif request.method == 'POST':
-        context = {}
        
         form = InvoiceSelectionForm(request.POST)
         if form.is_valid():
