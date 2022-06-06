@@ -17,7 +17,7 @@ class RequestFilter(models.Model):
     num_min = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Personen von")
     num_max = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Personen bis")
     split = models.BooleanField(null=True, verbose_name="Teilbar")
-    current_housing = models.BooleanField(null=True, verbose_name="Aktuelle Unterbringung")
+    current_housing = models.CharField(blank=True, choices=CURRENT_ACCOMODATION, verbose_name="Aktuelle Unterbringung", max_length=64)
     pets = MultiSelectField(choices=PETS, null=True, blank=True,  verbose_name="Haustiere")
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, null=True, blank=True, verbose_name="Sprachen")
     accessability_needs = models.BooleanField(null=True,  verbose_name="Barrierefrei")
@@ -59,8 +59,8 @@ class Profile(models.Model):
     signal = models.BooleanField(verbose_name="Signal")
     languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name="Sprachkenntnisse", null=True, blank=True)
     comment = models.CharField(max_length=128, verbose_name="Kommentar", blank=True)
-    request_filter = models.OneToOneField(to=RequestFilter, null=True, on_delete=models.SET_NULL)
-    offer_filter = models.OneToOneField(to=OfferFilter, null=True, on_delete=models.SET_NULL)
+    request_filter = models.OneToOneField(to=RequestFilter, null=True, blank=True, on_delete=models.SET_NULL)
+    offer_filter = models.OneToOneField(to=OfferFilter, null=True, blank=True, on_delete=models.SET_NULL)
     def __str__(self) -> str:
         return self.account.username
 
