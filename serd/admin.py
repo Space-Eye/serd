@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AnsprechpartnerHotel, HousingRequest, Offer, Hotel, NewsItem, Profile, HotelStay
+from .models import AnsprechpartnerHotel, HousingRequest, Offer, Hotel, NewsItem, Profile, HotelStay, Pate
 @admin.register(HousingRequest)
 class HousingRequestAdmin(admin.ModelAdmin):
     search_fields =  ['number']
@@ -16,3 +16,4 @@ admin.site.register(Hotel)
 admin.site.register(AnsprechpartnerHotel)
 admin.site.register(NewsItem)
 admin.site.register(HotelStay)
+admin.site.register(Pate)

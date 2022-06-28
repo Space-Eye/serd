@@ -4,7 +4,7 @@ from slugify import slugify
 from datetime import date
 from django.core.exceptions import ValidationError
 from serd.choices import CURRENT_ACCOMODATION, LANGUAGE_CHOICE, OFFER_SORT, OFFER_STATE, PETS, PRIORITY_CHOICE, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
-from .models import Hotel, HousingRequest, Offer, OfferFilter, Profile, HotelStay, RequestFilter
+from .models import Hotel, HousingRequest, Offer, OfferFilter, Pate, Profile, HotelStay, RequestFilter
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -19,6 +19,13 @@ def isascii(s):
     return len(s) == len(s.encode())
 
 PFLICHT = ValidationError(_("Pflichtfeld"))
+
+class PatenForm(forms.ModelForm):
+    class Meta:
+        model = Pate
+        exclude = ['number']
+
+
 class OfferForm(forms.ModelForm):
     def test_required(self, field:str):
         data = self.cleaned_data[field]

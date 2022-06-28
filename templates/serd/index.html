@@ -69,5 +69,13 @@
             {% url 'profile_edit' as profile_edit_url %}
             {% bootstrap_button "Profil bearbeiten" button_type="link" href=profile_edit_url button_class="btn-success" %}
         </div>
+        <div class="m-3">
+            {% url 'add_pate' as pate_add_url %}
+            {% bootstrap_button "Pate eintragen" button_type="link" href=pate_add_url button_class="btn-success" %}
+        </div>
+        <div class="m-3">
+            {% url 'paten' as paten_list_url %}
+            {% bootstrap_button "Paten  ansehen" button_type="link" href=paten_list_url button_class="btn-success" %}
+        </div>
     </div>
 </body>

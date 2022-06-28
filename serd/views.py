@@ -3,14 +3,14 @@ from django.urls import reverse
 from serd.choices import PETS
 from serd.utils.db import count_persons, get_departing_stays, get_hotel_from_request, get_persons, get_requests, get_stays
 from django.db.models import Q
-from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Profile, RequestFilter, OfferFilter
+from .models import Hotel, HotelStay, HousingRequest, Offer, NewsItem, Pate, Profile, RequestFilter, OfferFilter
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime
-from .forms import OfferEditForm, OfferForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
+from .forms import OfferEditForm, OfferForm, PatenForm, RequestEditForm, RequestFilterForm, RequestForm, OfferFilterForm, ProfileForm, InvoiceSelectionForm, RequestFormForHotels, StaySet
 from dal import autocomplete
 from .create_invoice import create_ods
 
@@ -394,6 +394,19 @@ def profile_list(request):
     context = {}
     context["dataset"] = Profile.objects.all()
     return render(request, "serd/profile_list.html", context)
+
+
+@login_required
+def paten_list(request):
+    context = {}
+    context["dataset"] = Pate.objects.all()
+    return render(request, "serd/paten_list.html", context)
+
+class AddPate(CreateView):
+    model = Pate
+    form_class = PatenForm
+    
+    success_url = "/"
 
 
 class UpdateProfile(UpdateView):

@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from unicodedata import name
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -20,7 +21,8 @@ from django.contrib.auth.decorators import login_required
 from django.conf.urls.i18n import i18n_patterns
 from .views import (AddOffer, AddRequest, OfferUpdate, offer_list, request_list, request_update,  index, SuccessOffer,
                     SuccessRequest, UpdateRequestFilter, UpdateOfferFilter, hotel_list, OfferAutocomplete, statistics, 
-                    InternalAddOffer, internal_add_housingrequest, profile_view, profile_list, UpdateProfile, invoice_view, hotel_add_housingrequest )
+                    InternalAddOffer, internal_add_housingrequest, profile_view, profile_list, UpdateProfile, invoice_view, hotel_add_housingrequest,
+                    AddPate, paten_list )
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
@@ -51,13 +53,15 @@ urlpatterns = [
         auth_views.PasswordResetConfirmView.as_view(success_url='/'),
         name='password_reset_confirm',
     ),
-    path('add_request/hotel/', hotel_add_housingrequest, name='add_request_hotel')
+    path('add_request/hotel/', hotel_add_housingrequest, name='add_request_hotel'),
+    path('paten/', paten_list, name='paten')
    
 ]
 urlpatterns += i18n_patterns(
     path('add_request/',AddRequest.as_view(),name='add_request'),
     path('add_offer/', AddOffer.as_view(), name='add_offer'),
     path('success_request/<request_id>', SuccessRequest.as_view(), name='success_request'),
-    path('success_offer/<offer_id>', SuccessOffer.as_view(), name='success_offer')
+    path('success_offer/<offer_id>', SuccessOffer.as_view(), name='success_offer'),
+    path('add_pate', AddPate.as_view(), name='add_pate'),
 )
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

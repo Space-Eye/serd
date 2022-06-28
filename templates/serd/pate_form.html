@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    {% load static %}
+    <script src="{% static 'popup.js' %}"></script> 
+<title>Paten - SERD</title>
+<link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+</head>
+<body>
+{% load i18n %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<style>
+.errorlist
+    {
+        color: red;
+        font-size: large;
+    }
+
+</style>
+<table>
+    <tr>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_en" >
+                {% csrf_token %}
+                
+                <input name="language" type="hidden" value="en" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_en" value="Submit"><img width="48", alt="english" src="{% static 'english.png' %}" /></button>
+        </td>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_de" >
+                {% csrf_token %}
+                <input name="language" type="hidden" value="de" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_de" value="Submit"><img width="48", alt="german" src="{% static 'german.png' %}" /></button>
+        </td>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_uk" >
+                {% csrf_token %}
+                <input name="language" type="hidden" value="uk" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_uk" value="Submit"><img width="48", alt="ukrainian" src="{% static 'ukrainian.png' %}" /></button>
+        <td>
+            <form action="/i18n/setlang/" method="post" id="form_ru" >
+                {% csrf_token %}
+                <input name="language" type="hidden" value="ru" />
+            </form>
+            <button class="btn btn-sm btn-outline-primary" type="submit" form="form_ru" value="Submit"><img width="48", alt="russian" src="{% static 'russian.png' %}" /></button>
+        </td>
+        <td><a href="https://space-eye.org"><button class="btn" role="button" style="background-color: #007194;">space-eye.org</button></a></div></td>
+    </tr>
+</table>
+<form method="POST" enctype="multipart/form-data">
+
+  
+    <!-- Security token -->
+    {% csrf_token %}
+  
+    <!-- Using the formset -->
+    {% for field in form %}
+    <div class="fieldWrapper form-group row m-1">
+        {{ field.errors }}
+        <label for="{{ field.id_for_label }}" class="col-lg-4 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ field.help_text|safe }}">
+            {{ field.label}}
+            {% if field.field.required %}
+                *
+            {% endif %}
+        </label>
+        <div class="col-lg-4 my-auto" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ field.help_text|safe }}">
+            {{ field }}
+        </div>
+    </div>
+    {% endfor %}
+      
+    <input class="btn-primary m-3" type="submit" value="{%trans 'Absenden' %}" >
+</form>
+</body>

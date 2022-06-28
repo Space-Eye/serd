@@ -202,3 +202,15 @@ class HotelStay(models.Model):
     request = models.ForeignKey(HousingRequest, on_delete=models.CASCADE, related_name='stays')
     def __str__(self) -> str:
         return "_".join([str(self.hotel), str(self.request)])
+
+class Pate(models.Model):
+    number = models.AutoField(primary_key=True)
+    last_name = models.CharField(max_length=128, verbose_name=_("Nachname"), blank=True, validators=[validate_not_empty])
+    given_name = models.CharField(max_length=128, verbose_name=_("Vorname"), blank=True)
+    city = models.CharField(max_length=256, verbose_name=_("Wohnort"), blank=True)
+    district = models.CharField(max_length=128, verbose_name=_('Stadtteil'), blank=True)
+    languages = MultiSelectField(choices=LANGUAGE_CHOICE, verbose_name=_("Sprachkenntnisse"), null=True, blank=True)
+    additional_languages = models.CharField(verbose_name=_("Weitere Sprachen"), max_length=64, blank=True)
+    phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name=_("Telefonnummer"), blank=True)
+    mail = models.CharField(max_length=256, validators=[validate_email],verbose_name=_("E-Mail-Adresse"), blank=True)
+    comment = models.TextField(blank=True, verbose_name=_('Kommentar'))
