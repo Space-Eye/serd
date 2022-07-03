@@ -76,3 +76,9 @@ SORT_DIRECTION = (
     ('asc', 'Aufsteigend'),
     ('desc', 'Absteigend')
 )
+
+MENTOR_STATE = ( 
+    ('new', 'neu'),
+    ('contacted', 'kontaktiert'),
+    ('placed', 'vermittelt') 
+)

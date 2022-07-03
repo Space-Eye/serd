@@ -5,7 +5,7 @@ from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
-from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, OFFER_SORT, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
+from .choices import CURRENT_ACCOMODATION, FOOD_CHOICES, HOTEL_STATE, LANGUAGE_CHOICE, LIVING_WITH, MENTOR_STATE, OFFER_SORT, PRIORITY_CHOICE, LIVING_WITH, OFFER_STATE, PETS, REQUEST_SORT, REQUEST_STATE, SORT_DIRECTION
 from .validators import validate_not_empty, validate_plz, validate_phone, validate_not_negative
 
 
@@ -214,3 +214,6 @@ class Pate(models.Model):
     phone = models.CharField(max_length=50, validators=[validate_phone], verbose_name=_("Telefonnummer"), blank=True)
     mail = models.CharField(max_length=256, validators=[validate_email],verbose_name=_("E-Mail-Adresse"), blank=True)
     comment = models.TextField(blank=True, verbose_name=_('Kommentar'))
+    state = models.CharField(choices=MENTOR_STATE, default='new', max_length=64)
+    def __str__(self) -> str:
+        return ' '.join([str(self.number), str(self.given_name), str(self.last_name)])
