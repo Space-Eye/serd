@@ -81,6 +81,7 @@
         <th>Kann zahlen</th>
         <th> Ankunft Datum</th>
         <th>Sprachen</th>
+        <th>Beruf</th>
         <th>COVID</th>
         <th>Vermittelt</th>
         <th>Priorität</th>
@@ -150,6 +151,8 @@
                 <br> {{data.additional_languages}}
             {% endif %}
            </span></td>
+           <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.profession |default:""}}</span></td>
+
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}">{{data.vaccination |yesno:'Ja,Nein'}}</span></td>
 
            <td>  <span title="{{data.number}}  {{data.given_name}} {{data.last_name}}"> <a href="/offers/edit/{{data.placed_at.number}}" style="color:black; text-decoration:underline"> {{data.placed_at |default:""}}</a></span></td>
